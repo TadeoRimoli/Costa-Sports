@@ -1,7 +1,7 @@
 import React from 'react';
 import { TextInput, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
-import { GeneralStyle } from '../Styles/GeneralStyles';
+import { GeneralStyle } from '../../Styles/GeneralStyles';
 
 const CustomInput = ({ customStyles,placeholder, label, value, setValue }) => {
   return (

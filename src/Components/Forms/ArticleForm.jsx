@@ -1,9 +1,9 @@
 import { StyleSheet,  Text, View } from 'react-native'
 import React from 'react'
-import CustomInput from '../../Components/CustomInput'; // Cambiado aquí
-import CustomButton from '../../Components/CustomButton'; // Cambiado aquí
+import CustomInput from '../CustomInput'; // Cambiado aquí
+import CustomButton from '../CustomButton'; // Cambiado aquí
 import { Picker } from '@react-native-picker/picker';
-import { GeneralStyle, MarginDirectionStyles } from '../../Styles/GeneralStyles';
+import { GeneralStyle, MarginDirectionStyles } from '../../../Styles/GeneralStyles';
 import { productCategories } from '../../Constants/Arrays';
 
 const ArticleForm = ({article,setArticle,addArticle}) => {

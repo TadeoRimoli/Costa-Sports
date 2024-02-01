@@ -2,7 +2,7 @@ import React from 'react'
 import {StatusBar, StyleSheet, SafeAreaView,Text, View ,TextInput, Pressable } from 'react-native';
 import CustomButton from '../CustomButton';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { Colors, GeneralStyle } from '../../Styles/GeneralStyles';
+import { Colors, GeneralStyle } from '../../../Styles/GeneralStyles';
 import { productCategories } from '../../Constants/Arrays';
 
  ArticleCard = ({ article ={id:'',description:'',createdAt:new Date(),category:productCategories[0]}, onPress }) => {

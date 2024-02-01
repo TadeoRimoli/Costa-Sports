@@ -1,14 +1,13 @@
 import { useState } from 'react';
 import {StatusBar, StyleSheet, SafeAreaView,Text, View ,TextInput,ScrollView,FlatList,Keyboard } from 'react-native';
-import CustomInput from './Components/CustomInput'; // Cambiado aquí
-import CustomButton from './Components/CustomButton'; // Cambiado aquí
-import {Categories,shopItems} from './Items/Items'; // Cambiado aquí
-import ArticleCard from './Components/Cards/ArticleCard'; // Cambiado aquí
-import CustomText from './Components/CustomText';
-import CustomModal from './Components/CustomModal';
-import ArticleForm from './Components/Forms/ArticleForm';
+import CustomInput from './src/Components/CustomInput'; // Cambiado aquí
+import CustomButton from './src/Components/CustomButton'; // Cambiado aquí
+import ArticleCard from './src/Components/Cards/ArticleCard'; // Cambiado aquí
+import CustomText from './src/Components/CustomText';
+import CustomModal from './src/Components/CustomModal';
+import ArticleForm from './src/Components/Forms/ArticleForm';
 import { FontSizeStyles, GeneralStyle, MarginDirectionStyles, MarginStyles } from './Styles/GeneralStyles';
-import { productCategories } from './Constants/Arrays';
+import { productCategories } from './src/Constants/Arrays';
 
 export default function App() {
   
