@@ -81,6 +81,9 @@ export const FontSizeStyles = StyleSheet.create({
   });
   
   export const MarginDirectionStyles = StyleSheet.create({
+    margin5: {
+      margin: 5,
+    },
     marginTop5: {
       marginTop: 5,
     },

@@ -10,8 +10,7 @@ const CustomInput = ({ customStyles,placeholder, label, value, setValue }) => {
       value={value}
       onChangeText={setValue}
       style={[customStyles,styles.inputText,GeneralStyle.background4]}
-      placeholderTextColor='black' 
-    />
+      placeholderTextColor='rgba(0, 0, 0, 0.8)'    />
   );
 };
 
