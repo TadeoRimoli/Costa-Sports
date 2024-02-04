@@ -14,10 +14,27 @@ export const Colors = {
   background3: '#76C8E0',
   background4: '#77E0B3',
   background5: '#7785E0',
+  green: '#6BB17B',
+  Orange: '#CF906D',
 };
 
 export const GeneralStyle = StyleSheet.create({
   // Utiliza los colores del objeto Colors
+  row:{
+    flexDirection:'row'
+  },
+  justifyBetween:{
+    justifyContent:'space-between'
+  },
+  itemsCenter:{
+    alignItems:'center'
+  },
+  padding16:{
+    padding:16
+  },
+  padding8:{
+    padding:8
+  },
   softDarkPurple: {
     backgroundColor: Colors.softDarkPurple,
   },

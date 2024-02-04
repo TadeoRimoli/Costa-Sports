@@ -8,7 +8,7 @@ const CustomButton = ({customStyles, label = "", value, setValue,onPress, color 
     return (
       <Pressable
         onPress={onPress}
-        style={[styles.button,customStyles, color ? color :GeneralStyle.softPink]}
+        style={[styles.button,customStyles, color ? {backgroundColor:color} :GeneralStyle.softPink]}
       >
         <Text style={styles.buttonText}>{label}</Text>
       </Pressable>
@@ -19,7 +19,6 @@ const styles = StyleSheet.create({
     button: {
       padding: 15,
       borderRadius:10,
-      marginVertical:10,
       justifyContent:'center'
     },
     buttonText: {

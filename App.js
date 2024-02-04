@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import {StatusBar, StyleSheet, SafeAreaView,Text, View ,TextInput,ScrollView,Image,FlatList,Keyboard,Dimensions } from 'react-native';
+import {StatusBar, StyleSheet, SafeAreaView,Text, View ,TextInput,ScrollView,Image,FlatList,Keyboard,Dimensions, Pressable } from 'react-native';
 import CustomInput from './src/Components/CustomInput'; // Cambiado aquí
 import CustomButton from './src/Components/CustomButton'; // Cambiado aquí
 import ArticleCard from './src/Components/Cards/ArticleCard'; // Cambiado aquí
@@ -7,9 +7,10 @@ import CustomText from './src/Components/CustomText';
 import CustomModal from './src/Components/CustomModal';
 import Header from './src/Components/Header';
 import ArticleForm from './src/Components/Forms/ArticleForm';
-import { FontSizeStyles, GeneralStyle, MarginDirectionStyles, MarginStyles } from './Styles/GeneralStyles';
+import { Colors, FontSizeStyles, GeneralStyle, MarginDirectionStyles, MarginStyles } from './Styles/GeneralStyles';
 import { productCategories,products } from './src/Constants/Arrays';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import ProductCard from './src/Components/Cards/ProductCard';
 
 export default function App() {
   
@@ -39,14 +40,22 @@ export default function App() {
 
   let discoutProducts = products.sort((a, b) => b.discountPercentage - a.discountPercentage);
   
+  const [category,setCategory]=useState('')
+  const [selectedCategory,setSelectedCategory]=useState(null)
+
+  function handlePressCategory(item){
+    setSelectedCategory(item)
+  }
+
+
 
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar  />
       <Header></Header>
-      {/* <View style={{paddingHorizontal:10}}>
+      <View style={{paddingHorizontal:10}}>
         <View style={[{flexDirection:'row',alignItems:'center'}]}>
-          <CustomInput customStyles={{flex:1,marginRight:10}} placeholder={'Category or product'}/>
+          <CustomInput value={category} setValue={(e)=>setCategory(e)} customStyles={{flex:1,marginRight:10}} placeholder={'Category or product'}/>
           <Ionicons name="search" size={35}  color={'black'} />
         </View>
         <View
@@ -55,24 +64,71 @@ export default function App() {
             borderBottomWidth: 3,
           }}
         />
-      </View> */}
-    <ScrollView>
-      <FlatList
-      horizontal
+      </View>
+      {selectedCategory && <View
+      style={[GeneralStyle.softPurple,{flexDirection:'row',alignItems:'center',justifyContent:'space-between',   borderRadius: 5, margin:10,padding: 5,width:'50%' }]}
+      >
+        <Text style={{ fontSize: 16, }}>{selectedCategory.name}</Text>
+        <Ionicons onPress={()=>{setSelectedCategory(null)}} name="close" size={35}  color={'black'} />
+      </View>}
+      {selectedCategory && 
+        <FlatList
+      data={products.filter((product)=>product.category == selectedCategory.name)}
+      renderItem={({ item }) => (
+        <ProductCard key={item.id} item={item}></ProductCard>
+      )}
+      keyExtractor={item => item.id}
+    />}
+
+      {!selectedCategory && <FlatList
       data={productCategories}
       renderItem={({ item }) => (
-        <View style={[ GeneralStyle.softPink,{width:windowWidth-20,height:windowHeight/2,  margin: 10,borderRadius:10 }]}>
+        <Pressable onPress={()=>{handlePressCategory(item)}} style={[ GeneralStyle.softPink,{width:windowWidth-20,height:windowHeight/2,  margin: 10,borderRadius:10 }]}>
           <Text style={[MarginDirectionStyles.margin5,FontSizeStyles.fontSize22,{alignSelf:'center'}]}>{item.name}</Text>
           <Image
           style={{ flex: 1, width: null,resizeMode: 'cover' , height: null,  borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}
           source={{ uri: item.image }}
           onError={(error) => console.error('Error al cargar la imagen:', error.nativeEvent.error)}
           />
-        </View>
+        </Pressable>
       )}
       keyExtractor={item => item.name+'category'}
-    />
-    <FlatList
+    />}
+      <View style={{
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: Colors.green, 
+        justifyContent:'space-between',
+        flexDirection:'row',
+        alignItems:'center',
+        paddingHorizontal:15,
+        paddingVertical:10,
+      }}>
+        <Ionicons  name="home" size={30}  color={'white'} />
+        <Ionicons  name="pricetags" size={30}  color={'white'} />
+        <Ionicons  name="cart" size={30}  color={'white'} />
+    </View>
+ 
+  </SafeAreaView>
+  );
+}
+
+const styles = StyleSheet.create({
+  headerContainer:{
+    flexDirection:'row',
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    flexDirection:'column',
+    backgroundColor:'white',
+    paddingBottom:50
+  },
+});
+
+{/* <FlatList
       horizontal
       data={discoutProducts.slice(0,10)}
       renderItem={({ item }) => (
@@ -89,44 +145,4 @@ export default function App() {
         </View>
       )}
       keyExtractor={item => item.id}
-    />
-    </ScrollView>
-  </SafeAreaView>
-  );
-}
-
-const styles = StyleSheet.create({
-  headerContainer:{
-    flexDirection:'row',
-  },
-  container: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    flexDirection:'column',
-    backgroundColor:'white'
-  },
-});
-
-{/* <ArticleForm article={article} setArticle={setArticle} addArticle={addArticle} />
-        <FlatList
-          data={articles}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item, index }) => (
-            <ArticleCard key={`CategoryCard${index}`} article={item} onPress={() => { setModalProps({ visible: true, item }); }}></ArticleCard>
-          )}
-        />
-    <CustomModal  visible={modalProps.visible} hideModalFunction={()=>{setModalProps({visible:false,item:defaultArticle})}}>
-      <CustomText styles={FontSizeStyles.fontSize20}>Estas seguro que queres eliminar el articulo {modalProps.item.title} ?</CustomText>
-      <View style={[{flexDirection:'row',justifyContent:'space-between'},,MarginDirectionStyles.marginTop10]}>
-        <CustomButton color={GeneralStyle.sandBackgroundLight} label='Cancelar' onPress={()=>{setModalProps({visible:false,item:defaultArticle})}}></CustomButton>
-        <CustomButton 
-        color={GeneralStyle.skyBlueLight}
-        label='Si, eliminar' onPress={()=>{
-          setArticles(articles.filter((article) => article.id !== modalProps.item.id))
-          setModalProps({visible:false,item:defaultArticle})
-        }}></CustomButton>
-      </View>
-    </CustomModal>
-    <CustomModal  visible={alertModal.visible} hideModalFunction={()=>{setAlertModal({visible:false,message:''})}} autoCloseTimeout={3500}>
-      <CustomText styles={FontSizeStyles.fontSize20}>{alertModal.message}</CustomText>
-    </CustomModal> */}
+    /> */}

@@ -4,7 +4,7 @@ import { GeneralStyle } from '../../Styles/GeneralStyles'
 
 const Header = () => {
   return (
-    <View style={[styles.container,GeneralStyle.background1]}>
+    <View style={[styles.container,{backgroundColor:'#E6E6FA'}]}>
       <Text style={styles.header}>Costa Compras</Text>
     </View>
   )
