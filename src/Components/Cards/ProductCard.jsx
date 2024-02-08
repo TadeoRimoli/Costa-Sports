@@ -7,7 +7,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import CustomButton from '../CustomButton';
 import CustomModal from '../CustomModal';
 
-const ProductCard = ({item}) => {
+const ProductCard = ({item,cart ,setCart}) => {
 
     const windowWidth = Dimensions.get('window').width;
     const windowHeight = Dimensions.get('window').height;
@@ -20,7 +20,7 @@ const ProductCard = ({item}) => {
     };
   
     const handleDecrement = () => {
-      if (count > 0) {
+      if (count > 1) {
         setCount(count - 1);
       }
     };
@@ -80,25 +80,28 @@ const ProductCard = ({item}) => {
         <View style={{ padding: 16, borderRadius: 8, backgroundColor: 'white', marginBottom: 16 }}>
             <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 8 }}>{addProductModal?.item?.title}</Text>
             <Text style={{ fontSize: 14, color: 'gray', marginBottom: 8 }}>{addProductModal?.item?.description}</Text>
+            
+            <View style={[GeneralStyle.row,GeneralStyle.itemsCenter,GeneralStyle.justifyBetween]}>
+              <Text style={{ fontSize: 16, fontWeight: 'bold', marginBottom: 8 }}>Price: ${addProductModal?.item?.price}</Text>
 
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 8 }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 8 }}>
                 <Pressable onPress={handleDecrement}>
-                <Ionicons name="arrow-down-outline" size={24} color="black" />
+                  <Ionicons name="arrow-down-outline" size={24} color="black" />
                 </Pressable>
-
                 <Text style={{ paddingHorizontal: 10, borderRadius: 8, fontSize: 18, marginHorizontal: 8 }}>{count}</Text>
-
                 <Pressable onPress={handleIncrement}>
-                <Ionicons name="arrow-up-outline" size={24} color="black" />
+                  <Ionicons name="arrow-up-outline" size={24} color="black" />
                 </Pressable>
             </View>
-
-            <Text style={{ fontSize: 16, fontWeight: 'bold', marginBottom: 8 }}>Precio: ${addProductModal?.item?.price}</Text>
-            <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Total: ${addProductModal?.item?.price*count}</Text>
+            </View>
+            <Text style={{ fontSize: 16, fontWeight: 'bold',alignSelf:'flex-end',marginTop:8 }}>Total: ${addProductModal?.item?.price*count}</Text>
         </View>
         <View style={[GeneralStyle.row,GeneralStyle.justifyBetween]}>
-            <CustomButton color={Colors.softDarkPurple} label='Cancelar'></CustomButton>
-            <CustomButton color={Colors.background4} label='Agregar'></CustomButton>
+            <CustomButton color={Colors.softDarkPurple} label='Cancelar' onPress={()=>setAddProductModal({visible:false,item:null})}></CustomButton>
+            <CustomButton color={Colors.background4} label='Agregar' onPress={()=>{
+              setCart([...cart,{item:addProductModal.item,quantity:count}])
+              setAddProductModal({visible:false,item:null})
+              }}></CustomButton>
         </View>
         </CustomModal>
     </View>

@@ -1,99 +1,32 @@
 import { useState } from 'react';
 import {StatusBar, StyleSheet, SafeAreaView,Text, View ,TextInput,ScrollView,Image,FlatList,Keyboard,Dimensions, Pressable } from 'react-native';
-import CustomInput from './src/Components/CustomInput'; // Cambiado aquí
-import CustomButton from './src/Components/CustomButton'; // Cambiado aquí
-import ArticleCard from './src/Components/Cards/ArticleCard'; // Cambiado aquí
-import CustomText from './src/Components/CustomText';
-import CustomModal from './src/Components/CustomModal';
-import Header from './src/Components/Header';
-import ArticleForm from './src/Components/Forms/ArticleForm';
+import { MaterialIcons } from '@expo/vector-icons';
 import { Colors, FontSizeStyles, GeneralStyle, MarginDirectionStyles, MarginStyles } from './Styles/GeneralStyles';
 import { productCategories,products } from './src/Constants/Arrays';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import ProductCard from './src/Components/Cards/ProductCard';
+import Header from './src/Components/Header';
+import ProductCatalog from './src/Components/Views/ProductCatalog';
+import ProductOffers from './src/Components/Views/ProductOffers';
+import ShoppingCart from './src/Components/Views/ShoppingCart';
 
 export default function App() {
-  
-  // const defaultArticle={id:'',description:'',createdAt:new Date(),category:productCategories[0]}
-  // const [articles,setArticles]=useState([])
-  // const [article,setArticle]=useState(defaultArticle)
-  // const [selectedOption, setSelectedOption] = useState('option1');
-  // const [modalProps,setModalProps]=useState({visible:false,item:{id:-1,title:''}})
-  // const [alertModal,setAlertModal]=useState({visible:false,message:''})
-  // function addArticle(){       
-  //   Keyboard.dismiss();
-  //   const foundArticle = articles.find(article => article.id === article.id);
-  //   if(foundArticle){
-  //     setAlertModal({visible:true,message:'Ya existe un articulo con este codigo, prueba con otro distinto'})
-  //   }
-  //   else if(article.id && article.category && article.description){
-  //     setArticles([...articles,{...article,createdAt:new Date()}])
-  //     setArticle(defaultArticle)
-  //   }else{
-  //     setAlertModal({visible:true,message:'Completa todos los campos'})
-  //   }
-    
-  // }
+      
+  const [cart,setCart]=useState([]) 
 
-  const windowWidth = Dimensions.get('window').width;
-  const windowHeight = Dimensions.get('window').height;
+  const componentToShow = [
+    {title:'Costa Shopping',content:<ProductCatalog cart={cart} setCart={setCart} />},
+    {title:'HOT SALE',content:<ProductOffers cart={cart} setCart={setCart}/>},
+    {title:'Cart',content:<ShoppingCart cart={cart} setCart={setCart}/>}
+  ]
 
-  let discoutProducts = products.sort((a, b) => b.discountPercentage - a.discountPercentage);
-  
-  const [category,setCategory]=useState('')
-  const [selectedCategory,setSelectedCategory]=useState(null)
-
-  function handlePressCategory(item){
-    setSelectedCategory(item)
-  }
-
-
+  const [index,setIndex] =useState(0)
 
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar  />
-      <Header></Header>
-      <View style={{paddingHorizontal:10}}>
-        <View style={[{flexDirection:'row',alignItems:'center'}]}>
-          <CustomInput value={category} setValue={(e)=>setCategory(e)} customStyles={{flex:1,marginRight:10}} placeholder={'Category or product'}/>
-          <Ionicons name="search" size={35}  color={'black'} />
-        </View>
-        <View
-          style={{
-            borderBottomColor: 'black',
-            borderBottomWidth: 3,
-          }}
-        />
-      </View>
-      {selectedCategory && <View
-      style={[GeneralStyle.softPurple,{flexDirection:'row',alignItems:'center',justifyContent:'space-between',   borderRadius: 5, margin:10,padding: 5,width:'50%' }]}
-      >
-        <Text style={{ fontSize: 16, }}>{selectedCategory.name}</Text>
-        <Ionicons onPress={()=>{setSelectedCategory(null)}} name="close" size={35}  color={'black'} />
-      </View>}
-      {selectedCategory && 
-        <FlatList
-      data={products.filter((product)=>product.category == selectedCategory.name)}
-      renderItem={({ item }) => (
-        <ProductCard key={item.id} item={item}></ProductCard>
-      )}
-      keyExtractor={item => item.id}
-    />}
-
-      {!selectedCategory && <FlatList
-      data={productCategories}
-      renderItem={({ item }) => (
-        <Pressable onPress={()=>{handlePressCategory(item)}} style={[ GeneralStyle.softPink,{width:windowWidth-20,height:windowHeight/2,  margin: 10,borderRadius:10 }]}>
-          <Text style={[MarginDirectionStyles.margin5,FontSizeStyles.fontSize22,{alignSelf:'center'}]}>{item.name}</Text>
-          <Image
-          style={{ flex: 1, width: null,resizeMode: 'cover' , height: null,  borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}
-          source={{ uri: item.image }}
-          onError={(error) => console.error('Error al cargar la imagen:', error.nativeEvent.error)}
-          />
-        </Pressable>
-      )}
-      keyExtractor={item => item.name+'category'}
-    />}
+      <Header title={componentToShow[index].title}/>
+      {componentToShow[index].content}
       <View style={{
         position: 'absolute',
         left: 0,
@@ -106,11 +39,10 @@ export default function App() {
         paddingHorizontal:15,
         paddingVertical:10,
       }}>
-        <Ionicons  name="home" size={30}  color={'white'} />
-        <Ionicons  name="pricetags" size={30}  color={'white'} />
-        <Ionicons  name="cart" size={30}  color={'white'} />
-    </View>
- 
+            <Ionicons  name="home" size={30}  color={'white'} onPress={()=>{setIndex(0)}}/>
+            <MaterialIcons name="local-fire-department" size={30} color="white" onPress={()=>{setIndex(1)}} />
+            <Ionicons  name="cart" size={30}  color={'white'} onPress={()=>{setIndex(2)}}/>
+        </View>
   </SafeAreaView>
   );
 }
