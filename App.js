@@ -18,10 +18,6 @@ import * as Font from 'expo-font';
 export default function App() {
       
   const [fontsLoaded] = Font.useFonts(FontsArray);
-  if(!fontsLoaded){
-    return <Text>Loading Fonts</Text>
-  }
-
   const [cart,setCart]=useState([]) 
   const viewIndexes = {
     home : 0,
@@ -35,10 +31,13 @@ export default function App() {
     {title:'Hot Sale',content:<ProductOffers cart={cart} setCart={setCart}/>},
     {title:'Cart',content:<ShoppingCart cart={cart} setCart={setCart}/>}
   ]
-
+  const iconColor = '#2ecc71'; 
   const [index,setIndex] =useState(0)
 
-  const iconColor = '#2ecc71'; 
+  if(!fontsLoaded){
+    return <Text>Loading Fonts</Text>
+  }
+
 
   return (
     <SafeAreaView style={styles.container}>

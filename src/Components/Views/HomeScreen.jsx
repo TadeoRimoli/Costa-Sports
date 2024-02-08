@@ -3,23 +3,11 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
 const HomeScreen = ({ viewIndexes,navigate }) => {
   
-  const [saludo, setSaludo] = useState('');
-
-  useEffect(() => {
-    // Logic to get the personalized greeting based on the time of day
-    const hour = new Date().getHours();
-    if (hour < 12) {
-      setSaludo('Good morning!');
-    } else if (hour < 18) {
-      setSaludo('Good afternoon!');
-    } else {
-      setSaludo('Good evening!');
-    }
-  }, []);
+  const hour = new Date().getHours();
 
   return (
     <View style={styles.container}>
-    <Text style={styles.saludo}>{saludo}</Text>
+    <Text style={styles.saludo}>{hour <12 ? 'Good morning!' : hour<18 ? 'Good afternoon!' : 'Good evening!' }</Text>
     <Text style={styles.noticia}>Explore, choose, enjoy! Find what you need in one place.</Text>
       <TouchableOpacity
         style={[styles.button, styles.catalogButton]}
