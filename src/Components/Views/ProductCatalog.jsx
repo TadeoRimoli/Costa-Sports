@@ -36,7 +36,7 @@ const ProductCatalog = ({cart ,setCart}) => {
     <React.Fragment>
       <View style={{paddingHorizontal:10}}>
         <View style={[{flexDirection:'row',alignItems:'center'}]}>
-          <CustomInput value={filterValue} setValue={(e)=>{filterItems(e)}} customStyles={{flex:1,marginRight:10}} placeholder={'Category or product'}/>
+          <CustomInput value={filterValue} setValue={(e)=>{filterItems(e)}} customStyles={{flex:1,marginRight:10}} placeholder={selectedCategory ? 'Product' : 'Category'}/>
           <Ionicons name="search" size={35}  color={'black'} />
         </View>
         <View
