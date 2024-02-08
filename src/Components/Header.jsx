@@ -1,11 +1,14 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { GeneralStyle } from '../../Styles/GeneralStyles'
+import { FontsArray } from '../Constants/Fonts'
+import { useFonts } from 'expo-font'
 
 const Header = ({title}) => {
+
   return (
     <View style={[styles.container,{backgroundColor:'#2c3e50'}]}>
-      <Text style={styles.header}>{title}</Text>
+      <Text style={[styles.header]}>{title}</Text>
     </View>
   )
 }
@@ -20,6 +23,7 @@ const styles = StyleSheet.create({
     },
     header:{
         fontSize:20,
-        color:'white'
+        color:'white',
+        fontFamily:'RobotoItalic'
     }
 })

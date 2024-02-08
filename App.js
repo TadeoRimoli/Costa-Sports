@@ -10,9 +10,18 @@ import ProductCatalog from './src/Components/Views/ProductCatalog';
 import ProductOffers from './src/Components/Views/ProductOffers';
 import ShoppingCart from './src/Components/Views/ShoppingCart';
 import HomeScreen from './src/Components/Views/HomeScreen';
+import { FontsArray } from './src/Constants/Fonts';
+import * as Font from 'expo-font';
+
+
 
 export default function App() {
       
+  const [fontsLoaded] = Font.useFonts(FontsArray);
+  if(!fontsLoaded){
+    return <Text>Cargando Fuentes</Text>
+  }
+
   const [cart,setCart]=useState([]) 
   const viewIndexes = {
     home : 0,
