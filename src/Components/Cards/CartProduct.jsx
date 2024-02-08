@@ -9,7 +9,7 @@ const CartProduct = ({ quantity,item, onRemove }) => {
   const windowHeight = Dimensions.get('window').height;
 
   return (
-    <View style={[{ backgroundColor: Colors.Orange, width: windowWidth - 20, height: (windowHeight + 50) / 2, margin: 10, borderRadius: 10 }]}>
+    <View style={[{ alignSelf:'center',backgroundColor: '#d2d7d3', width: windowWidth - 50, height: (windowHeight ) / 2.5, margin: 10, borderRadius: 10 }]}>
       <Image
         style={{ position:'relative',flex: 1, width: null, resizeMode: 'cover', height: null, borderTopLeftRadius: 10, borderTopRightRadius: 10 }}
         source={{ uri: item.thumbnail }}

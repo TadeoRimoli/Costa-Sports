@@ -7,10 +7,9 @@ import { Colors, FontSizeStyles, GeneralStyle, MarginDirectionStyles, MarginStyl
 import Ionicons from '@expo/vector-icons/Ionicons';
 import ProductCard from '../Cards/ProductCard';
 import { productCategories, products } from '../../Constants/Arrays';
+import CategoryProductCard from '../Cards/CategoryProductCard';
 const ProductCatalog = ({cart ,setCart}) => {
 
-    const windowWidth = Dimensions.get('window').width;
-    const windowHeight = Dimensions.get('window').height;
 
     const [localProducts,setLocalProducts]=useState([])
     const [localCategories,setLocalCategories]=useState(productCategories)
@@ -27,7 +26,7 @@ const ProductCatalog = ({cart ,setCart}) => {
       setFilterValue(e)
   
       if(selectedCategory){
-        setLocalProducts(products.filter((product)=> product.title.toLowerCase().includes(e.toLowerCase()) && product.category == selectedCategory.name ))
+        setLocalProducts(products.filter((product)=> product.title.toLowerCase().includes(e.toLowerCase()) && product.category.toLowerCase() == selectedCategory.name.toLowerCase() ))
       }else{
         setLocalCategories(productCategories.filter((category)=>category.name.toLowerCase().includes(e.toLowerCase())))
       }
@@ -50,7 +49,7 @@ const ProductCatalog = ({cart ,setCart}) => {
       {selectedCategory && <View
       style={[GeneralStyle.softPurple,{flexDirection:'row',alignItems:'center',justifyContent:'space-between',   borderRadius: 5, margin:10,padding: 5,width:'50%' }]}
       >
-        <Text style={{ fontSize: 16, }}>{selectedCategory.name}</Text>
+        <Text style={{ fontSize: 16, }}>{selectedCategory.name.toLowerCase().split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}</Text>
         <Ionicons onPress={()=>{
           setLocalProducts([])
           setFilterValue('')
@@ -70,14 +69,7 @@ const ProductCatalog = ({cart ,setCart}) => {
       {!selectedCategory && <FlatList
       data={localCategories}
       renderItem={({ item }) => (
-        <Pressable onPress={()=>{handlePressCategory(item)}} style={[ GeneralStyle.softPink,{width:windowWidth-20,height:windowHeight/2,  margin: 10,borderRadius:10 }]}>
-          <Text style={[MarginDirectionStyles.margin5,FontSizeStyles.fontSize22,{alignSelf:'center'}]}>{item.name}</Text>
-          <Image
-          style={{ flex: 1, width: null,resizeMode: 'cover' , height: null,  borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}
-          source={{ uri: item.image }}
-          onError={(error) => console.error('Error al cargar la imagen:', error.nativeEvent.error)}
-          />
-        </Pressable>
+        <CategoryProductCard item={item}handlePressCategory={handlePressCategory}></CategoryProductCard>
       )}
       keyExtractor={item => item.name+'category'}
     />}
@@ -87,4 +79,3 @@ const ProductCatalog = ({cart ,setCart}) => {
 
 export default ProductCatalog
 
-const styles = StyleSheet.create({})

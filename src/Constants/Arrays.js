@@ -47,7 +47,7 @@ export const products = [{
   "price": 899,
   "discountPercentage": 17.94,
   "rating": 4.44,
-  "stock": 34,
+  "stock": 5,
   "brand": "Apple",
   "category": "smartphones",
   "thumbnail": "https://i.dummyjson.com/data/products/2/thumbnail.jpg",

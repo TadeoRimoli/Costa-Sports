@@ -16,11 +16,12 @@ const ProductCard = ({item,cart ,setCart}) => {
     const [addProductModal,setAddProductModal] = useState({visible:false,item:null});
 
     const handleIncrement = () => {
-      setCount(count + 1);
+      if(count < item.stock)
+        setCount(count + 1);
     };
   
     const handleDecrement = () => {
-      if (count > 1) {
+      if (count > 1 ) {
         setCount(count - 1);
       }
     };
@@ -46,7 +47,7 @@ const ProductCard = ({item,cart ,setCart}) => {
   };
 
   return (
-    <View  style={[ {backgroundColor:Colors.Orange,width:windowWidth-20,height:(windowHeight+50)/2,  margin: 10,borderRadius:10 }]}>
+    <View  style={[ {backgroundColor:'#d2d7d3',width:windowWidth-20,height:(windowHeight+50)/2,  margin: 10,borderRadius:10 }]}>
           <Image
           style={{ flex: 1, width: null,resizeMode: 'cover' , height: null,  borderTopLeftRadius: 10, borderTopRightRadius: 10 }}
           source={{ uri: item.thumbnail }}
@@ -66,9 +67,9 @@ const ProductCard = ({item,cart ,setCart}) => {
                 {renderStars(Math.round(item.rating * 2) / 2)}
               </View>
             
-              <CustomButton label='Add to Cart' onPress={()=>{
+              <CustomButton  label='Add to Cart' onPress={()=>{
                 setAddProductModal({visible:true,item:item})
-                }} color={Colors.background2}/>
+                }} color={'#2c3e50'}/>
               
             </View>
 
@@ -97,8 +98,8 @@ const ProductCard = ({item,cart ,setCart}) => {
             <Text style={{ fontSize: 16, fontWeight: 'bold',alignSelf:'flex-end',marginTop:8 }}>Total: ${addProductModal?.item?.price*count}</Text>
         </View>
         <View style={[GeneralStyle.row,GeneralStyle.justifyBetween]}>
-            <CustomButton color={Colors.softDarkPurple} label='Cancelar' onPress={()=>setAddProductModal({visible:false,item:null})}></CustomButton>
-            <CustomButton color={Colors.background4} label='Agregar' onPress={()=>{
+            <CustomButton color={'#e74c3c'} label='Cancel' onPress={()=>setAddProductModal({visible:false,item:null})}></CustomButton>
+            <CustomButton color={'#2ecc71'} label='Add' onPress={()=>{
               setCart([...cart,{item:addProductModal.item,quantity:count}])
               setAddProductModal({visible:false,item:null})
               }}></CustomButton>

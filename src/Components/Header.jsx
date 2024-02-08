@@ -4,7 +4,7 @@ import { GeneralStyle } from '../../Styles/GeneralStyles'
 
 const Header = ({title}) => {
   return (
-    <View style={[styles.container,{backgroundColor:'#E6E6FA'}]}>
+    <View style={[styles.container,{backgroundColor:'#2c3e50'}]}>
       <Text style={styles.header}>{title}</Text>
     </View>
   )
@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
         height:'10%'
     },
     header:{
-        fontSize:20
+        fontSize:20,
+        color:'white'
     }
 })

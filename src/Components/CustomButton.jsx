@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     buttonText: {
       fontSize:15,
       alignSelf:'center',
-      color: 'black',
+      color: 'white',
     },
 });
 export default CustomButton

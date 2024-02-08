@@ -9,40 +9,49 @@ import Header from './src/Components/Header';
 import ProductCatalog from './src/Components/Views/ProductCatalog';
 import ProductOffers from './src/Components/Views/ProductOffers';
 import ShoppingCart from './src/Components/Views/ShoppingCart';
+import HomeScreen from './src/Components/Views/HomeScreen';
 
 export default function App() {
       
   const [cart,setCart]=useState([]) 
-
+  const viewIndexes = {
+    home : 0,
+    products : 1,
+    offers : 2,
+    cart : 3,
+  }
   const componentToShow = [
-    {title:'Costa Shopping',content:<ProductCatalog cart={cart} setCart={setCart} />},
-    {title:'HOT SALE',content:<ProductOffers cart={cart} setCart={setCart}/>},
+    {title:'Costa Shopping',content:<HomeScreen viewIndexes={viewIndexes} navigate={(viewIndex)=>{setIndex(viewIndex)}}/>},
+    {title:'Products',content:<ProductCatalog cart={cart} setCart={setCart} />},
+    {title:'Hot Sale',content:<ProductOffers cart={cart} setCart={setCart}/>},
     {title:'Cart',content:<ShoppingCart cart={cart} setCart={setCart}/>}
   ]
 
   const [index,setIndex] =useState(0)
+
+  const iconColor = '#2ecc71'; 
 
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar  />
       <Header title={componentToShow[index].title}/>
       {componentToShow[index].content}
-      <View style={{
+      <View style={[{
         position: 'absolute',
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: Colors.green, 
-        justifyContent:'space-between',
-        flexDirection:'row',
-        alignItems:'center',
+        backgroundColor: '#404040', 
         paddingHorizontal:15,
         paddingVertical:10,
-      }}>
-            <Ionicons  name="home" size={30}  color={'white'} onPress={()=>{setIndex(0)}}/>
-            <MaterialIcons name="local-fire-department" size={30} color="white" onPress={()=>{setIndex(1)}} />
-            <Ionicons  name="cart" size={30}  color={'white'} onPress={()=>{setIndex(2)}}/>
+      },GeneralStyle.itemsCenter]}>
+        <View style={[{width:'80%'},GeneralStyle.row,GeneralStyle.itemsCenter,GeneralStyle.justifyBetween]}>
+            <Ionicons name="home" size={30} color={index === viewIndexes.home ? iconColor : 'white'} onPress={() => setIndex(viewIndexes.home)} />
+            <Ionicons name="pricetags" size={30} color={index === viewIndexes.products ? iconColor : 'white'} onPress={() => setIndex(viewIndexes.products)} />
+            <MaterialIcons name="local-fire-department" size={30} color={index === viewIndexes.offers ? iconColor : 'white'} onPress={() => setIndex(viewIndexes.offers)} />
+            <Ionicons name="cart" size={30} color={index === viewIndexes.cart ? iconColor : 'white'} onPress={() => setIndex(viewIndexes.cart)} />
         </View>
+      </View>
   </SafeAreaView>
   );
 }
