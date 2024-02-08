@@ -19,7 +19,7 @@ export default function App() {
       
   const [fontsLoaded] = Font.useFonts(FontsArray);
   if(!fontsLoaded){
-    return <Text>Cargando Fuentes</Text>
+    return <Text>Loading Fonts</Text>
   }
 
   const [cart,setCart]=useState([]) 
