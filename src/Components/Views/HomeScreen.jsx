@@ -1,32 +1,32 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Pressable } from 'react-native';
 
-const HomeScreen = ({ viewIndexes,navigate }) => {
+const HomeScreen = ({navigation,route}) => {
   
   const hour = new Date().getHours();
-
   return (
     <View style={styles.container}>
     <Text style={styles.saludo}>{hour <12 ? 'Good morning!' : hour<18 ? 'Good afternoon!' : 'Good evening!' }</Text>
     <Text style={styles.noticia}>Explore, choose, enjoy! Find what you need in one place.</Text>
-      <TouchableOpacity
+      <Pressable
         style={[styles.button, styles.catalogButton]}
-        onPress={() => navigate(viewIndexes.products)}
+        onPress={()=>navigation.navigate("CategoriesStack",{screen:"Categories"})}
       >
         <Text style={styles.buttonText}>Products</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
+      </Pressable>
+      <Pressable
         style={[styles.button, styles.offersButton]}
-        onPress={() => navigate(viewIndexes.offers)}
+        onPress={()=>navigation.navigate("HotSaleStack",{screen:"HotSale"})}
       >
         <Text style={styles.buttonText}>Hot Sale</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
+      </Pressable>
+      <Pressable
         style={[styles.button, styles.cartButton]}
-        onPress={() => navigate(viewIndexes.cart)}
+        onPress={()=>navigation.navigate("CartStack",{screen:"ShoppingCart"})}
+      
       >
         <Text style={styles.buttonText}>Cart</Text>
-      </TouchableOpacity>
+      </Pressable>
     </View>
   );
 };

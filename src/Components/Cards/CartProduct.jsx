@@ -27,8 +27,7 @@ const CartProduct = ({ quantity,item, onRemove }) => {
 
         <View style={[GeneralStyle.row, GeneralStyle.justifyBetween, GeneralStyle.itemsCenter, MarginDirectionStyles.marginTop5]}>
           <View style={[GeneralStyle.row, GeneralStyle.itemsCenter]}>
-            <Text style={[,{fontWeight:'bold'},FontSizeStyles.fontSize18]}>Cantidad: </Text>
-            
+            <Text style={[,{fontWeight:'bold'},FontSizeStyles.fontSize18]}>Quantity: </Text>
             <Text style={{ paddingHorizontal: 10 }}>{quantity}</Text>
           </View>
           <View style={[GeneralStyle.row, GeneralStyle.itemsCenter]}>

@@ -6,7 +6,6 @@ import { Colors, GeneralStyle } from '../../../Styles/GeneralStyles';
 import { productCategories } from '../../Constants/Arrays';
 
  ArticleCard = ({ article ={id:'',description:'',createdAt:new Date(),category:productCategories[0]}, onPress }) => {
-  console.log(article)
   return (
     <View style={[styles.container, GeneralStyle.background2 ]}>
       <View style={styles.textContainer}>

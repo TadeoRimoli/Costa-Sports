@@ -4,8 +4,8 @@ import { StyleSheet,Pressable, Text,Dimensions,Image, View } from 'react-native'
 import React from 'react'
 import { Colors, GeneralStyle, MarginDirectionStyles } from '../../../Styles/GeneralStyles';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import CustomButton from '../CustomButton';
-import CustomModal from '../CustomModal';
+import CustomButton from '../CoreComponents/CustomButton';
+import CustomModal from '../CoreComponents/CustomModal';
 
 const ProductCard = ({item,cart ,setCart}) => {
 

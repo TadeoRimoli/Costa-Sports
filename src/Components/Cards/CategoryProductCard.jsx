@@ -7,7 +7,7 @@ const CategoryProductCard = ({item,handlePressCategory}) => {
     const windowHeight = Dimensions.get('window').height;
     return (
     <Pressable
-    onPress={() => { handlePressCategory(item) }}
+    onPress={handlePressCategory}
     style={[styles.cardContainer,{
       
     }]}

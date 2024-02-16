@@ -2,8 +2,9 @@ import { FlatList, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import ProductCard from '../Cards/ProductCard'
 import CartProduct from '../Cards/CartProduct'
+import { FontSizeStyles, GeneralStyle } from '../../../Styles/GeneralStyles'
 
-const ShoppingCart = ({cart ,setCart}) => {
+const ShoppingCart = ({cart, setCart}) => {
     const [totalPrice, setTotalPrice] = useState(0);
 
     useEffect(() => {
@@ -15,9 +16,9 @@ const ShoppingCart = ({cart ,setCart}) => {
       }, [cart]);
 
   return (
-    <React.Fragment>
+    <View style={{flex:1,backgroundColor: '#34495e'}}>
      <View style={styles.totalContainer}>
-        <Text style={styles.totalText}>Total: ${totalPrice.toFixed(2)}</Text>
+        <Text style={[{fontWeight:'bold',color:'white'},FontSizeStyles.fontSize18,]}>Total: ${totalPrice.toFixed(2)}</Text>
       </View>
 
     <FlatList
@@ -31,7 +32,7 @@ const ShoppingCart = ({cart ,setCart}) => {
         )}
         keyExtractor={(item, index) => item.item.id.toString() + '_' + index.toString()} // Utiliza el ID del elemento y el índice
         />
-    </React.Fragment>
+    </View>
 
   )
 }
@@ -44,9 +45,6 @@ const styles = StyleSheet.create({
       paddingHorizontal: 16,
       paddingVertical: 8,
     },
-    totalText: {
-      fontSize: 18,
-      fontWeight: 'bold',
-    },
+   
   });
   
