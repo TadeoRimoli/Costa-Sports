@@ -16,11 +16,16 @@ export const Colors = {
   background5: '#7785E0',
   green: '#6BB17B',
   Orange: '#CF906D',
+  backgroundError:'#FADBD8',
+  error:'#DF4B4E'
 };
 
 export const GeneralStyle = StyleSheet.create({
   // Utiliza los colores del objeto Colors
-  row:{
+  flex1:{
+    flex:1
+  }
+  ,row:{
     flexDirection:'row'
   },
   justifyBetween:{

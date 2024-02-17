@@ -11,6 +11,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import ShoppingCart from '../Views/ShoppingCart';
 import ProductList from '../Views/ProductList';
 import { products } from '../../Constants/Arrays';
+import PaymentScreen from '../Views/PaymentScreen';
 
 const Tab = createBottomTabNavigator()
 const Stack = createNativeStackNavigator()
@@ -28,17 +29,10 @@ const MyNavigator = ({cart,setCart}) => {
       function LocalProductCatalog(){
         return <ProductCatalog navigation={navigation} route={route} cart={cart}setCart={setCart}/>
       }
-      function LocalProductList(){
-        return <ProductList navigation={navigation}  cart={cart}setCart={setCart} />
-      }
-
+   
         return <Stack.Navigator initialRouteName='Categories' >
             <Stack.Screen name="Categories" component={LocalProductCatalog} />
-            <Stack.Screen 
-            options={{
-              headerTitle: 'Products', // Aquí defines el título del header
-            }}
-            name="Products" component={LocalProductList} />
+      
         </Stack.Navigator>
     }
 
@@ -57,10 +51,13 @@ const MyNavigator = ({cart,setCart}) => {
 
     
 
-    const ShoppingCartStack = ({  }) => {
+    const ShoppingCartStack = ({ navigation }) => {
       
       function LocalShoppingCart(){
         return <ShoppingCart cart={cart}setCart={setCart}/>
+      }
+      function LocalPaymentScreen(){
+        return <PaymentScreen navigation={navigation} setCart={setCart}/>
       }
 
         return <Stack.Navigator >
@@ -70,6 +67,13 @@ const MyNavigator = ({cart,setCart}) => {
                   headerTitle:'Shopping Cart'
                 }}
                 component={(LocalShoppingCart)} // Aquí se pasa directamente el componente ShoppingCart
+            />
+            <Stack.Screen 
+                name="PaymentScreen" 
+                options={{
+                  headerTitle:'Shopping Cart'
+                }}
+                component={(LocalPaymentScreen)} // Aquí se pasa directamente el componente ShoppingCart
             />
         </Stack.Navigator>
     }
