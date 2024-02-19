@@ -18,7 +18,6 @@ import MyNavigator from './src/Components/Navigation/Navigator';
 export default function App() {
       
   const [fontsLoaded] = Font.useFonts(FontsArray);
-  const [cart,setCart]=useState([]) 
 
   if(!fontsLoaded){
     return <Text>Loading Fonts</Text>
@@ -28,7 +27,7 @@ export default function App() {
     <SafeAreaView style={styles.container}>
       <NavigationContainer>
         <StatusBar  />
-        <MyNavigator cart={cart} setCart={setCart}/>
+        <MyNavigator />
       </NavigationContainer>
   </SafeAreaView>
   );

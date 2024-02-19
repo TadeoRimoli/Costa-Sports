@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -17,10 +17,11 @@ import Purchases from '../Views/Purchases';
 const Tab = createBottomTabNavigator()
 const Stack = createNativeStackNavigator()
 
-const MyNavigator = ({cart,setCart}) => {
+const MyNavigator = ({}) => {
+  const [cart,setCart]=useState([]) 
 
     const HomeStack = () => {
-        return <Stack.Navigator >
+        return <Stack.Navigator initialRouteName='Home'>
             <Stack.Screen name="Home" component={HomeScreen}></Stack.Screen>
             <Stack.Screen name="Purchases" component={Purchases}></Stack.Screen>
         </Stack.Navigator>
@@ -35,12 +36,14 @@ const MyNavigator = ({cart,setCart}) => {
         return <ProductList navigation={navigation}  cart={cart}setCart={setCart} />
       }
 
-        return <Stack.Navigator initialRouteName='Categories' >
+        return <Stack.Navigator initialRouteName='Categories' 
+        >
             <Stack.Screen name="Categories" component={LocalProductCatalog} />
             <Stack.Screen 
-            options={{
-              headerTitle: 'Products', // Aquí defines el título del header
-            }}
+            options={({ route }) => ({
+              headerTitle:route.params.selectedCategory.name.toLowerCase().split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
+              ,
+            })}
             name="Products" component={LocalProductList} />
         </Stack.Navigator>
     }

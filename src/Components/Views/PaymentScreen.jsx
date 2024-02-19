@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, StyleSheet, Text, TextInput, View, ActivityIndicator } from 'react-native';
+import { Button, StyleSheet, Text, TextInput, View, ActivityIndicator, BackHandler } from 'react-native';
 import { useIsFocused, useNavigation, useRoute } from '@react-navigation/native';
 import { Colors, FontSizeStyles, GeneralStyle } from '../../../Styles/GeneralStyles';
 import CustomButton from '../CoreComponents/CustomButton';
@@ -19,7 +19,7 @@ const PaymentScreen = ({ cart,setCart }) => {
   const [securityCodeError, setSecurityCodeError] = useState(false);
   const [cardholderNameError, setCardholderNameError] = useState(false);
   const route = useRoute();
-  const { totalPrice } = route.params;
+  const { totalPrice, } = route.params;
 
   const cases ={
     good:'VALIDATED',
@@ -46,7 +46,6 @@ const PaymentScreen = ({ cart,setCart }) => {
         setPurchaseStatus(cases.good);
         // Obtener los datos actuales de AsyncStorage
         const jsonValue = await AsyncStorage.getItem(purchasesKey);
-        console.log("purchases", jsonValue)
         let purchasesArray;
         if(jsonValue){
           purchasesArray = JSON.parse(jsonValue);
@@ -58,7 +57,7 @@ const PaymentScreen = ({ cart,setCart }) => {
           date: new Date(),
           totalAmount: totalPrice,
           items: cart,
-          card: creditCardNumber
+          card: creditCardNumber,
         });
         // Convertir el arreglo de compras de nuevo a formato JSON y almacenarlo en AsyncStorage
         const updatedJsonValue = JSON.stringify(purchasesArray);
@@ -83,13 +82,13 @@ const PaymentScreen = ({ cart,setCart }) => {
     navigation.navigate("CategoriesStack")
   };
 
-  const isFocus = useIsFocused()
+  const isFocused = useIsFocused()
 
   useEffect(()=>{
-    if(!isFocus){
+    if(!isFocused){
       navigation.pop()
     }
-  },[isFocus])
+  },[isFocused])
 
   return (
     <View style={styles.container}>
@@ -128,12 +127,7 @@ const PaymentScreen = ({ cart,setCart }) => {
       </View>}
 
       {purchaseStatus === cases.good && (
-        <>
           <Text style={styles.successText}>Purchase successful!</Text>
-          <CustomButton color={Colors.green} label="Continue Shopping" 
-          onPress={handleReturn}
-           />
-        </>
       )}
       {purchaseStatus === cases.bad && (
         <>

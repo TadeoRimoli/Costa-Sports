@@ -20,11 +20,6 @@ const ProductList = ({navigation,cart ,setCart}) => {
   return (
     <View style={{flex:1,backgroundColor: '#34495e'}}>
         <View style={{paddingHorizontal:10}}>
-            <View style={[GeneralStyle.softPurple,{flexDirection:'row',alignItems:'center',justifyContent:'space-between',   borderRadius: 5, marginVertical:10,padding: 5, }]}
-            >
-                <Text style={[,GeneralStyle.padding8,FontSizeStyles.fontSize16]}>{selectedCategory.name.toLowerCase().split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}</Text>
-            </View>
-            <View style={{borderBottomColor: 'white',borderBottomWidth: 3,}}/>
             <View style={[{flexDirection:'row',alignItems:'center'}]}>
                 <CustomInput value={filterValue} setValue={(e)=>{filterItems(e)}} customStyles={{flex:1,marginRight:10}} placeholder={'Search'}/>
             </View>

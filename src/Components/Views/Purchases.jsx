@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, FlatList } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { GeneralStyle } from '../../../Styles/GeneralStyles';
 
 const Purchases = () => {
   const [purchases, setPurchases] = useState([]);
@@ -12,7 +13,7 @@ const Purchases = () => {
         const purchasesData = await AsyncStorage.getItem('purchases');
         if (purchasesData) {
           const parsedPurchases = JSON.parse(purchasesData);
-          setPurchases(parsedPurchases);
+          setPurchases(parsedPurchases.reverse());
         }
       } catch (error) {
         console.error('Error loading purchases:', error);
@@ -22,33 +23,43 @@ const Purchases = () => {
     // Llamar a la función para cargar los datos al montar el componente
     loadPurchases();
   }, []);
-console.log(purchases)
-  return (
-    <ScrollView style={styles.container}>
-      {purchases.map((purchase, index) => {
-        let date = new Date(purchase.date)
-        return <View key={index} style={styles.purchaseCard}>
-          <Text>Date: {date.toLocaleDateString()}</Text>
-          <Text>Hour: {date.toLocaleTimeString()}</Text>
-          <Text>Total Amount: ${purchase.totalAmount ? purchase.totalAmount.toFixed(2) : 'N/A'}</Text>
-          <Text>Credit Card Number: {purchase.card}</Text>
-          <Text>Items:</Text>
-          {purchase.items.map((item, itemIndex) => {
-            return <View key={itemIndex} style={{marginLeft:5}}>
-              <Text>{item.item.title}</Text>
-              <Text>Price: ${item.item.price.toFixed(2)}</Text>
-            </View>
-          })}
+
+  const renderItem = ({ item, index }) => {
+    let date = new Date(item.date);
+    return (
+      <View style={styles.purchaseCard}>
+        <View style={styles.header}>
+          <Text style={styles.dateText}>{date.toLocaleDateString()}</Text>
+          <Text style={styles.dateText}>{date.toLocaleTimeString()}</Text>
         </View>
-      })}
-    </ScrollView>
+        <Text style={styles.totalAmountText}>Total Amount: ${item.totalAmount ? item.totalAmount.toFixed(2) : 'N/A'}</Text>
+        <Text style={styles.cardText}>Credit Card Number: {item.card}</Text>
+        <Text style={styles.itemsHeader}>Items:</Text>
+        {item.items.map((product, productIndex) => (
+          <View key={productIndex} style={styles.itemContainer}>
+            <Text style={styles.itemIndexText}>Item {productIndex + 1}</Text>
+            <Text style={styles.itemTitleText}>{product.item.title}</Text>
+            <Text style={styles.itemPriceText}>Price: ${product.item.price.toFixed(2)}</Text>
+          </View>
+        ))}
+      </View>
+    );
+  };
+
+  return (
+    <FlatList
+      style={styles.container}
+      contentContainerStyle={{alignItems:''}}
+      data={purchases}
+      renderItem={renderItem}
+      keyExtractor={(item, index) => index.toString()}
+    />
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
     backgroundColor: '#ffffff',
   },
   purchaseCard: {
@@ -56,7 +67,42 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     borderRadius: 10,
     padding: 10,
+    margin: 10,
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     marginBottom: 10,
+  },
+  dateText: {
+    fontSize: 16,
+  },
+  totalAmountText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  cardText: {
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  itemsHeader: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 5,
+  },
+  itemContainer: {
+    marginLeft: 10,
+  },
+  itemIndexText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  itemTitleText: {
+    fontSize: 16,
+  },
+  itemPriceText: {
+    fontSize: 16,
   },
 });
 

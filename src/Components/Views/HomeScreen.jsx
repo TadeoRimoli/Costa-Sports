@@ -34,27 +34,6 @@ const HomeScreen = ({navigation,route}) => {
         >
       <Text style={styles.buttonText}>My Purchases</Text>
       </Pressable>
-
-      <Pressable
-          style={[styles.button, styles.purchasesButton]}
-          onPress={()=>{
-            const clearAsyncStorage = async () => {
-              try {
-                await AsyncStorage.clear();
-                console.log('AsyncStorage cleared successfully.');
-              } catch (error) {
-                console.error('Error clearing AsyncStorage:', error);
-              }
-            };
-          clearAsyncStorage();
-            
-          }
-        }
-        >
-      <Text style={styles.buttonText}>Elimiar async storage</Text>
-      </Pressable>
-
-      
     </View>
   );
 };

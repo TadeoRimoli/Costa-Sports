@@ -1,9 +1,12 @@
 import { Button, FlatList, StyleSheet, Text, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import { useNavigation } from '@react-navigation/native'; // Importa hook de navegación
 import CartProduct from '../Cards/CartProduct';
 import { Colors, FontSizeStyles } from '../../../Styles/GeneralStyles';
 import CustomButton from '../../Components/CoreComponents/CustomButton';
+import { useIsFocused, useNavigation, useRoute } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import uuid from 'react-native-uuid';
+
 
 const ShoppingCart = ({ cart, setCart }) => {
   const [totalPrice, setTotalPrice] = useState(0);
@@ -18,8 +21,7 @@ const ShoppingCart = ({ cart, setCart }) => {
   }, [cart]);
 
   const handlePayment = () => {
-    // Navega a la vista de pago al presionar el botón
-    navigation.navigate('PaymentScreen',{totalPrice});
+    navigation.navigate('PaymentScreen', { totalPrice });
   };
 
   return (

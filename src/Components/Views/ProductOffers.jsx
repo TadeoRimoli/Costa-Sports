@@ -8,7 +8,7 @@ import CustomInput from '../CoreComponents/CustomInput';
 
 const ProductOffers = ({cart ,setCart}) => {
   const [filterValue,setFilterValue]=useState('')
-  let offers = products.sort((a, b) => b.discountPercentage - a.discountPercentage).slice(0, 20)
+  const [offers,setOffers]=useState(products.sort((a, b) => b.discountPercentage - a.discountPercentage).slice(0, 20))
   const [bestOffers,setBestOffers]=useState( offers)
 
   function filterItems(e){
