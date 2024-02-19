@@ -12,6 +12,7 @@ import ShoppingCart from '../Views/ShoppingCart';
 import ProductList from '../Views/ProductList';
 import { products } from '../../Constants/Arrays';
 import PaymentScreen from '../Views/PaymentScreen';
+import Purchases from '../Views/Purchases';
 
 const Tab = createBottomTabNavigator()
 const Stack = createNativeStackNavigator()
@@ -21,6 +22,7 @@ const MyNavigator = ({cart,setCart}) => {
     const HomeStack = () => {
         return <Stack.Navigator >
             <Stack.Screen name="Home" component={HomeScreen}></Stack.Screen>
+            <Stack.Screen name="Purchases" component={Purchases}></Stack.Screen>
         </Stack.Navigator>
     }
 
@@ -29,22 +31,29 @@ const MyNavigator = ({cart,setCart}) => {
       function LocalProductCatalog(){
         return <ProductCatalog navigation={navigation} route={route} cart={cart}setCart={setCart}/>
       }
-   
+      function LocalProductList(){
+        return <ProductList navigation={navigation}  cart={cart}setCart={setCart} />
+      }
+
         return <Stack.Navigator initialRouteName='Categories' >
             <Stack.Screen name="Categories" component={LocalProductCatalog} />
-      
+            <Stack.Screen 
+            options={{
+              headerTitle: 'Products', // Aquí defines el título del header
+            }}
+            name="Products" component={LocalProductList} />
         </Stack.Navigator>
     }
 
     const ProductOffersStack = () => {
       
       function LocalProductOffers(){
-        return <ProductOffers cart={cart}setCart={setCart}/>
+        return <ProductOffers cart={cart} setCart={setCart}/>
       }
       
       return <Stack.Navigator >
           <Stack.Screen name="HotSale" 
-          options={{headerTitle:'Hot Sale'}}
+          options={{headerTitle:'20 Best Offers'}}
           component={LocalProductOffers} />
       </Stack.Navigator>
     }
@@ -57,10 +66,10 @@ const MyNavigator = ({cart,setCart}) => {
         return <ShoppingCart cart={cart}setCart={setCart}/>
       }
       function LocalPaymentScreen(){
-        return <PaymentScreen navigation={navigation} setCart={setCart}/>
+        return <PaymentScreen navigation={navigation} cart={cart} setCart={setCart}/>
       }
 
-        return <Stack.Navigator >
+        return <Stack.Navigator initialRouteName='ShoppingCart'>
             <Stack.Screen 
                 name="ShoppingCart" 
                 options={{
@@ -80,7 +89,12 @@ const MyNavigator = ({cart,setCart}) => {
 
   return (
       <Tab.Navigator
-      screenOptions={{ headerShown: false,tabBarShowLabel:false }}
+      screenOptions={{ headerShown: false,tabBarShowLabel:false,
+        tabBarActiveTintColor: '#877665', // Cambia el color del ícono seleccionado aquí
+        tabBarStyle: {
+          backgroundColor: '#f2f2f2', // Color de fondo del footer (gris claro)
+        }
+      }}
       >
         <Tab.Screen  
         name="HomeStack" component={HomeStack}

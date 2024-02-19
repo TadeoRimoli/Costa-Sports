@@ -23,10 +23,10 @@ const ProductCatalog = ({navigation,route,cart ,setCart}) => {
     }
 
   return (
-    <View style={{backgroundColor: '#34495e'}}>
+    <View style={{flex:1,backgroundColor: '#34495e'}}>
       <View style={{paddingHorizontal:10}}>
         <View style={[{flexDirection:'row',alignItems:'center'}]}>
-          <CustomInput value={filterValue} setValue={(e)=>{filterItems(e)}} customStyles={{flex:1,marginRight:10}} placeholder={'Category'}/>
+          <CustomInput value={filterValue} setValue={(e)=>{filterItems(e)}} customStyles={{flex:1,marginRight:10}} placeholder={'Search'}/>
         </View>
         <View
           style={{

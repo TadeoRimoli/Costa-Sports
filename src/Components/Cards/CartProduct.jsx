@@ -16,7 +16,7 @@ const CartProduct = ({ quantity,item, onRemove }) => {
         onError={(error) => console.error('Error al cargar la imagen:', error.nativeEvent.error)}
       />
         <Pressable style={{ position:'absolute',top:0,right:0,margin:5}} onPress={onRemove}>
-            <Ionicons name="close-circle" size={30} color="white" />
+            <Ionicons name="close-circle" size={30} color={Colors.error} />
         </Pressable>
       <View style={[GeneralStyle.padding16]}>
         <View style={[GeneralStyle.row, GeneralStyle.justifyBetween, MarginDirectionStyles.marginBottom5]}>

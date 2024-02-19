@@ -46,8 +46,12 @@ const ProductCard = ({item,cart ,setCart}) => {
     return stars;
   };
 
+  const handleAddProduct = (item) => {
+    setCart([...cart, { item: item, quantity: count }]);
+  };
+
   return (
-    <View  style={[ {backgroundColor:'#d2d7d3',width:windowWidth-20,height:(windowHeight+50)/2,  margin: 10,borderRadius:10 }]}>
+    <View  style={[ {alignSelf:'center',marginVertical:10, backgroundColor:'#d2d7d3',width:windowWidth-20,height:(windowHeight+50)/2,borderRadius:10 }]}>
           <Image
           style={{ flex: 1, width: null,resizeMode: 'cover' , height: null,  borderTopLeftRadius: 10, borderTopRightRadius: 10 }}
           source={{ uri: item.thumbnail }}
@@ -66,44 +70,42 @@ const ProductCard = ({item,cart ,setCart}) => {
               <View style={[GeneralStyle.row]}>
                 {renderStars(Math.round(item.rating * 2) / 2)}
               </View>
-            
               <CustomButton  label='Add to Cart' onPress={()=>{
                 setAddProductModal({visible:true,item:item})
                 }} color={'#2c3e50'}/>
-              
             </View>
-
           </View>
         <CustomModal
         visible={addProductModal.visible}
         hideModalFunction={()=>{setAddProductModal({visible:false,item:null})}}
         >   
-        <View style={{ padding: 16, borderRadius: 8, backgroundColor: 'white', marginBottom: 16 }}>
-            <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 8 }}>{addProductModal?.item?.title}</Text>
-            <Text style={{ fontSize: 14, color: 'gray', marginBottom: 8 }}>{addProductModal?.item?.description}</Text>
-            
-            <View style={[GeneralStyle.row,GeneralStyle.itemsCenter,GeneralStyle.justifyBetween]}>
-              <Text style={{ fontSize: 16, fontWeight: 'bold', marginBottom: 8 }}>Price: ${addProductModal?.item?.price}</Text>
+          <View style={{ padding: 16, borderRadius: 8, backgroundColor: 'white', marginBottom: 16 }}>
+              <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 8 }}>{addProductModal?.item?.title}</Text>
+              <Text style={{ fontSize: 14, color: 'gray', marginBottom: 8 }}>{addProductModal?.item?.description}</Text>
+              
+              <View style={[GeneralStyle.row,GeneralStyle.itemsCenter,GeneralStyle.justifyBetween]}>
+                <Text style={{ fontSize: 16, fontWeight: 'bold', marginBottom: 8 }}>Price: ${addProductModal?.item?.price}</Text>
 
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 8 }}>
-                <Pressable onPress={handleDecrement}>
-                  <Ionicons name="arrow-down-outline" size={24} color="black" />
-                </Pressable>
-                <Text style={{ paddingHorizontal: 10, borderRadius: 8, fontSize: 18, marginHorizontal: 8 }}>{count}</Text>
-                <Pressable onPress={handleIncrement}>
-                  <Ionicons name="arrow-up-outline" size={24} color="black" />
-                </Pressable>
-            </View>
-            </View>
-            <Text style={{ fontSize: 16, fontWeight: 'bold',alignSelf:'flex-end',marginTop:8 }}>Total: ${addProductModal?.item?.price*count}</Text>
-        </View>
-        <View style={[GeneralStyle.row,GeneralStyle.justifyBetween]}>
-            <CustomButton color={'#e74c3c'} label='Cancel' onPress={()=>setAddProductModal({visible:false,item:null})}></CustomButton>
-            <CustomButton color={'#2ecc71'} label='Add' onPress={()=>{
-              setCart([...cart,{item:addProductModal.item,quantity:count}])
-              setAddProductModal({visible:false,item:null})
-              }}></CustomButton>
-        </View>
+              <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 8 }}>
+                  <Pressable onPress={handleDecrement}>
+                    <Ionicons name="arrow-down-outline" size={24} color="black" />
+                  </Pressable>
+                  <Text style={{ paddingHorizontal: 10, borderRadius: 8, fontSize: 18, marginHorizontal: 8 }}>{count}</Text>
+                  <Pressable onPress={handleIncrement}>
+                    <Ionicons name="arrow-up-outline" size={24} color="black" />
+                  </Pressable>
+              </View>
+              </View>
+              <Text style={{ fontSize: 16, fontWeight: 'bold',alignSelf:'flex-end',marginTop:8 }}>Total: ${addProductModal?.item?.price*count}</Text>
+          </View>
+          <View style={[GeneralStyle.row,GeneralStyle.justifyBetween]}>
+              <CustomButton color={'#e74c3c'} label='Cancel' onPress={()=>setAddProductModal({visible:false,item:null})}></CustomButton>
+              <CustomButton color={'#2ecc71'} label='Add' onPress={()=>{
+                const value = { ...addProductModal.item }; // Copia superficial de addProductModal.item
+                handleAddProduct(value);
+                setAddProductModal({visible:false,item:null})
+                }}></CustomButton>
+          </View>
         </CustomModal>
     </View>
   )

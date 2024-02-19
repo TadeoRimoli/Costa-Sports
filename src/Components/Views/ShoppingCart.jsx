@@ -24,12 +24,18 @@ const ShoppingCart = ({ cart, setCart }) => {
 
   return (
     <View style={{ flex: 1, backgroundColor: '#34495e' }}>
+      
+      {totalPrice === 0 ? (
+      <View style={styles.emptyCartMessage}>
+        <Text style={styles.emptyCartText}>You don't have anything in your cart yet.</Text>
+      </View>
+      ):
       <View style={styles.totalContainer}>
         <Text style={[{ fontWeight: 'bold', color: 'white' }, FontSizeStyles.fontSize18]}>
           Total: ${totalPrice.toFixed(2)}
         </Text>
       </View>
-
+      }
       <FlatList
         data={cart}
         renderItem={({ item, index }) => (
@@ -48,7 +54,7 @@ const ShoppingCart = ({ cart, setCart }) => {
       />
 
       {/* Botón para simular el pago */}
-      {totalPrice>0 && <CustomButton color={Colors.green} label="Pagar" onPress={handlePayment} />}
+      {cart.length>0 && <CustomButton color={Colors.green} label="Pagar" onPress={handlePayment} />}
     </View>
   );
 };
@@ -60,5 +66,15 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     paddingHorizontal: 16,
     paddingVertical: 8,
+  },
+  emptyCartMessage: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 20,
+  },
+  emptyCartText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
