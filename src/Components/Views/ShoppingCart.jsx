@@ -6,11 +6,13 @@ import CustomButton from '../../Components/CoreComponents/CustomButton';
 import { useIsFocused, useNavigation, useRoute } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import uuid from 'react-native-uuid';
+import { useCart } from '../Context/Context';
 
 
-const ShoppingCart = ({ cart, setCart }) => {
+const ShoppingCart = ({ }) => {
   const [totalPrice, setTotalPrice] = useState(0);
   const navigation = useNavigation(); // Inicializa el hook de navegación
+  const { cart, setCart, purchases, setPurchases } = useCart();
 
   useEffect(() => {
     let total = 0;
@@ -56,7 +58,7 @@ const ShoppingCart = ({ cart, setCart }) => {
       />
 
       {/* Botón para simular el pago */}
-      {cart.length>0 && <CustomButton color={Colors.green} label="Pagar" onPress={handlePayment} />}
+      {cart.length>0 && <CustomButton color={Colors.green} label="Pay" onPress={handlePayment} />}
     </View>
   );
 };

@@ -5,11 +5,13 @@ import { FlatList, View,StyleSheet,Text } from 'react-native';
 import CustomText from '../CoreComponents/CustomText'
 import { FontSizeStyles, GeneralStyle } from '../../../Styles/GeneralStyles';
 import CustomInput from '../CoreComponents/CustomInput';
+import { useCart } from '../Context/Context';
 
-const ProductOffers = ({cart ,setCart}) => {
+const ProductOffers = ({}) => {
   const [filterValue,setFilterValue]=useState('')
   const [offers,setOffers]=useState(products.sort((a, b) => b.discountPercentage - a.discountPercentage).slice(0, 20))
   const [bestOffers,setBestOffers]=useState( offers)
+  const { cart, setCart, purchases, setPurchases } = useCart();
 
   function filterItems(e){
       setFilterValue(e)
@@ -23,7 +25,7 @@ const ProductOffers = ({cart ,setCart}) => {
         <FlatList
         data={bestOffers}
         renderItem={({ item }) => (
-          <ProductCard key={item.id} item={item} cart={cart} setCart={setCart}></ProductCard>
+          <ProductCard key={item.id} item={item} ></ProductCard>
         )}
         keyExtractor={item => item.id}
       />}

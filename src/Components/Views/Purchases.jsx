@@ -2,28 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, FlatList } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { GeneralStyle } from '../../../Styles/GeneralStyles';
+import { useCart } from '../Context/Context';
 
-const Purchases = () => {
-  const [purchases, setPurchases] = useState([]);
-
-  useEffect(() => {
-    // Función para cargar los datos de AsyncStorage
-    const loadPurchases = async () => {
-      try {
-        const purchasesData = await AsyncStorage.getItem('purchases');
-        if (purchasesData) {
-          const parsedPurchases = JSON.parse(purchasesData);
-          setPurchases(parsedPurchases.reverse());
-        }
-      } catch (error) {
-        console.error('Error loading purchases:', error);
-      }
-    };
-
-    // Llamar a la función para cargar los datos al montar el componente
-    loadPurchases();
-  }, []);
-
+const Purchases = ({}) => {
+  const { cart, setCart, purchases, setPurchases } = useCart();
+  
   const renderItem = ({ item, index }) => {
     let date = new Date(item.date);
     return (

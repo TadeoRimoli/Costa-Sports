@@ -6,9 +6,9 @@ import CustomButton from '../CoreComponents/CustomButton';
 import CustomInput from '../CoreComponents/CustomInput';
 import { purchasesKey } from '../../Constants/Constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useCart } from '../Context/Context';
 
-
-const PaymentScreen = ({ cart,setCart }) => {
+const PaymentScreen = ({  }) => {
 
   const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
@@ -19,8 +19,8 @@ const PaymentScreen = ({ cart,setCart }) => {
   const [securityCodeError, setSecurityCodeError] = useState(false);
   const [cardholderNameError, setCardholderNameError] = useState(false);
   const route = useRoute();
-  const { totalPrice, } = route.params;
-
+  const { totalPrice } = route.params;
+  const { cart, setCart, purchases, setPurchases } = useCart();
   const cases ={
     good:'VALIDATED',
     bad:'ERROR',
@@ -36,32 +36,21 @@ const PaymentScreen = ({ cart,setCart }) => {
       setLoading(false);
       return;
     } else {
-      // Simulación de proceso de compra
       setLoading(true);
       await simulateTransaction(); // Espera 2 segundos con el cosito girando
       
-      const success = Math.random() < 0.5; // 50% de probabilidad de éxito para ver diferentes casos posibles
+      const success = true;//Math.random() < 0.5; // 50% de probabilidad para simular mas realidad
 
       if(success){
         setPurchaseStatus(cases.good);
         // Obtener los datos actuales de AsyncStorage
-        const jsonValue = await AsyncStorage.getItem(purchasesKey);
-        let purchasesArray;
-        if(jsonValue){
-          purchasesArray = JSON.parse(jsonValue);
-        } else {
-          purchasesArray = [];
-        }
-        // Agregar la nueva compra al arreglo
-        purchasesArray.push({
+        setPurchases([...purchases,{
           date: new Date(),
           totalAmount: totalPrice,
           items: cart,
           card: creditCardNumber,
-        });
-        // Convertir el arreglo de compras de nuevo a formato JSON y almacenarlo en AsyncStorage
-        const updatedJsonValue = JSON.stringify(purchasesArray);
-        await AsyncStorage.setItem(purchasesKey, updatedJsonValue);
+        }])
+        
       } else {
         setPurchaseStatus(cases.bad);
       }
@@ -89,6 +78,12 @@ const PaymentScreen = ({ cart,setCart }) => {
       navigation.pop()
     }
   },[isFocused])
+
+  useEffect(()=>{
+    if(purchaseStatus === cases.good){
+      setCart([])
+    }
+  },[purchaseStatus])
 
   return (
     <View style={styles.container}>

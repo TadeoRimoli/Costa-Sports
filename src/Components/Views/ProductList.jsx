@@ -6,12 +6,14 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import CustomInput from '../CoreComponents/CustomInput';
 import ProductCard from '../Cards/ProductCard';
 import { products } from '../../Constants/Arrays';
+import { useCart } from '../Context/Context';
 
-const ProductList = ({navigation,cart ,setCart}) => {
+const ProductList = ({navigation}) => {
     const route = useRoute()
     const {selectedCategory} = route.params
     const [filterValue,setFilterValue]=useState('')
     const [localProducts,setLocalProducts]=useState(products.filter((product)=> product.category.toLowerCase() == selectedCategory.name.toLowerCase() ))
+    const { cart, setCart, purchases, setPurchases } = useCart();
 
     function filterItems(e){
         setFilterValue(e)
@@ -27,7 +29,7 @@ const ProductList = ({navigation,cart ,setCart}) => {
         <FlatList
         data={localProducts}
         renderItem={({ item }) => (
-          <ProductCard key={item.id} item={item} cart={cart} setCart={setCart}></ProductCard>
+          <ProductCard key={item.id} item={item} ></ProductCard>
         )}
         keyExtractor={item => item.id}
       />

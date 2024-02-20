@@ -7,11 +7,11 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import ProductCard from '../Cards/ProductCard';
 import { productCategories, products } from '../../Constants/Arrays';
 import CategoryProductCard from '../Cards/CategoryProductCard';
-const ProductCatalog = ({navigation,route,cart ,setCart}) => {
+const ProductCatalog = ({navigation,route,}) => {
 
     const [localCategories,setLocalCategories]=useState(productCategories)
     const [filterValue,setFilterValue]=useState('')
-  
+
     function handlePressCategory(item){
       setFilterValue('')
       navigation.navigate("Products",{selectedCategory:item})

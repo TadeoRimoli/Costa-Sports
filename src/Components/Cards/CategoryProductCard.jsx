@@ -1,27 +1,52 @@
-import { StyleSheet, Text, View,Dimensions, Pressable, Image } from 'react-native'
+import { StyleSheet, Text, View,Dimensions, Pressable, Image, ScrollView } from 'react-native'
 import React from 'react'
+import { Colors, GeneralStyle, MarginDirectionStyles } from '../../../Styles/GeneralStyles';
 
 const CategoryProductCard = ({item,handlePressCategory}) => {
   
     const windowWidth = Dimensions.get('window').width;
     const windowHeight = Dimensions.get('window').height;
+    let titleFixed = item.name.toLowerCase().split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
+
+    const renderBrands = () => {
+      return item.brands.map((brand, index) => (
+        <Text key={index} style={{ fontWeight: 'bold' }}>{brand}</Text>
+      ));
+    };
     return (
-    <Pressable
-    onPress={handlePressCategory}
-    style={[styles.cardContainer,{
-      
-    }]}
-  >
-    <Text style={[styles.categoryText]}>{item.name.toLowerCase().split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}</Text>
-    <Image
-      style={[styles.image,{
-        width: windowWidth - 50, 
-        height: windowHeight / 2.5,
+      <Pressable
+      onPress={handlePressCategory}
+      style={[styles.cardContainer,{
+        width:windowWidth-20,
       }]}
-      source={{ uri: item.image }}
-      onError={(error) => console.error('Error al cargar la imagen:', error.nativeEvent.error)}
-    />
-  </Pressable>
+    >
+      <Image
+        style={[styles.image,{
+          height: windowHeight / 2.5,
+        }]}
+        source={{ uri: item.image }}
+        onError={(error) => console.error('Error al cargar la imagen:', error.nativeEvent.error)}
+      />
+      
+      {item.isNew && (
+              <View style={[GeneralStyle.row,{position:'absolute',right:0,margin:8,padding:8,backgroundColor:Colors.softSkyBlue,borderRadius:8}]}>
+                <Text style={{ fontWeight: 'bold', color: 'green' }}>New</Text>
+              </View>
+            )}
+      <View style={{marginHorizontal:10,paddingTop:10,paddingBottom:20}}>
+        <View style={[GeneralStyle.row,GeneralStyle.justifyBetween,GeneralStyle.itemsCenter,MarginDirectionStyles.marginBottom10]}>
+          <Text ellipsizeMode='tail' numberOfLines={1} style={{ marginRight:8,fontSize: 20, fontWeight: 'bold' }}>{titleFixed}</Text>
+          <Text style={{ fontWeight: 'bold' }}>{item.priceRange}</Text>
+        </View>
+        
+        <Text>{item.description}</Text>
+
+          <View style={GeneralStyle.row}>
+            <Text >{item.brands.join(', ')}</Text>
+          </View>
+      </View>
+    </Pressable>
+    
   )
 }
 
@@ -49,10 +74,9 @@ const styles = StyleSheet.create({
       fontWeight: 'bold',
     },
     image: {
-      width: null,
+      position:'relative',
       resizeMode: 'cover',
-      height: null,
-      borderBottomLeftRadius: 15,
-      borderBottomRightRadius: 15,
+      borderTopLeftRadius: 15,
+      borderTopRightRadius: 15,
     },
   });

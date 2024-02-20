@@ -18,7 +18,6 @@ const Tab = createBottomTabNavigator()
 const Stack = createNativeStackNavigator()
 
 const MyNavigator = ({}) => {
-  const [cart,setCart]=useState([]) 
 
     const HomeStack = () => {
         return <Stack.Navigator initialRouteName='Home'>
@@ -30,10 +29,10 @@ const MyNavigator = ({}) => {
     const CategoriesStack = ({navigation,route}) => {
 
       function LocalProductCatalog(){
-        return <ProductCatalog navigation={navigation} route={route} cart={cart}setCart={setCart}/>
+        return <ProductCatalog navigation={navigation} route={route} />
       }
       function LocalProductList(){
-        return <ProductList navigation={navigation}  cart={cart}setCart={setCart} />
+        return <ProductList navigation={navigation}  />
       }
 
         return <Stack.Navigator initialRouteName='Categories' 
@@ -51,7 +50,7 @@ const MyNavigator = ({}) => {
     const ProductOffersStack = () => {
       
       function LocalProductOffers(){
-        return <ProductOffers cart={cart} setCart={setCart}/>
+        return <ProductOffers />
       }
       
       return <Stack.Navigator >
@@ -61,15 +60,13 @@ const MyNavigator = ({}) => {
       </Stack.Navigator>
     }
 
-    
-
     const ShoppingCartStack = ({ navigation }) => {
       
       function LocalShoppingCart(){
-        return <ShoppingCart cart={cart}setCart={setCart}/>
+        return <ShoppingCart />
       }
       function LocalPaymentScreen(){
-        return <PaymentScreen navigation={navigation} cart={cart} setCart={setCart}/>
+        return <PaymentScreen navigation={navigation} />
       }
 
         return <Stack.Navigator initialRouteName='ShoppingCart'>

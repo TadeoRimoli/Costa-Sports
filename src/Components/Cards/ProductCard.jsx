@@ -6,8 +6,11 @@ import { Colors, GeneralStyle, MarginDirectionStyles } from '../../../Styles/Gen
 import Ionicons from '@expo/vector-icons/Ionicons';
 import CustomButton from '../CoreComponents/CustomButton';
 import CustomModal from '../CoreComponents/CustomModal';
+import { useCart } from '../Context/Context';
+import CustomInput from '../CoreComponents/CustomInput';
 
-const ProductCard = ({item,cart ,setCart}) => {
+const ProductCard = ({item}) => {
+  const { cart, setCart, purchases, setPurchases } = useCart();
 
     const windowWidth = Dimensions.get('window').width;
     const windowHeight = Dimensions.get('window').height;
@@ -47,8 +50,24 @@ const ProductCard = ({item,cart ,setCart}) => {
   };
 
   const handleAddProduct = (item) => {
-    setCart([...cart, { item: item, quantity: count }]);
+    if(count <= item.stock && count >= 1){
+      setCart([...cart, { item: item, quantity: count }]);
+    }
   };
+  function handleAddCount(e) {
+    // Si la entrada es una cadena vacía, establece el valor en 0
+    if (e === "") {
+      setCount(0);
+      return;
+    }
+    // Intenta convertir la entrada a un número entero
+    const countValue = parseInt(e, 10);
+    
+    // Verifica si el resultado es un número válido
+    if (!isNaN(countValue) && countValue <= item.stock && countValue >= 1) {
+      setCount(countValue);
+    }
+  }
 
   return (
     <View  style={[ {alignSelf:'center',marginVertical:10, backgroundColor:'#d2d7d3',width:windowWidth-20,height:(windowHeight+50)/2,borderRadius:10 }]}>
@@ -79,21 +98,26 @@ const ProductCard = ({item,cart ,setCart}) => {
         visible={addProductModal.visible}
         hideModalFunction={()=>{setAddProductModal({visible:false,item:null})}}
         >   
-          <View style={{ padding: 16, borderRadius: 8, backgroundColor: 'white', marginBottom: 16 }}>
+          <View style={{  borderRadius: 8, backgroundColor: 'white', marginBottom: 16 }}>
               <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 8 }}>{addProductModal?.item?.title}</Text>
               <Text style={{ fontSize: 14, color: 'gray', marginBottom: 8 }}>{addProductModal?.item?.description}</Text>
               
               <View style={[GeneralStyle.row,GeneralStyle.itemsCenter,GeneralStyle.justifyBetween]}>
-                <Text style={{ fontSize: 16, fontWeight: 'bold', marginBottom: 8 }}>Price: ${addProductModal?.item?.price}</Text>
+                <View style={[]}>
+                  <Text style={{ fontSize: 16, fontWeight: 'bold', marginBottom: 8 }}>Price: ${addProductModal?.item?.price}</Text>
+                  <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Stock: {item.stock}</Text>
+                </View>
 
-              <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 8 }}>
-                  <Pressable onPress={handleDecrement}>
-                    <Ionicons name="arrow-down-outline" size={24} color="black" />
-                  </Pressable>
-                  <Text style={{ paddingHorizontal: 10, borderRadius: 8, fontSize: 18, marginHorizontal: 8 }}>{count}</Text>
-                  <Pressable onPress={handleIncrement}>
-                    <Ionicons name="arrow-up-outline" size={24} color="black" />
-                  </Pressable>
+              <View style={{ flexDirection: 'col',  marginVertical: 8 }}>
+                <View style={[GeneralStyle.row,GeneralStyle.itemsCenter]}>
+                    <Pressable onPress={handleDecrement}>
+                      <Ionicons name="arrow-down-outline" size={35} color="black" />
+                    </Pressable>
+                    <CustomInput customStyles={{marginHorizontal: 10,}} keyboardType={"numeric"} value={count.toString()} setValue={handleAddCount}/>
+                    <Pressable onPress={handleIncrement}>
+                      <Ionicons name="arrow-up-outline" size={35} color="black" />
+                    </Pressable>
+                </View>
               </View>
               </View>
               <Text style={{ fontSize: 16, fontWeight: 'bold',alignSelf:'flex-end',marginTop:8 }}>Total: ${addProductModal?.item?.price*count}</Text>
