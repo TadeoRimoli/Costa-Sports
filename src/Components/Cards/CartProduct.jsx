@@ -26,10 +26,7 @@ const CartProduct = ({ quantity,item, onRemove }) => {
             {/* Aquí puedes incluir el icono de eliminación */}
 
         <View style={[GeneralStyle.row, GeneralStyle.justifyBetween, GeneralStyle.itemsCenter, MarginDirectionStyles.marginTop5]}>
-          <View style={[GeneralStyle.row, GeneralStyle.itemsCenter]}>
-            <Text style={[,{fontWeight:'bold'},FontSizeStyles.fontSize18]}>Quantity: </Text>
-            <Text style={{ paddingHorizontal: 10 }}>{quantity}</Text>
-          </View>
+            <Text style={[,{fontWeight:'bold'},FontSizeStyles.fontSize18]}>Quantity: {quantity}</Text>
           <View style={[GeneralStyle.row, GeneralStyle.itemsCenter]}>
             <Text style={[,{fontWeight:'bold'},FontSizeStyles.fontSize18]}>Total: </Text>
             <Text style={[FontSizeStyles.fontSize22]}>{quantity*item.price}</Text>

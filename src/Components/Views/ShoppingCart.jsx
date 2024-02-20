@@ -58,7 +58,7 @@ const ShoppingCart = ({ }) => {
       />
 
       {/* Botón para simular el pago */}
-      {cart.length>0 && <CustomButton color={Colors.green} label="Pay" onPress={handlePayment} />}
+      {cart.length>0 && <CustomButton color={Colors.green} label="Go to Pay" onPress={handlePayment} />}
     </View>
   );
 };
