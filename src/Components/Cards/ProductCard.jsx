@@ -56,15 +56,12 @@ const ProductCard = ({item}) => {
     }
   };
   function handleAddCount(e) {
-    // Si la entrada es una cadena vacía, establece el valor en 0
     if (e === "") {
       setCount(0);
       return;
     }
-    // Intenta convertir la entrada a un número entero
     const countValue = parseInt(e, 10);
     
-    // Verifica si el resultado es un número válido
     if (!isNaN(countValue) && countValue <= item.stock && countValue >= 1) {
       setCount(countValue);
     }
@@ -126,7 +123,7 @@ const ProductCard = ({item}) => {
           <View style={[GeneralStyle.row,GeneralStyle.justifyBetween]}>
               <CustomButton color={'#e74c3c'} label='Cancel' onPress={()=>setAddProductModal({visible:false,item:null})}></CustomButton>
               <CustomButton color={'#2ecc71'} label='Add' onPress={()=>{
-                const value = { ...addProductModal.item }; // Copia superficial de addProductModal.item
+                const value = { ...addProductModal.item };
                 handleAddProduct(value);
                 setAddProductModal({visible:false,item:null})
                 }}></CustomButton>

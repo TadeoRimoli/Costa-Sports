@@ -57,14 +57,14 @@ const MyNavigator = ({}) => {
                 options={{
                   headerTitle:'Shopping Cart'
                 }}
-                component={ShoppingCart} // Aquí se pasa directamente el componente ShoppingCart
+                component={ShoppingCart} 
             />
             <Stack.Screen 
                 name="PaymentScreen" 
                 options={{
                   headerTitle:'Shopping Cart'
                 }}
-                component={PaymentScreen} // Aquí se pasa directamente el componente ShoppingCart
+                component={PaymentScreen}
             />
         </Stack.Navigator>
     }
@@ -72,9 +72,9 @@ const MyNavigator = ({}) => {
   return (
       <Tab.Navigator
       screenOptions={{ headerShown: false,tabBarShowLabel:false,
-        tabBarActiveTintColor: '#877665', // Cambia el color del ícono seleccionado aquí
+        tabBarActiveTintColor: '#877665', 
         tabBarStyle: {
-          backgroundColor: '#f2f2f2', // Color de fondo del footer (gris claro)
+          backgroundColor: '#f2f2f2',
         }
       }}
       >

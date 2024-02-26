@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#34495e', // Color de fondo oscuro azul
+    backgroundColor: '#34495e', 
   },
   saludo: {
     fontSize: 24,
@@ -69,19 +69,19 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 18,
-    color: '#ffffff', // Color de texto blanco
+    color: '#ffffff', 
   },
   catalogButton: {
-    backgroundColor: '#3498db', // Azul claro para el botón de Catálogo
+    backgroundColor: '#3498db', 
   },
   offersButton: {
-    backgroundColor: '#2ecc71', // Verde azulado para el botón de Ofertas
+    backgroundColor: '#2ecc71', 
   },
   purchasesButton: {
-    backgroundColor: '#8C7B61', // Rojo oscuro para el fondo del botón "My Purchases"
+    backgroundColor: '#8C7B61',
   },
   cartButton: {
-    backgroundColor: '#e74c3c', // Rojo oscuro para el botón de Carrito
+    backgroundColor: '#e74c3c',
   },
   
 });

@@ -45,9 +45,9 @@ const styles = StyleSheet.create({
     color: "black",
   },
   labelText: {
-    color: 'black', // Color del texto antes de los dos puntos
-    fontWeight: 'bold', // Puedes ajustar el estilo según tus preferencias
-    marginRight: 5, // Puedes ajustar el espaciado entre el texto y el valor
+    color: 'black',
+    fontWeight: 'bold', 
+    marginRight: 5, 
   },
 });
 

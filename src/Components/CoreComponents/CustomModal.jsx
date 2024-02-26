@@ -51,10 +51,10 @@ const CustomModal = ({
 
 const styles = StyleSheet.create({
     buttons: {
-      flexDirection: 'row', // Establece la dirección horizontal de los elementos
-      justifyContent: 'space-between', // Distribuye los elementos a los extremos
-      paddingHorizontal: 16, // Espaciado horizontal para los botones
-      marginTop: 20, // Margen superior opcional
+      flexDirection: 'row', 
+      justifyContent: 'space-between',
+      paddingHorizontal: 16, 
+      marginTop: 20, 
     },
     container: {
       flex: 1,
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
       flex:1,
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: 'rgba(0, 0, 0, 0.7)', // Fondo semi-transparente para el modal
+      backgroundColor: 'rgba(0, 0, 0, 0.7)',
     },
     modalContent: {
       backgroundColor: 'white',
@@ -78,8 +78,8 @@ const styles = StyleSheet.create({
       borderRadius: 10,
       elevation: 5,
       maxWidth: '90%',
-      overflow: 'hidden', // Evita que el contenido se desborde
-      display: 'flex',     // Establece el contenido como flexible
+      overflow: 'hidden', 
+      display: 'flex',     
       flexDirection:'column'
     },
   

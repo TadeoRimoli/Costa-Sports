@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from 'react';
 import {StatusBar, StyleSheet, SafeAreaView,Text, View ,TextInput,ScrollView,Image,FlatList,Keyboard,Dimensions, Pressable } from 'react-native';
-import CustomInput from '../CoreComponents/CustomInput'; // Cambiado aquí
+import CustomInput from '../CoreComponents/CustomInput'; 
 import { Colors, FontSizeStyles, GeneralStyle, MarginDirectionStyles, MarginStyles } from '../../../Styles/GeneralStyles';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import ProductCard from '../Cards/ProductCard';

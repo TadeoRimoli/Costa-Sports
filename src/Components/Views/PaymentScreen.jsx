@@ -46,7 +46,6 @@ const PaymentScreen = ({  }) => {
 
       if(success){
         setPurchaseStatus(cases.good);
-        // Obtener los datos actuales de AsyncStorage
         dispatch(addPurchasesItem({
           date: new Date().toISOString(),
           totalAmount: totalPrice,

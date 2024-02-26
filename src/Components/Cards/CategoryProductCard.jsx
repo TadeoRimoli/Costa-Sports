@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
         width: 0,
         height: 2,
       },
-      elevation: 2, // Solo para Android
+      elevation: 2,
     },
     categoryText: {
       margin: 5,

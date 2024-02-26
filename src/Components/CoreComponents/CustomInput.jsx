@@ -8,7 +8,6 @@ const CustomInput = ({ customStyles, placeholder, label, value, setValue, keyboa
 
   const handleFocus = () => {
     setIsFocused(true);
-    // Desactivar el estado de error cuando el campo está enfocado
     if (error) {
       setError(false);
     }
@@ -58,10 +57,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   focused: {
-    borderColor: '#2980b9', // Cambiar el color del borde cuando el campo está enfocado
+    borderColor: '#2980b9',
   },
   error: {
-    borderColor: '#e74c3c', // Cambiar el color del borde cuando hay un error
+    borderColor: '#e74c3c', 
   },
 });
 

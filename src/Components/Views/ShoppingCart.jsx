@@ -10,7 +10,7 @@ import { removeCartItem } from '../../../Redux/slices/GeneralSlice';
 
 const ShoppingCart = ({ }) => {
   const [totalPrice, setTotalPrice] = useState(0);
-  const navigation = useNavigation(); // Inicializa el hook de navegación
+  const navigation = useNavigation(); 
   const {cart}= useSelector(state =>state.General)
   const dispatch = useDispatch()
   useEffect(() => {
