@@ -6,12 +6,13 @@ import { Colors, GeneralStyle, MarginDirectionStyles } from '../../../Styles/Gen
 import Ionicons from '@expo/vector-icons/Ionicons';
 import CustomButton from '../CoreComponents/CustomButton';
 import CustomModal from '../CoreComponents/CustomModal';
-import { useCart } from '../Context/Context';
 import CustomInput from '../CoreComponents/CustomInput';
+import { useDispatch } from 'react-redux';
+import { addCartItem } from '../../../Redux/slices/GeneralSlice';
+
 
 const ProductCard = ({item}) => {
-  const { cart, setCart, purchases, setPurchases } = useCart();
-
+    const dispatch = useDispatch()
     const windowWidth = Dimensions.get('window').width;
     const windowHeight = Dimensions.get('window').height;
     
@@ -48,10 +49,10 @@ const ProductCard = ({item}) => {
     }
     return stars;
   };
-
   const handleAddProduct = (item) => {
     if(count <= item.stock && count >= 1){
-      setCart([...cart, { item: item, quantity: count }]);
+
+      dispatch(addCartItem( { item: item, quantity: count }));
     }
   };
   function handleAddCount(e) {

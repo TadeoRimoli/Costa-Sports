@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, FlatList } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { GeneralStyle } from '../../../Styles/GeneralStyles';
-import { useCart } from '../Context/Context';
+import { useSelector } from 'react-redux';
 
 const Purchases = ({}) => {
-  const { cart, setCart, purchases, setPurchases } = useCart();
   
+  const {purchases} = useSelector(state => state.General)
+
   const renderItem = ({ item, index }) => {
     let date = new Date(item.date);
     return (
@@ -18,13 +17,14 @@ const Purchases = ({}) => {
         <Text style={styles.totalAmountText}>Total Amount: ${item.totalAmount ? item.totalAmount.toFixed(2) : 'N/A'}</Text>
         <Text style={styles.cardText}>Credit Card Number: {item.card}</Text>
         <Text style={styles.itemsHeader}>Items:</Text>
-        {item.items.map((product, productIndex) => (
-          <View key={productIndex} style={styles.itemContainer}>
-            <Text style={styles.itemIndexText}>Item {productIndex + 1}</Text>
-            <Text style={styles.itemTitleText}>{product.item.title}</Text>
-            <Text style={styles.itemPriceText}>Price: ${product.item.price.toFixed(2)}</Text>
+        {item.items.map((product, productIndex) => {
+          return <View key={productIndex} style={styles.itemContainer}>
+            <Text style={styles.itemIndexText}>{product.item.title}</Text>
+            <Text style={styles.itemPriceText}>Price per unit: ${product.item.price.toFixed(2)}</Text>
+            <Text style={styles.itemPriceText}>Quantity: ${product.quantity}</Text>
+            <Text style={styles.itemPriceText}>Total: ${(product.quantity*product.item.price).toFixed(2)}</Text>
           </View>
-        ))}
+        })}
       </View>
     );
   };
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   itemContainer: {
-    marginLeft: 10,
+    margin: 10,
   },
   itemIndexText: {
     fontSize: 16,
@@ -86,6 +86,7 @@ const styles = StyleSheet.create({
   },
   itemPriceText: {
     fontSize: 16,
+    marginVertical:2,
   },
 });
 

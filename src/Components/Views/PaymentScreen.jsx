@@ -4,9 +4,8 @@ import { useIsFocused, useNavigation, useRoute } from '@react-navigation/native'
 import { Colors, FontSizeStyles, GeneralStyle } from '../../../Styles/GeneralStyles';
 import CustomButton from '../CoreComponents/CustomButton';
 import CustomInput from '../CoreComponents/CustomInput';
-import { purchasesKey } from '../../Constants/Constants';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useCart } from '../Context/Context';
+import { useDispatch, useSelector } from 'react-redux';
+import { addPurchasesItem, deleteAllCartItems } from '../../../Redux/slices/GeneralSlice';
 
 const PaymentScreen = ({  }) => {
 
@@ -20,7 +19,11 @@ const PaymentScreen = ({  }) => {
   const [cardholderNameError, setCardholderNameError] = useState(false);
   const route = useRoute();
   const { totalPrice } = route.params;
-  const { cart, setCart, purchases, setPurchases } = useCart();
+  
+
+  const {cart,purchases} = useSelector(state => state.General);
+
+
   const cases ={
     good:'VALIDATED',
     bad:'ERROR',
@@ -44,12 +47,12 @@ const PaymentScreen = ({  }) => {
       if(success){
         setPurchaseStatus(cases.good);
         // Obtener los datos actuales de AsyncStorage
-        setPurchases([...purchases,{
-          date: new Date(),
+        dispatch(addPurchasesItem({
+          date: new Date().toISOString(),
           totalAmount: totalPrice,
           items: cart,
           card: creditCardNumber,
-        }])
+        }))
         
       } else {
         setPurchaseStatus(cases.bad);
@@ -65,9 +68,9 @@ const PaymentScreen = ({  }) => {
       }, 1000);
     });
   };
-
+  const dispatch = useDispatch()
   const handleReturn = () => {
-    setCart([])
+    dispatch(deleteAllCartItems())
     navigation.navigate("CategoriesStack")
   };
 
@@ -81,7 +84,7 @@ const PaymentScreen = ({  }) => {
 
   useEffect(()=>{
     if(purchaseStatus === cases.good){
-      setCart([])
+      dispatch(deleteAllCartItems())
     }
   },[purchaseStatus])
 

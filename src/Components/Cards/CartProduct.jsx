@@ -23,7 +23,6 @@ const CartProduct = ({ quantity,item, onRemove }) => {
           <Text ellipsizeMode='tail' numberOfLines={1} style={{ flex: 1, marginRight: 8, fontSize: 20, fontWeight: 'bold' }}>{item.title}</Text>
           <Text style={{ fontSize: 20, fontWeight: 'bold' }}>${item.price}</Text>
         </View>
-            {/* Aquí puedes incluir el icono de eliminación */}
 
         <View style={[GeneralStyle.row, GeneralStyle.justifyBetween, GeneralStyle.itemsCenter, MarginDirectionStyles.marginTop5]}>
             <Text style={[,{fontWeight:'bold'},FontSizeStyles.fontSize18]}>Quantity: {quantity}</Text>

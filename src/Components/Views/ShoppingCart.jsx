@@ -4,16 +4,15 @@ import CartProduct from '../Cards/CartProduct';
 import { Colors, FontSizeStyles } from '../../../Styles/GeneralStyles';
 import CustomButton from '../../Components/CoreComponents/CustomButton';
 import { useIsFocused, useNavigation, useRoute } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import uuid from 'react-native-uuid';
-import { useCart } from '../Context/Context';
+import { useDispatch, useSelector } from 'react-redux';
+import { removeCartItem } from '../../../Redux/slices/GeneralSlice';
 
 
 const ShoppingCart = ({ }) => {
   const [totalPrice, setTotalPrice] = useState(0);
   const navigation = useNavigation(); // Inicializa el hook de navegación
-  const { cart, setCart, purchases, setPurchases } = useCart();
-
+  const {cart}= useSelector(state =>state.General)
+  const dispatch = useDispatch()
   useEffect(() => {
     let total = 0;
     cart.forEach((item) => {
@@ -48,9 +47,7 @@ const ShoppingCart = ({ }) => {
             item={item.item}
             quantity={item.quantity}
             onRemove={() => {
-              const updatedCart = [...cart];
-              updatedCart.splice(index, 1);
-              setCart(updatedCart);
+              dispatch(removeCartItem(index))
             }}
           />
         )}

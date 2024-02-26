@@ -7,8 +7,9 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import ProductCard from '../Cards/ProductCard';
 import { productCategories, products } from '../../Constants/Arrays';
 import CategoryProductCard from '../Cards/CategoryProductCard';
-const ProductCatalog = ({navigation,route,}) => {
-
+import { useNavigation } from '@react-navigation/native';
+const ProductCatalog = ({}) => {
+    const navigation = useNavigation()
     const [localCategories,setLocalCategories]=useState(productCategories)
     const [filterValue,setFilterValue]=useState('')
 
@@ -43,7 +44,7 @@ const ProductCatalog = ({navigation,route,}) => {
         )}
         keyExtractor={item => item.name+'category'}
       />
-      </View>
+    </View>
   )
 }
 

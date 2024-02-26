@@ -28,46 +28,28 @@ const MyNavigator = ({}) => {
 
     const CategoriesStack = ({navigation,route}) => {
 
-      function LocalProductCatalog(){
-        return <ProductCatalog navigation={navigation} route={route} />
-      }
-      function LocalProductList(){
-        return <ProductList navigation={navigation}  />
-      }
-
         return <Stack.Navigator initialRouteName='Categories' 
         >
-            <Stack.Screen name="Categories" component={LocalProductCatalog} />
+            <Stack.Screen name="Categories" component={ProductCatalog} />
             <Stack.Screen 
             options={({ route }) => ({
               headerTitle:route.params.selectedCategory.name.toLowerCase().split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
               ,
             })}
-            name="Products" component={LocalProductList} />
+            name="Products" component={ProductList} />
         </Stack.Navigator>
     }
 
     const ProductOffersStack = () => {
       
-      function LocalProductOffers(){
-        return <ProductOffers />
-      }
-      
       return <Stack.Navigator >
           <Stack.Screen name="HotSale" 
           options={{headerTitle:'20 Best Offers'}}
-          component={LocalProductOffers} />
+          component={ProductOffers} />
       </Stack.Navigator>
     }
 
     const ShoppingCartStack = ({ navigation }) => {
-      
-      function LocalShoppingCart(){
-        return <ShoppingCart />
-      }
-      function LocalPaymentScreen(){
-        return <PaymentScreen navigation={navigation} />
-      }
 
         return <Stack.Navigator initialRouteName='ShoppingCart'>
             <Stack.Screen 
@@ -75,14 +57,14 @@ const MyNavigator = ({}) => {
                 options={{
                   headerTitle:'Shopping Cart'
                 }}
-                component={(LocalShoppingCart)} // Aquí se pasa directamente el componente ShoppingCart
+                component={ShoppingCart} // Aquí se pasa directamente el componente ShoppingCart
             />
             <Stack.Screen 
                 name="PaymentScreen" 
                 options={{
                   headerTitle:'Shopping Cart'
                 }}
-                component={(LocalPaymentScreen)} // Aquí se pasa directamente el componente ShoppingCart
+                component={PaymentScreen} // Aquí se pasa directamente el componente ShoppingCart
             />
         </Stack.Navigator>
     }
@@ -132,7 +114,7 @@ const MyNavigator = ({}) => {
         options={{
             tabBarLabel:'',
             tabBarIcon: ({ color, size }) => (
-              <Ionicons name="cart" size={size} color={color} />
+              <Ionicons name="cart-outline" size={size} color={color} />
             ),
           }}
         />

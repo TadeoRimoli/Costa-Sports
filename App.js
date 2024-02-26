@@ -14,7 +14,8 @@ import { FontsArray } from './src/Constants/Fonts';
 import * as Font from 'expo-font';
 import { NavigationContainer } from '@react-navigation/native'
 import MyNavigator from './src/Components/Navigation/Navigator';
-import { CartProvider } from './src/Components/Context/Context';
+import store from './Redux/Store';
+import { Provider } from 'react-redux';
 
 export default function App() {
       
@@ -28,9 +29,9 @@ export default function App() {
     <SafeAreaView style={styles.container}>
       <NavigationContainer>
         <StatusBar  />
-        <CartProvider>
-          <MyNavigator />
-        </CartProvider>
+        <Provider store={store}>
+        <MyNavigator />
+        </Provider>
         </NavigationContainer>
   </SafeAreaView>
   );
