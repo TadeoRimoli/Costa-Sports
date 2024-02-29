@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { StyleSheet, Pressable, Text, Dimensions, Image, View } from 'react-native';
 import React from 'react';
-import { Colors, FontSizeStyles, GeneralStyle, MarginDirectionStyles } from '../../../Styles/GeneralStyles';
+import { Colors, FontSizeStyles, GeneralStyle, MarginDirectionStyles } from '../../Styles/GeneralStyles';
 import { Ionicons } from '@expo/vector-icons';
 
 const CartProduct = ({ quantity,item, onRemove }) => {

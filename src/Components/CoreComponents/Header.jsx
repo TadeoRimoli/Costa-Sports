@@ -1,8 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
-import { GeneralStyle } from '../../../Styles/GeneralStyles'
-import { FontsArray } from '../../Constants/Fonts'
-import { useFonts } from 'expo-font'
 
 const Header = ({title}) => {
 

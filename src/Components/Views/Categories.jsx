@@ -1,16 +1,17 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react';
-import {StatusBar, StyleSheet, SafeAreaView,Text, View ,TextInput,ScrollView,Image,FlatList,Keyboard,Dimensions, Pressable } from 'react-native';
+import {View ,FlatList, ActivityIndicator } from 'react-native';
 import CustomInput from '../CoreComponents/CustomInput'; 
-import { Colors, FontSizeStyles, GeneralStyle, MarginDirectionStyles, MarginStyles } from '../../../Styles/GeneralStyles';
-import Ionicons from '@expo/vector-icons/Ionicons';
-import ProductCard from '../Cards/ProductCard';
-import { productCategories, products } from '../../Constants/Arrays';
 import CategoryProductCard from '../Cards/CategoryProductCard';
-import { useNavigation } from '@react-navigation/native';
-const ProductCatalog = ({}) => {
+import { useFocusEffect, useIsFocused, useNavigation } from '@react-navigation/native';
+import { useGetCategoriesQuery } from '../../services/ecommerceAPI';
+const Categories = ({}) => {
+
+
+    const { data: categories, error, isLoading,isSuccess } = useGetCategoriesQuery();
+
     const navigation = useNavigation()
-    const [localCategories,setLocalCategories]=useState(productCategories)
+    const [localCategories,setLocalCategories]=useState([])
     const [filterValue,setFilterValue]=useState('')
 
     function handlePressCategory(item){
@@ -20,9 +21,23 @@ const ProductCatalog = ({}) => {
   
     function filterItems(e){
       setFilterValue(e)
-      setLocalCategories(productCategories.filter((category)=>category.name.toLowerCase().includes(e.toLowerCase())))
+      setLocalCategories(categories.filter((category)=>category.name.toLowerCase().includes(e.toLowerCase())))
     }
+    
+    const isFocused = useIsFocused()
 
+    useEffect(()=>{
+      setLocalCategories(categories);
+    },[categories])
+
+    if (isLoading) {
+      return <ActivityIndicator/>;
+    }
+  
+    if (error) {
+      return <Text>Error: {error.message}</Text>;
+    }
+  
   return (
     <View style={{flex:1,backgroundColor: '#34495e'}}>
       <View style={{paddingHorizontal:10}}>
@@ -48,5 +63,5 @@ const ProductCatalog = ({}) => {
   )
 }
 
-export default ProductCatalog
+export default Categories
 

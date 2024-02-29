@@ -1,11 +1,11 @@
 import { Button, FlatList, StyleSheet, Text, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import CartProduct from '../Cards/CartProduct';
-import { Colors, FontSizeStyles } from '../../../Styles/GeneralStyles';
 import CustomButton from '../../Components/CoreComponents/CustomButton';
 import { useIsFocused, useNavigation, useRoute } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeCartItem } from '../../../Redux/slices/GeneralSlice';
+import { Colors, FontSizeStyles } from '../../Styles/GeneralStyles';
 
 
 const ShoppingCart = ({ }) => {

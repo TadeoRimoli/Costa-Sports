@@ -1,16 +1,14 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
-import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from '../Views/HomeScreen';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import ProductCatalog from '../Views/ProductCatalog';
+import Categories from '../Views/Categories';
 import ProductOffers from '../Views/ProductOffers';
 import { MaterialIcons } from '@expo/vector-icons';
 import ShoppingCart from '../Views/ShoppingCart';
 import ProductList from '../Views/ProductList';
-import { products } from '../../Constants/Arrays';
 import PaymentScreen from '../Views/PaymentScreen';
 import Purchases from '../Views/Purchases';
 
@@ -30,7 +28,7 @@ const MyNavigator = ({}) => {
 
         return <Stack.Navigator initialRouteName='Categories' 
         >
-            <Stack.Screen name="Categories" component={ProductCatalog} />
+            <Stack.Screen name="Categories" component={Categories} />
             <Stack.Screen 
             options={({ route }) => ({
               headerTitle:route.params.selectedCategory.name.toLowerCase().split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')

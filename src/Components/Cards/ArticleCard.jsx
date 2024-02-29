@@ -3,9 +3,8 @@ import {StatusBar, StyleSheet, SafeAreaView,Text, View ,TextInput, Pressable } f
 import CustomButton from '../CustomButton';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Colors, GeneralStyle } from '../../../Styles/GeneralStyles';
-import { productCategories } from '../../Constants/Arrays';
 
- ArticleCard = ({ article ={id:'',description:'',createdAt:new Date(),category:productCategories[0]}, onPress }) => {
+ ArticleCard = ({ article ={id:'',description:'',createdAt:new Date(),category:""}, onPress }) => {
   return (
     <View style={[styles.container, GeneralStyle.background2 ]}>
       <View style={styles.textContainer}>

@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View,Dimensions, Pressable, Image, ScrollView } from 'react-native'
 import React from 'react'
-import { Colors, GeneralStyle, MarginDirectionStyles } from '../../../Styles/GeneralStyles';
+import { Colors, GeneralStyle, MarginDirectionStyles } from '../../Styles/GeneralStyles';
 
 const CategoryProductCard = ({item,handlePressCategory}) => {
   

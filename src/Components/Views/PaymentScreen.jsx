@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Button, StyleSheet, Text, TextInput, View, ActivityIndicator, BackHandler } from 'react-native';
 import { useIsFocused, useNavigation, useRoute } from '@react-navigation/native';
-import { Colors, FontSizeStyles, GeneralStyle } from '../../../Styles/GeneralStyles';
 import CustomButton from '../CoreComponents/CustomButton';
 import CustomInput from '../CoreComponents/CustomInput';
 import { useDispatch, useSelector } from 'react-redux';
 import { addPurchasesItem, deleteAllCartItems } from '../../../Redux/slices/GeneralSlice';
+import { Colors, FontSizeStyles, GeneralStyle } from '../../Styles/GeneralStyles';
 
 const PaymentScreen = ({  }) => {
 

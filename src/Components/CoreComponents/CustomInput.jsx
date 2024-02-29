@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { TextInput, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
-import { GeneralStyle } from '../../../Styles/GeneralStyles';
 
 const CustomInput = ({ customStyles, placeholder, label, value, setValue, keyboardType, error,setError }) => {
   const [isFocused, setIsFocused] = useState(false);
