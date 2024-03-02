@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { StyleSheet,Pressable, Text,Dimensions,Image, View } from 'react-native'
 import React from 'react'
-import { Colors, GeneralStyle, MarginDirectionStyles } from '../../Styles/GeneralStyles';
+import { Colors, GeneralStyle } from '../../Styles/GeneralStyles';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import CustomButton from '../CoreComponents/CustomButton';
 import CustomModal from '../CoreComponents/CustomModal';
@@ -78,12 +78,12 @@ const ProductCard = ({item}) => {
             <Text style={{ fontSize: 16, fontWeight: 'bold' }}>-{item.discountPercentage}%</Text>
           </View>
           <View style={[GeneralStyle.padding16]}>
-            <View style={[GeneralStyle.row,GeneralStyle.justifyBetween,MarginDirectionStyles.marginBottom5]}>
+            <View style={[GeneralStyle.row,GeneralStyle.justifyBetween,GeneralStyle.marginBottom5]}>
               <Text ellipsizeMode='tail' numberOfLines={1} style={{ flex:1,marginRight:8,fontSize: 20, fontWeight: 'bold' }}>{item.title}</Text>
               <Text style={{ fontSize: 20, fontWeight: 'bold' }}>${item.price}</Text>
             </View>
             <Text >{item.description}</Text>
-            <View style={[GeneralStyle.row,GeneralStyle.justifyBetween,GeneralStyle.itemsCenter,MarginDirectionStyles.marginTop5]}>
+            <View style={[GeneralStyle.row,GeneralStyle.justifyBetween,GeneralStyle.itemsCenter,GeneralStyle.marginTop5]}>
               <View style={[GeneralStyle.row]}>
                 {renderStars(Math.round(item.rating * 2) / 2)}
               </View>

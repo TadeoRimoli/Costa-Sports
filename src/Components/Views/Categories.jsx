@@ -4,6 +4,8 @@ import {View ,FlatList, ActivityIndicator } from 'react-native';
 import CustomInput from '../CoreComponents/CustomInput'; 
 import CategoryProductCard from '../Cards/CategoryProductCard';
 import { useFocusEffect, useIsFocused, useNavigation } from '@react-navigation/native';
+import { GeneralStyle } from '../../Styles/GeneralStyles';
+import LoadingIndicator from '../CoreComponents/LoadingIndicator';
 import { useGetCategoriesQuery } from '../../services/ecommerceAPI';
 const Categories = ({}) => {
 
@@ -30,8 +32,9 @@ const Categories = ({}) => {
       setLocalCategories(categories);
     },[categories])
 
+    
     if (isLoading) {
-      return <ActivityIndicator/>;
+       return <LoadingIndicator/>
     }
   
     if (error) {

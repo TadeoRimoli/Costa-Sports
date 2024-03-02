@@ -4,8 +4,9 @@ import { useIsFocused, useNavigation, useRoute } from '@react-navigation/native'
 import CustomButton from '../CoreComponents/CustomButton';
 import CustomInput from '../CoreComponents/CustomInput';
 import { useDispatch, useSelector } from 'react-redux';
-import { addPurchasesItem, deleteAllCartItems } from '../../../Redux/slices/GeneralSlice';
-import { Colors, FontSizeStyles, GeneralStyle } from '../../Styles/GeneralStyles';
+import { deleteAllCartItems } from '../../../Redux/slices/GeneralSlice';
+import { Colors, GeneralStyle } from '../../Styles/GeneralStyles';
+import { usePostOrderMutation } from '../../services/ecommerceAPI';
 
 const PaymentScreen = ({  }) => {
 
@@ -19,7 +20,8 @@ const PaymentScreen = ({  }) => {
   const [cardholderNameError, setCardholderNameError] = useState(false);
   const route = useRoute();
   const { totalPrice } = route.params;
-  
+
+  const [postOrder, { isLoading, isError, isSuccess }] = usePostOrderMutation();
 
   const {cart,purchases} = useSelector(state => state.General);
 
@@ -45,14 +47,19 @@ const PaymentScreen = ({  }) => {
       const success = true;//Math.random() < 0.5; // 50% de probabilidad para simular mas realidad
 
       if(success){
-        setPurchaseStatus(cases.good);
-        dispatch(addPurchasesItem({
-          date: new Date().toISOString(),
-          totalAmount: totalPrice,
-          items: cart,
-          card: creditCardNumber,
-        }))
-        
+        try{
+          let item={
+            date: new Date().toISOString(),
+            totalAmount: totalPrice,
+            items: cart,
+            card: creditCardNumber,
+            user:"robertito"
+        }
+          await postOrder(item)
+          setPurchaseStatus(cases.good);
+        }catch(error){
+            console.log(error)
+        }
       } else {
         setPurchaseStatus(cases.bad);
       }
@@ -93,7 +100,7 @@ const PaymentScreen = ({  }) => {
       :
       <>
       {purchaseStatus=== cases.neutral &&<View style={{ width: '100%' }}>
-        <Text style={[styles.text, FontSizeStyles.fontSize18]}>Total to pay: ${totalPrice.toFixed(2)}</Text>
+        <Text style={[styles.text, GeneralStyle.fontSize18]}>Total to pay: ${totalPrice.toFixed(2)}</Text>
         <CustomInput
           placeholder="Credit Card Number"
           keyboardType="numeric"

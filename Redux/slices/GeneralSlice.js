@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
+  user:null,
   cart: [],
-  purchases: [],
+  user:null,
 };
 
 const GeneralSlice = createSlice({
@@ -11,6 +12,12 @@ const GeneralSlice = createSlice({
   reducers: {
     deleteAllCartItems(state){
         state.cart = [];
+    },
+    setUser(state,action){
+      state.user = action.payload;
+    },
+    resetUser(state){
+      state.user =null;
     },
     addCartItem(state, action) {
       state.cart.push(action.payload);
@@ -21,19 +28,9 @@ const GeneralSlice = createSlice({
     removeCartItem(state, action){
         const itemIndexToRemove = action.payload;
         state.cart.splice(itemIndexToRemove, 1);
-    },
-    addPurchasesItem(state, action) {
-        state.purchases.push(action.payload);
-    },
-    setPurchasesItems(state, action){
-        state.purchases = action.payload
-    },
-    removePurchasesItem(state, action){
-        const itemIndexToRemove = action.payload;
-        state.purchases.splice(itemIndexToRemove, 1);
     }
   },
 });
 
-export const { deleteAllCartItems,addCartItem,setCartItems,removeCartItem,addPurchasesItem,setPurchasesItems,removePurchasesItem} = GeneralSlice.actions;
+export const { deleteAllCartItems,addCartItem,setCartItems,removeCartItem,setUser,resetUser} = GeneralSlice.actions;
 export default GeneralSlice.reducer;

@@ -21,8 +21,21 @@ export const ecommerceAPI = createApi({
         }),
         getCategories:buidler.query({
             query:()=>'categories.json'
+        }),
+        postOrder:buidler.mutation({
+            query:({...order})=>({
+                url:'orders.json',
+                method:"POST",
+                body:order
+            })
+        }),
+        getOrders:buidler.mutation({
+            query:()=>({
+                url:'orders.json',
+                method:"GET",
+            })
         })
     })
 })
 
-export const {useGetCategoriesQuery,useGetProductsQuery,useGetProductsByCategoryQuery} = ecommerceAPI
+export const {useGetCategoriesQuery,useGetProductsQuery,useGetProductsByCategoryQuery,usePostOrderMutation,useGetOrdersMutation} = ecommerceAPI

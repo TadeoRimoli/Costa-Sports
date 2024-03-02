@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View,Dimensions, Pressable, Image, ScrollView } from 'react-native'
 import React from 'react'
-import { Colors, GeneralStyle, MarginDirectionStyles } from '../../Styles/GeneralStyles';
+import { Colors, GeneralStyle } from '../../Styles/GeneralStyles';
 
 const CategoryProductCard = ({item,handlePressCategory}) => {
   
@@ -34,7 +34,7 @@ const CategoryProductCard = ({item,handlePressCategory}) => {
               </View>
             )}
       <View style={{marginHorizontal:10,paddingTop:10,paddingBottom:20}}>
-        <View style={[GeneralStyle.row,GeneralStyle.justifyBetween,GeneralStyle.itemsCenter,MarginDirectionStyles.marginBottom10]}>
+        <View style={[GeneralStyle.row,GeneralStyle.justifyBetween,GeneralStyle.itemsCenter,GeneralStyle.marginBottom10]}>
           <Text ellipsizeMode='tail' numberOfLines={1} style={{ marginRight:8,fontSize: 20, fontWeight: 'bold' }}>{titleFixed}</Text>
           <Text style={{ fontWeight: 'bold' }}>{item.priceRange}</Text>
         </View>

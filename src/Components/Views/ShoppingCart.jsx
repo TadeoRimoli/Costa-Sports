@@ -5,14 +5,16 @@ import CustomButton from '../../Components/CoreComponents/CustomButton';
 import { useIsFocused, useNavigation, useRoute } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeCartItem } from '../../../Redux/slices/GeneralSlice';
-import { Colors, FontSizeStyles } from '../../Styles/GeneralStyles';
+import { Colors, GeneralStyle } from '../../Styles/GeneralStyles';
 
 
 const ShoppingCart = ({ }) => {
   const [totalPrice, setTotalPrice] = useState(0);
   const navigation = useNavigation(); 
   const {cart}= useSelector(state =>state.General)
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+
+
   useEffect(() => {
     let total = 0;
     cart.forEach((item) => {
@@ -34,7 +36,7 @@ const ShoppingCart = ({ }) => {
       </View>
       ):
       <View style={styles.totalContainer}>
-        <Text style={[{ fontWeight: 'bold', color: 'white' }, FontSizeStyles.fontSize18]}>
+        <Text style={[{ fontWeight: 'bold', color: 'white' }, GeneralStyle.fontSize18]}>
           Total: ${totalPrice.toFixed(2)}
         </Text>
       </View>

@@ -1,4 +1,3 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Pressable } from 'react-native';
 
@@ -13,13 +12,7 @@ const HomeScreen = ({navigation,route}) => {
           style={[styles.button, styles.catalogButton]}
           onPress={()=>navigation.navigate("CategoriesStack",{screen:"Categories"})}
         >
-          <Text style={styles.buttonText}>Products</Text>
-        </Pressable>
-        <Pressable
-          style={[styles.button, styles.offersButton]}
-          onPress={()=>navigation.navigate("HotSaleStack",{screen:"HotSale"})}
-        >
-          <Text style={styles.buttonText}>Hot Sale</Text>
+          <Text style={styles.buttonText}>Categories</Text>
         </Pressable>
         <Pressable
           style={[styles.button, styles.cartButton]}

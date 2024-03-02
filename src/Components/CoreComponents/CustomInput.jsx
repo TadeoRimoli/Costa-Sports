@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { TextInput, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 
-const CustomInput = ({ customStyles, placeholder, label, value, setValue, keyboardType, error,setError }) => {
+const CustomInput = ({ customStyles, placeholder, label, value, setValue, keyboardType, error,setError,secureTextEntry=false }) => {
   const [isFocused, setIsFocused] = useState(false);
 
   const handleFocus = () => {
@@ -22,6 +22,7 @@ const CustomInput = ({ customStyles, placeholder, label, value, setValue, keyboa
       value={value}
       keyboardType={keyboardType}
       onChangeText={setValue}
+      secureTextEntry={secureTextEntry}
       style={[
         styles.inputText,
         customStyles,

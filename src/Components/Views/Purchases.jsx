@@ -1,10 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, FlatList } from 'react-native';
 import { useSelector } from 'react-redux';
+import { useGetOrdersMutation } from '../../services/ecommerceAPI';
+import { useIsFocused } from '@react-navigation/native';
 
 const Purchases = ({}) => {
   
-  const {purchases} = useSelector(state => state.General)
+
+  const [purchases, setPurchases] = useState([]);
+  const [getOrders, {data, isLoading: isPosting, isError: postError, isSuccess }] = useGetOrdersMutation();
+
+  const isFocused = useIsFocused()
+
+  useEffect(() => {
+      if(isFocused)
+        getOrders();
+  }, [isFocused]);
+
+  useEffect(()=>{
+    if(isSuccess){
+      setPurchases(Object.values(data))
+    }
+  },[isSuccess])
+
 
   const renderItem = ({ item, index }) => {
     let date = new Date(item.date);

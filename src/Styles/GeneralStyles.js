@@ -31,6 +31,12 @@ export const GeneralStyle = StyleSheet.create({
   justifyBetween:{
     justifyContent:'space-between'
   },
+  justifyCenter:{
+    justifyContent:'center'
+  },
+  selfCenter:{
+    alignSelf:'center'
+  },
   itemsCenter:{
     alignItems:'center'
   },
@@ -71,9 +77,7 @@ export const GeneralStyle = StyleSheet.create({
   background5: {
     backgroundColor: Colors.background5,
   },
-});
-export const FontSizeStyles = StyleSheet.create({
-    fontSize16: {
+   fontSize16: {
       fontSize: 16,
     },
     fontSize18: {
@@ -100,9 +104,6 @@ export const FontSizeStyles = StyleSheet.create({
     fontSize32: {
       fontSize: 32,
     },
-  });
-  
-  export const MarginDirectionStyles = StyleSheet.create({
     margin5: {
       margin: 5,
     },
@@ -178,4 +179,10 @@ export const FontSizeStyles = StyleSheet.create({
     marginVertical20: {
       marginVertical: 20,
     },
-  });
+    fontBold: {
+      fontWeight: 'bold',
+    },
+    maxwidth:{
+      width:'100%'
+    }
+});
