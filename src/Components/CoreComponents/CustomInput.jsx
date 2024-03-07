@@ -22,6 +22,7 @@ const CustomInput = ({ customStyles, placeholder, label, value, setValue, keyboa
       value={value}
       keyboardType={keyboardType}
       onChangeText={setValue}
+      autoCapitalize='none'
       secureTextEntry={secureTextEntry}
       style={[
         styles.inputText,

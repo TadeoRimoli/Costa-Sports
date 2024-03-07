@@ -7,15 +7,23 @@ import { useSignUpMutation } from '../../../services/authAPI'
 
 import { useNavigation } from '@react-navigation/native';
 import LoadingIndicator from '../../CoreComponents/LoadingIndicator'
+import CustomModal from '../../CoreComponents/CustomModal'
 const Register = () => {
 
   const [email,setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
+  const [errorModal, setErrorModal] = useState(false);
 
   const [signUp,{data, isLoading, isError: postError, isSuccess,result}] = useSignUpMutation();
 
   
+  useEffect(()=>{
+    if(postError){
+      setErrorModal(true)
+    }
+  },[postError])
+
   const handleSignUp = async () => {
     if (!email || !password || !repeatPassword) {
       Alert.alert('Error', 'Por favor completa todos los campos');
@@ -32,12 +40,14 @@ const Register = () => {
       return;
     }
 
-      signUp({ email, password });
+    if(password.length < 8){
+      Alert.alert('Error', 'Las contraseñas deben tener al menos 8 caracteres');
+      return;
+    }
+
+    signUp({ email, password });
   };
 
-  useEffect(()=>{
-    console.log("result: ",result)
-  },[result])
   const navigation = useNavigation()
   const redirectToLogin = () => {
     navigation.navigate('Login');
@@ -62,6 +72,8 @@ const Register = () => {
     </View>
   </Modal>
   }
+
+   
 
 
   return (
@@ -93,6 +105,16 @@ const Register = () => {
       <Text style={[GeneralStyle.fontSize16,GeneralStyle.marginTop15]}>Already have an account?<Text onPress={()=>{
           navigation.navigate("Login")
       }} style={[GeneralStyle.fontSize16,{color:'blue'}]}> Log in</Text> </Text>
+      <CustomModal
+      animationType="none"
+      transparent={false}
+      visible={errorModal}
+      hideModalFunction={() => {
+        setErrorModal(false);
+      }}
+    >
+        <Text style={[GeneralStyle.fontSize22,GeneralStyle.marginBottom10]}>Ha ocurrido un error y no te pudimos registrar</Text>
+    </CustomModal>
     </View>
   )
 }

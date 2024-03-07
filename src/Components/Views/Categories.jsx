@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useState } from 'react';
+import { useState,Text } from 'react';
 import {View ,FlatList, ActivityIndicator } from 'react-native';
 import CustomInput from '../CoreComponents/CustomInput'; 
 import CategoryProductCard from '../Cards/CategoryProductCard';
@@ -41,6 +41,8 @@ const Categories = ({}) => {
       return <Text>Error: {error.message}</Text>;
     }
   
+
+
   return (
     <View style={{flex:1,backgroundColor: '#34495e'}}>
       <View style={{paddingHorizontal:10}}>

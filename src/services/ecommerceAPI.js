@@ -3,7 +3,19 @@ import { FirebaseURL } from "../Constants/Constants"
 
 export const ecommerceAPI = createApi({
     reducerPath:"ecommerceAPI",
-    baseQuery:fetchBaseQuery({baseUrl:FirebaseURL}),
+    baseQuery:fetchBaseQuery({
+        baseUrl:FirebaseURL,
+        prepareHeaders: (headers, { getState }) => {
+        //     const state = getState();
+        //     const authToken = state.General.user.idToken;
+      
+        //     if (authToken) {
+        //       headers.set("Authorization", `Bearer ${authToken}`);
+        //     }
+      
+        //     return headers;
+          },
+    }),
     endpoints:(buidler)=>({
         getProducts:buidler.query({
             query:()=>'products.json',
