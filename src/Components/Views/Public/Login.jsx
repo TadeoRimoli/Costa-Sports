@@ -8,25 +8,29 @@ import { useLoginMutation } from '../../../services/authAPI';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../../../Redux/slices/GeneralSlice';
 import CustomModal from '../../CoreComponents/CustomModal';
+import { loginSchema } from '../../../services/authYupSchema';
 
 const Login = () => {
   const [email, setEmail] = useState('');
+  const [emailError, setEmailError] = useState({error:false,message:''});
+  const [passwordError, setPasswordError] = useState({error:false,message:''});
   const [password, setPassword] = useState('');
+
   const [login,{data, isLoading, isError: postError, isSuccess,result,error}] = useLoginMutation();
 
   const handleLogin = async () => {
-    
-    if (!email || !password ) {
-      Alert.alert('Error', 'Por favor completa todos los campos');
-      return;
+    try {
+      loginSchema.validateSync({ email, password }, { abortEarly: false });
+      await login({ email, password });
+    } catch (error) {
+      const errors = {};
+      error.inner.forEach(err => {
+        errors[err.path] = err.message;
+      });
+      setEmailError({ error: errors.email ? true : false, message: errors.email || '' });
+      setPasswordError({ error: errors.password ? true : false, message: errors.password || '' });
     }
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      Alert.alert('Error', 'Por favor ingresa un correo electrónico válido');
-      return;
-    }
-    await login({ email, password });
-  };
+  }
   const dispatch = useDispatch();
   useEffect(() => {
     if (isSuccess) {
@@ -53,6 +57,8 @@ const Login = () => {
         placeholder="Email"
         value={email}
         setValue={text => setEmail(text)}
+        error={emailError}
+        setError={setEmailError}
         />
         <CustomInput
         customStyles={{width:'100%'}}
@@ -60,6 +66,8 @@ const Login = () => {
         secureTextEntry={true}
         value={password}
         setValue={text => setPassword(text)}
+        error={passwordError}
+        setError={setPasswordError}
         />
         <CustomButton
         customStyles={{width:'100%'}}

@@ -8,13 +8,17 @@ import { useSignUpMutation } from '../../../services/authAPI'
 import { useNavigation } from '@react-navigation/native';
 import LoadingIndicator from '../../CoreComponents/LoadingIndicator'
 import CustomModal from '../../CoreComponents/CustomModal'
+import { registerSchema } from '../../../services/authYupSchema'
 const Register = () => {
 
   const [email,setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [repeatPassword, setRepeatPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [errorModal, setErrorModal] = useState(false);
 
+  const [emailError, setEmailError] = useState({error:false,message:''});
+  const [passwordError, setPasswordError] = useState({error:false,message:''});
+  const [confirmPasswordError, setConfirmPasswordError] = useState({error:false,message:''});
   const [signUp,{data, isLoading, isError: postError, isSuccess,result}] = useSignUpMutation();
 
   
@@ -25,27 +29,19 @@ const Register = () => {
   },[postError])
 
   const handleSignUp = async () => {
-    if (!email || !password || !repeatPassword) {
-      Alert.alert('Error', 'Por favor completa todos los campos');
-      return;
-    }
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      Alert.alert('Error', 'Por favor ingresa un correo electrónico válido');
-      return;
-    }
+    try {
+      registerSchema.validateSync({ email, password, confirmPassword }, { abortEarly: false });
   
-    if (password !== repeatPassword) {
-      Alert.alert('Error', 'Las contraseñas no coinciden');
-      return;
+      signUp({ email, password });
+    } catch (error) {
+      const errors = {};
+      error.inner.forEach(err => {
+        errors[err.path] = err.message;
+      });
+      setEmailError({ error: errors.email ? true : false, message: errors.email || '' });
+      setPasswordError({ error: errors.password ? true : false, message: errors.password || '' });
+      setConfirmPasswordError({ error: errors.confirmPassword ? true : false, message: errors.confirmPassword || '' });
     }
-
-    if(password.length < 8){
-      Alert.alert('Error', 'Las contraseñas deben tener al menos 8 caracteres');
-      return;
-    }
-
-    signUp({ email, password });
   };
 
   const navigation = useNavigation()
@@ -84,6 +80,8 @@ const Register = () => {
       placeholder="Email"
       value={email}
       setValue={(text) => {setEmail(text)}}
+      error={emailError}
+      setError={setEmailError}
       />
       <CustomInput
       customStyles={{width:'100%'}}
@@ -91,13 +89,17 @@ const Register = () => {
       secureTextEntry={true}
       value={password}
       setValue={(text) => setPassword(text)}
+      error={passwordError}
+      setError={setPasswordError}
       />
       <CustomInput
       customStyles={{width:'100%'}}
       placeholder="Repeat Password"
       secureTextEntry={true}
-      value={repeatPassword}
-      setValue={(text) => setRepeatPassword(text)}
+      value={confirmPassword}
+      setValue={(text) => setConfirmPassword(text)}
+      error={confirmPasswordError}
+      setError={setConfirmPasswordError}
       />
       <CustomButton
       customStyles={{width:'100%'}}

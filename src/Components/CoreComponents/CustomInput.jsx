@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { TextInput, StyleSheet } from 'react-native';
+import { TextInput, StyleSheet, Text } from 'react-native';
 import PropTypes from 'prop-types';
 
-const CustomInput = ({ customStyles, placeholder, label, value, setValue, keyboardType, error,setError,secureTextEntry=false }) => {
+const CustomInput = ({ customStyles, placeholder, label, value, setValue, keyboardType, error, setError, secureTextEntry=false }) => {
   const [isFocused, setIsFocused] = useState(false);
-
+  
   const handleFocus = () => {
     setIsFocused(true);
-    if (error) {
-      setError(false);
+    if (error && error.error) {
+      setError({error:false,message:''});
     }
   };
 
@@ -16,25 +16,36 @@ const CustomInput = ({ customStyles, placeholder, label, value, setValue, keyboa
     setIsFocused(false);
   };
 
+  function handle(e){
+    if (error && error.error) {
+      setError({error:false,message:''});
+    }
+    setValue(e)
+  }
+  
+
   return (
-    <TextInput
-      placeholder={placeholder}
-      value={value}
-      keyboardType={keyboardType}
-      onChangeText={setValue}
-      autoCapitalize='none'
-      secureTextEntry={secureTextEntry}
-      style={[
-        styles.inputText,
-        customStyles,
-        isFocused && styles.focused,
-        error && styles.error,
-        { backgroundColor: error ? '#FADBD8' : '#f5f5f5' }
-      ]}
-      placeholderTextColor="rgba(0, 0, 0, 0.8)"
-      onFocus={handleFocus}
-      onBlur={handleBlur}
-    />
+    <>
+      <TextInput
+        placeholder={placeholder}
+        value={value}
+        keyboardType={keyboardType}
+        onChangeText={handle}
+        autoCapitalize='none'
+        secureTextEntry={secureTextEntry}
+        style={[
+          styles.inputText,
+          customStyles,
+          isFocused && styles.focused,
+          error && error.error && styles.error,
+          { backgroundColor: error && error.error ? '#FADBD8' : '#f5f5f5' }
+        ]}
+        placeholderTextColor="rgba(0, 0, 0, 0.8)"
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+      />
+      {error && error.message ? <Text style={{marginBottom:10,alignSelf:'flex-start'}}>{error.message}</Text> : null}
+    </>
   );
 };
 
@@ -45,7 +56,7 @@ CustomInput.propTypes = {
   value: PropTypes.string,
   setValue: PropTypes.func,
   keyboardType: PropTypes.string,
-  error: PropTypes.bool,
+  error: PropTypes.object,
 };
 
 const styles = StyleSheet.create({
