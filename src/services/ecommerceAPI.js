@@ -18,32 +18,32 @@ export const ecommerceAPI = createApi({
     }),
     endpoints:(buidler)=>({
         getProducts:buidler.query({
-            query:()=>'products.json',
+            query:()=>'/products.json',
             transformResponse:(response)=>{
                 const data = Object.values(response)
                 return data
             }
         }),
         getProductsByCategory:buidler.query({
-            query:(category)=>`products.json?orderBy="category"&equalTo="${category}"`,
+            query:(category)=>`/products.json?orderBy="category"&equalTo="${category}"`,
             transformResponse:(response)=>{
                 const data = Object.values(response)
                 return data
             }
         }),
         getCategories:buidler.query({
-            query:()=>'categories.json'
+            query:()=>'/categories.json'
         }),
         postOrder:buidler.mutation({
             query:({...order})=>({
-                url:'orders.json',
+                url:'/orders.json',
                 method:"POST",
                 body:order
             })
         }),
         getOrders:buidler.mutation({
             query:()=>({
-                url:'orders.json',
+                url:'/orders.json',
                 method:"GET",
             })
         })

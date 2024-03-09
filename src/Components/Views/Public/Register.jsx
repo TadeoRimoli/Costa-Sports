@@ -58,7 +58,6 @@ const Register = () => {
     transparent={false}
     visible={true}
     onRequestClose={() => {
-      // Al cerrar el modal, redirige al usuario a la pantalla de login
       redirectToLogin();
     }}
   >

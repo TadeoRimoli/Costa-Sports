@@ -6,23 +6,31 @@ export const profileApi = createApi({
     baseQuery:fetchBaseQuery({
         baseUrl:FirebaseURL,
     }),
-    endpoints:(buidler)=>({
-        postImageProfile:buidler.mutation({
-            query:({image,localId})=>({
-                uri:`profileImages/${localId}.json`,
-                method:'PUT',
-                body: {
-                    image:image
-                }
+    endpoints:(builder)=>({
+        putImageProfile: builder.mutation({
+            query: ({ image, localId }) => {
+                return {
+                    url: `/profile/${localId}.json`,
+                    method: "PUT",
+                    body: { image }
+                };
+            },
+        }),
+        getImageProfile:builder.query({
+            query:(localId) => `/profile/${localId}.json`
+        }),
+        putUserLocation:builder.mutation({
+            query:({localId,locationFormatted})=> ({
+                url:`/userLocation/${localId}.json`,
+                method:"PUT",
+                body:locationFormatted
+
             })
         }),
-        getImageProfile:buidler.query({
-            query:({localId})=>({
-                uri:`profile/${localId}.json`,
-                method:'GET',
-            })
-        }),
+        getUserLocation:builder.query({
+            query:(localId) => `/userLocation/${localId}.json`
+        })
     })
 })
 
-export const {usePostImageProfileMutation,useGetImageProfileQuery} = profileApi
+export const {usePutImageProfileMutation,useGetImageProfileQuery,useGetUserLocationQuery,usePutUserLocationMutation} = profileApi

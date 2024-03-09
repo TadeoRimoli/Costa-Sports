@@ -8,29 +8,19 @@ import { GeneralStyle } from '../../Styles/GeneralStyles';
 import LoadingIndicator from '../CoreComponents/LoadingIndicator';
 import { useNavigation } from '@react-navigation/native';
 import { resetUser, setUser } from '../../../Redux/slices/GeneralSlice';
-import { useGetImageProfileQuery, usePostImageProfileMutation } from '../../services/profileApi';
+import { useGetImageProfileQuery, usePutImageProfileMutation } from '../../services/profileApi';
 const UserMainView = () => {
   const {user} = useSelector(state=>state.General)
   const dispatch = useDispatch()
 
-  const [postImageProfile] = usePostImageProfileMutation()
-  // const [getImageProfile] = useGetImageProfileQuery()
+  const [putImageProfile] = usePutImageProfileMutation()
+  const {data,isSuccess} = useGetImageProfileQuery(user.localId)
   const [image, setImage] = useState(null);
 
+    useEffect(()=>{
+      if(isSuccess && data) setImage(data.image)
+  },[isSuccess,data])
 
-  useEffect(()=>{
-    // let response = getImageProfile(user.localId)
-    // console.log(response)
-  },[])
-
-  // useEffect(()=>{
-  //   if(isSuccess){
-  //     console.log(data)
-  //     setImage(data.image)
-  //   }else{
-  //     console.log(data)
-  //   }
-  // },[isSuccess])
 
   const showImagePickerOptions = () => {
     Alert.alert(
@@ -64,7 +54,6 @@ const UserMainView = () => {
       ]
     );
   };
-  // Función para permitir al usuario seleccionar una imagen de la galería
   const pickImageFromGallery = async () => {
     try {
       const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -73,22 +62,18 @@ const UserMainView = () => {
       }
 
       const pickerResult = await ImagePicker.launchImageLibraryAsync({base64:true});
-      if (pickerResult.cancelled === true) {
+      if (pickerResult.canceled === true) {
         return;
       }
 
       const { uri } = pickerResult.assets[0];
       setImage(uri);
-      console.log('data:image/jpeg;base64'+pickerResult.assets[0].base64)
-      let response = await postImageProfile('data:image/jpeg;base64'+pickerResult.assets[0].base64,user.localId)
-      console.log(response)
+      let response = await putImageProfile({image:'data:image/jpeg;base64,' + pickerResult.assets[0].base64,localId:user.localId})
     } catch (error) {
       console.error('Error al seleccionar imagen de la galería:', error);
       Alert.alert('Error', 'Ocurrió un error al seleccionar la imagen de la galería');
     }
   };
-
-  // Función para permitir al usuario tomar una foto con la cámara
   const takePhotoWithCamera = async () => {
     try {
       const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
@@ -97,15 +82,17 @@ const UserMainView = () => {
       }
 
       const pickerResult = await ImagePicker.launchCameraAsync({
+        allowsEditing:true,
+        aspect:[6,4],
+        quality:0.3,
         base64:true
-      });
-      if (pickerResult.cancelled === true) {
+     })
+      if (pickerResult.canceled === true) {
         return;
       }
       const { uri } = pickerResult.assets[0];
       setImage(uri);
-      let response = await postImageProfile('data:image/jpeg;base64'+pickerResult.assets[0].base64,user.localId)
-      console.log(response)
+      await putImageProfile({image:'data:image/jpeg;base64,'+pickerResult.assets[0].base64,localId:user.localId})
     } catch (error) {
       console.error('Error al tomar foto con la cámara:', error);
       Alert.alert('Error', 'Ocurrió un error al tomar la foto con la cámara');
@@ -114,26 +101,25 @@ const UserMainView = () => {
 
   return (
     <View style={styles.container}>
+        <CustomButton label="Cerrar sesión" customStyles={{alignSelf:'flex-end'}} onPress={handleLogout} />
+      <View style={[GeneralStyle.flex1,GeneralStyle.justifyCenter,GeneralStyle.itemsCenter]}>
       {/* Mostrar la imagen seleccionada o el icono de usuario */}
-      {image ? (
-        <TouchableOpacity onPress={showImagePickerOptions}>
-        <Image  source={{ uri: image }} style={styles.userImage} />
-        </TouchableOpacity>
-      )
-       : (
-        <TouchableOpacity onPress={showImagePickerOptions} style={styles.userIconContainer}>
-          <Ionicons name="person-circle-outline" size={100} color="black" />
-        </TouchableOpacity>
-      )}
-      <View style={[GeneralStyle.row, GeneralStyle.marginBottom20]}>
-        <Text style={[GeneralStyle.fontBold, GeneralStyle.fontSize18]}>Email: </Text>
-        <Text style={[GeneralStyle.fontSize18]}>{user.email}</Text>
+        {image ? (
+          <TouchableOpacity onPress={showImagePickerOptions}>
+          <Image  source={{ uri: image }} style={styles.userImage} />
+          </TouchableOpacity>
+        )
+        : (
+          <TouchableOpacity onPress={showImagePickerOptions} style={styles.userIconContainer}>
+            <Ionicons name="person-circle-outline" size={100} color="black" />
+          </TouchableOpacity>
+        )}
+        <View style={[GeneralStyle.row, GeneralStyle.marginBottom20]}>
+          <Text style={[GeneralStyle.fontBold, GeneralStyle.fontSize18]}>Email: </Text>
+          <Text style={[GeneralStyle.fontSize18]}>{user.email}</Text>
+        </View>
       </View>
-      
-      <View style={[GeneralStyle.row, GeneralStyle.justifyBetween, GeneralStyle.maxwidth]}>
         {/* <CustomButton label="Eliminar cuenta" onPress={handleDeleteAccount} /> */}
-        <CustomButton label="Cerrar sesión" onPress={handleLogout} />
-      </View>
     </View>
   );
 };
@@ -145,7 +131,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding:20,
-    justifyContent: 'center',
     alignItems: 'center',
   },
   userImage: {
