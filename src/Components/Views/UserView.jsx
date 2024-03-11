@@ -83,10 +83,7 @@ const UserView = () => {
   
   return (
     <ScrollView contentContainerStyle={{alignItems:'center',padding:10}}>
-        <View style={[GeneralStyle.row, GeneralStyle.marginBottom20]}>
-            <Text style={[GeneralStyle.fontBold, GeneralStyle.fontSize18]}>Email: </Text>
-            <Text style={[GeneralStyle.fontSize18]}>{user.email}</Text>
-        </View>
+        
         <View style={[GeneralStyle.justifyCenter,GeneralStyle.itemsCenter]}>
             {image ? (
             <TouchableOpacity onPress={showImagePickerOptions}>
@@ -98,6 +95,10 @@ const UserView = () => {
                 <Ionicons name="person-circle-outline" size={100} color="black" />
             </Pressable>
             )}
+            <View style={[GeneralStyle.row, GeneralStyle.marginBottom20]}>
+                <Text style={[GeneralStyle.fontBold, GeneralStyle.fontSize18]}>Email: </Text>
+                <Text style={[GeneralStyle.fontSize18]}>{user.email}</Text>
+            </View>
         </View>
         <MapPreview/>
     </ScrollView>
@@ -108,8 +109,8 @@ export default UserView
 
 const styles = StyleSheet.create({
     userImage: {
-      width: 200,
-      height: 200,
+      width: 150,
+      height: 150,
       borderRadius: 50,
       marginBottom: 20,
     },

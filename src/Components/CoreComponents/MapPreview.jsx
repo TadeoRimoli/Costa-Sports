@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Dimensions, Image, StyleSheet, View, PanResponder } from 'react-native';
+import { Dimensions, Image, StyleSheet, View, PanResponder, Text } from 'react-native';
 import { mapsApiKey } from '../../Constants/Constants';
 import * as Location from "expo-location"
 import { useIsFocused } from '@react-navigation/native';
@@ -33,17 +33,31 @@ const MapPreview = ({ latitude, longitude }) => {
     fetchLocation();
   }, [isFocused]);
 
+  useEffect(() => {
+    const fetchLocation = async () => {
+      if (isFocused && location.latitude) {
+        const response  = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.latitude},${location.longitude}&key=${mapsApiKey}`)
+        const data = await response.json();
+        setAddress(data.results[0].formatted_address)
+      }
+    };
+    fetchLocation();
+  }, [isFocused,location]);
+
   return (
+    <>
         <Image
           source={ location.latitude!="" ?  { uri: url } : require('../../images/mapa.png')}
           style={styles.userImage}
         />
+        <Text>{address}</Text>
+      </>
   );
 };
 
 const styles = StyleSheet.create({
   userImage: {
-    width: 200,
+    width: 300,
     height: 200,
     borderRadius: 50,
     marginBottom: 20,

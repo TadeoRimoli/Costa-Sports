@@ -4,11 +4,13 @@ import MapPreview from '../CoreComponents/MapPreview';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import UserView from './UserView';
 import { Ionicons } from '@expo/vector-icons';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../../../Redux/slices/GeneralSlice';
 
 const Stack = createNativeStackNavigator()
 
 const UserMainView = () => {
-  
+    const dispatch = useDispatch()
     const handleLogout = () => {
       Alert.alert(
           'Cerrar sesión',
