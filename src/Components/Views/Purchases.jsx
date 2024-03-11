@@ -9,12 +9,12 @@ const Purchases = ({}) => {
 
   const [purchases, setPurchases] = useState([]);
   const [getOrders, {data, isLoading: isPosting, isError: postError, isSuccess }] = useGetOrdersMutation();
-
+  const {user} = useSelector(state=>state.General)
   const isFocused = useIsFocused()
 
   useEffect(() => {
       if(isFocused)
-        getOrders();
+        getOrders(user.localId);
   }, [isFocused]);
 
   useEffect(()=>{

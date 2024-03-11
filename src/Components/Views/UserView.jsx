@@ -26,12 +26,12 @@ const UserView = () => {
 
     const showImagePickerOptions = () => {
       Alert.alert(
-        'Seleccionar imagen',
-        'Elige una opción para seleccionar una imagen:',
+        'Select image',
+        'Choose an option to select an image:',
         [
-          { text: 'Cancelar', style: 'cancel' },
-          { text: 'Galería', onPress: pickImageFromGallery },
-          { text: 'Cámara', onPress: takePhotoWithCamera },
+          { text: 'Cancel', style: 'cancel' },
+          { text: 'Gallery', onPress: pickImageFromGallery },
+          { text: 'Camera', onPress: takePhotoWithCamera },
         ]
       );
     };
@@ -40,46 +40,48 @@ const UserView = () => {
       try {
         const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
         if (permissionResult.granted === false) {
-          throw new Error('Permisos de la galería requeridos');
+          throw new Error('Gallery permissions required');
         }
-  
+    
         const pickerResult = await ImagePicker.launchImageLibraryAsync({base64:true});
         if (pickerResult.canceled === true) {
           return;
         }
-  
+    
         const { uri } = pickerResult.assets[0];
         setImage(uri);
         let response = await putImageProfile({image:'data:image/jpeg;base64,' + pickerResult.assets[0].base64,localId:user.localId})
       } catch (error) {
-        console.error('Error al seleccionar imagen de la galería:', error);
-        Alert.alert('Error', 'Ocurrió un error al seleccionar la imagen de la galería');
+        console.error('Error selecting image from gallery:', error);
+        Alert.alert('Error', 'An error occurred while selecting the image from the gallery');
       }
     };
+    
     const takePhotoWithCamera = async () => {
       try {
         const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
         if (permissionResult.granted === false) {
-          throw new Error('Permisos de la cámara requeridos');
+          throw new Error('Camera permissions required');
         }
-  
+    
         const pickerResult = await ImagePicker.launchCameraAsync({
           allowsEditing:true,
           aspect:[6,4],
           quality:0.3,
           base64:true
-       })
+        });
         if (pickerResult.canceled === true) {
           return;
         }
         const { uri } = pickerResult.assets[0];
         setImage(uri);
-        await putImageProfile({image:'data:image/jpeg;base64,'+pickerResult.assets[0].base64,localId:user.localId})
+        await putImageProfile({image:'data:image/jpeg;base64,'+pickerResult.assets[0].base64,localId:user.localId});
       } catch (error) {
-        console.error('Error al tomar foto con la cámara:', error);
-        Alert.alert('Error', 'Ocurrió un error al tomar la foto con la cámara');
+        console.error('Error taking photo with camera:', error);
+        Alert.alert('Error', 'An error occurred while taking the photo with the camera');
       }
     };
+    
   
   return (
     <ScrollView contentContainerStyle={{alignItems:'center',padding:10}}>

@@ -13,15 +13,14 @@ const UserMainView = () => {
     const dispatch = useDispatch()
     const handleLogout = () => {
       Alert.alert(
-          'Cerrar sesión',
-          '¿Estás seguro de que deseas cerrar sesión?',
+          'Log out',
+          'Are you sure you want to log out?',
           [
-            { text: 'Volver', style: 'cancel' },
-            { text: 'Cerrar sesión', onPress:()=>{ dispatch(setUser(null)) } },
+            { text: 'Go back', style: 'cancel' },
+            { text: 'Log out', onPress:()=>{ dispatch(setUser(null)) } },
           ]
         );
       };
-
   return (
    <Stack.Navigator >
     <Stack.Screen name="Perfil" component={UserView}

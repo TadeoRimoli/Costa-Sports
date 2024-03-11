@@ -42,8 +42,8 @@ export const ecommerceAPI = createApi({
             })
         }),
         getOrders:buidler.mutation({
-            query:()=>({
-                url:'/orders.json',
+            query:(user)=>({
+                url:`/orders.json?orderBy="user"&equalTo="${user}"`,
                 method:"GET",
             })
         })

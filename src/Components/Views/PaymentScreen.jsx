@@ -15,15 +15,16 @@ const PaymentScreen = ({  }) => {
   const [creditCardNumber, setCreditCardNumber] = useState('');
   const [securityCode, setSecurityCode] = useState('');
   const [cardholderName, setCardholderName] = useState('');
-  const [creditCardError, setCreditCardError] = useState(false);
-  const [securityCodeError, setSecurityCodeError] = useState(false);
-  const [cardholderNameError, setCardholderNameError] = useState(false);
+  const [creditCardError, setCreditCardError] = useState({error:false,message:''});
+  const [securityCodeError, setSecurityCodeError] = useState({error:false,message:''});
+  const [cardholderNameError, setCardholderNameError] = useState({error:false,message:''});
   const route = useRoute();
   const { totalPrice } = route.params;
 
   const [postOrder, { isLoading, isError, isSuccess }] = usePostOrderMutation();
 
   const {cart,purchases} = useSelector(state => state.General);
+  const {user} = useSelector(state=>state.General)
 
 
   const cases ={
@@ -35,9 +36,9 @@ const PaymentScreen = ({  }) => {
 
   const simulatePurchase = async () => {
     if (!creditCardNumber || !securityCode || !cardholderName) {
-      setCreditCardError(!creditCardNumber);
-      setSecurityCodeError(!securityCode);
-      setCardholderNameError(!cardholderName);
+      setCreditCardError({error:!creditCardNumber,message:''});
+      setSecurityCodeError({error:!securityCode,message:''});
+      setCardholderNameError({error:!cardholderName,message:''});
       setLoading(false);
       return;
     } else {
@@ -53,7 +54,7 @@ const PaymentScreen = ({  }) => {
             totalAmount: totalPrice,
             items: cart,
             card: creditCardNumber,
-            user:"robertito"
+            user:user.localId
         }
           await postOrder(item)
           setPurchaseStatus(cases.good);
