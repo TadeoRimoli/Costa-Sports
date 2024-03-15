@@ -17,11 +17,13 @@ const UserView = () => {
     const {user} = useSelector(state=>state.General)
 
     const [putImageProfile] = usePutImageProfileMutation()
-    const {data,isSuccess} = useGetImageProfileQuery(user.localId)
+    const {data,isSuccess,refetch } = useGetImageProfileQuery(user.localId)
     const [image, setImage] = useState(null);
   
       useEffect(()=>{
-        if(isSuccess && data) setImage(data.image)
+        if(isSuccess && data){
+            setImage(data.image)
+        }
     },[isSuccess,data])
 
     const showImagePickerOptions = () => {

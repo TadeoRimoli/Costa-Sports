@@ -6,6 +6,7 @@ export const profileApi = createApi({
     baseQuery:fetchBaseQuery({
         baseUrl:FirebaseURL,
     }),
+    tagTypes:["userImage"],
     endpoints:(builder)=>({
         putImageProfile: builder.mutation({
             query: ({ image, localId }) => {
@@ -15,9 +16,11 @@ export const profileApi = createApi({
                     body: { image }
                 };
             },
+            invalidatesTags:["userImage"]
         }),
         getImageProfile:builder.query({
-            query:(localId) => `/profile/${localId}.json`
+            query:(localId) => `/profile/${localId}.json`,
+            providesTags:["userImage"]
         }),
         putUserLocation:builder.mutation({
             query:({localId,locationFormatted})=> ({
