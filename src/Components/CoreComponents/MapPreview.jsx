@@ -19,7 +19,7 @@ const MapPreview = ({ latitude, longitude }) => {
       if (isFocused) {
         let { status } = await Location.requestForegroundPermissionsAsync();
         if (status !== "granted") {
-          setErrorMessage("Permiso denegado");
+          setErrorMessage("Permission denied");
           return;
         }
         try {
