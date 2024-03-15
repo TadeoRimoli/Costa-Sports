@@ -6,6 +6,8 @@ import UserView from './UserView';
 import { Ionicons } from '@expo/vector-icons';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../../Redux/slices/GeneralSlice';
+import SettingsScreen from './Settings';
+import SecurityScreen from './Security';
 
 const Stack = createNativeStackNavigator()
 
@@ -35,9 +37,11 @@ const UserMainView = () => {
             />
           ),
         }}
-    >
+    />
+    <Stack.Screen name="Location" component={MapPreview}/>
+    <Stack.Screen name="Settings" component={SettingsScreen}/>
+    <Stack.Screen name="Security" component={SecurityScreen}/>
 
-    </Stack.Screen>
    </Stack.Navigator>
   );
 };

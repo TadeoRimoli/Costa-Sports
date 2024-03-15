@@ -10,6 +10,7 @@ import { useGetImageProfileQuery, usePutImageProfileMutation } from '../../servi
 import MapPreview from '../CoreComponents/MapPreview';
 import { useNavigation } from '@react-navigation/native';
 import { ScrollView } from 'react-native';
+import NavigateRow from '../CoreComponents/NavigateRow';
 
 const UserView = () => {
 
@@ -83,10 +84,11 @@ const UserView = () => {
         Alert.alert('Error', 'An error occurred while taking the photo with the camera');
       }
     };
-    
+    const navigation = useNavigation()
   
   return (
-    <ScrollView contentContainerStyle={{alignItems:'center',padding:10}}>
+    <View style={{flex:1,padding:10,justifyContent:'space-between'}}>
+    <View style={{alignItems:'center',}}>
         
         <View style={[GeneralStyle.justifyCenter,GeneralStyle.itemsCenter]}>
             {image ? (
@@ -99,13 +101,16 @@ const UserView = () => {
                 <Ionicons name="person-circle-outline" size={100} color="black" />
             </Pressable>
             )}
-            <View style={[GeneralStyle.row, GeneralStyle.marginBottom20]}>
-                <Text style={[GeneralStyle.fontBold, GeneralStyle.fontSize18]}>Email: </Text>
-                <Text style={[GeneralStyle.fontSize18]}>{user.email}</Text>
-            </View>
+                <Text style={[GeneralStyle.fontSize18,GeneralStyle.marginBottom20]}>{user.email}</Text>
         </View>
-        <MapPreview/>
-    </ScrollView>
+        <NavigateRow label="Purchases" route="Purchases" />
+        <NavigateRow label="Location" route="Location" />
+        <NavigateRow label="Settings" route="Settings" />
+        <NavigateRow label="Security" route="Security" />
+    </View>
+    <Text style={{alignSelf:'flex-end',}}>Version 1.0.0</Text>
+
+    </View>
   )
 }
 
@@ -113,8 +118,8 @@ export default UserView
 
 const styles = StyleSheet.create({
     userImage: {
-      width: 150,
-      height: 150,
+      width: 100,
+      height: 100,
       borderRadius: 50,
       marginBottom: 20,
     },

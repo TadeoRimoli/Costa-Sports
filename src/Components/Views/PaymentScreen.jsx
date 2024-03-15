@@ -90,8 +90,17 @@ const PaymentScreen = ({  }) => {
   },[isFocused])
 
   useEffect(()=>{
-    if(purchaseStatus === cases.good){
-      dispatch(deleteAllCartItems())
+    if (purchaseStatus === cases.good) {
+      // Elimina todos los elementos del carrito
+      dispatch(deleteAllCartItems());
+
+      // Navega a la ruta deseada después de 3 segundos
+      const timeoutId = setTimeout(() => {
+        navigation.navigate('Purchases');
+      }, 3000);
+
+      // Limpia el timeout al desmontar el componente
+      return () => clearTimeout(timeoutId);
     }
   },[purchaseStatus])
 

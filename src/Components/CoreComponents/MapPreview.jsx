@@ -45,24 +45,35 @@ const MapPreview = ({ latitude, longitude }) => {
   }, [isFocused,location]);
 
   return (
-    <>
-        <Image
-          source={ location.latitude!="" ?  { uri: url } : require('../../images/mapa.png')}
-          style={styles.userImage}
-        />
-        <Text>{address}</Text>
-      </>
+    <View style={styles.container}>
+    <Image
+      source={location.latitude !== "" ? { uri: url } : require('../../images/mapa.png')}
+      style={styles.userImage}
+      resizeMode="contain" // Ajusta la imagen al tamaño del contenedor
+    />
+    <Text style={styles.addressText}>{address}</Text>
+  </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1, // Ocupa todo el espacio disponible
+    justifyContent: 'center', // Centra verticalmente
+    alignItems: 'center', // Centra horizontalmente
+    padding: 20, // Agrega un poco de espacio alrededor del contenido
+  },
   userImage: {
-    width: 300,
-    height: 200,
-    borderRadius: 50,
-    marginBottom: 20,
+    width: '100%', // Ancho del 100% del contenedor
+    height: 200, // Altura fija (puedes ajustarla según tus necesidades)
+    marginBottom: 20, // Agrega espacio entre la imagen y el texto
+  },
+  addressText: {
+    fontSize: 16, // Tamaño de fuente personalizable
+    textAlign: 'center', // Alineación de texto centrada
   },
 });
+
 export default MapPreview;
 
 
