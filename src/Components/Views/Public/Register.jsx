@@ -9,6 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 import LoadingIndicator from '../../CoreComponents/LoadingIndicator'
 import CustomModal from '../../CoreComponents/CustomModal'
 import { registerSchema } from '../../../services/authYupSchema'
+import { appName } from '../../../Constants/Constants'
 const Register = () => {
 
   const [email,setEmail] = useState('');
@@ -73,7 +74,7 @@ const Register = () => {
 
   return (
     <View style={[GeneralStyle.padding16, GeneralStyle.flex1, GeneralStyle.justifyCenter, GeneralStyle.itemsCenter]}>
-      <Text style={[GeneralStyle.fontBold,GeneralStyle.fontSize24,GeneralStyle.marginBottom10]}>La costa Shopping</Text>
+      <Text style={[GeneralStyle.fontBold,GeneralStyle.fontSize24,GeneralStyle.marginBottom10]}>{appName}</Text>
       <CustomInput
       customStyles={{width:'100%'}}
       placeholder="Email"

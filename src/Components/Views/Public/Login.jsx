@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '../../../../Redux/slices/GeneralSlice';
 import { loginSchema } from '../../../services/authYupSchema';
 import { insertSession } from '../../../db';
+import { appName } from '../../../Constants/Constants';
 
 
 const Login = () => {
@@ -48,7 +49,7 @@ const Login = () => {
   }
   return (
     <View style={[GeneralStyle.padding16, GeneralStyle.flex1, GeneralStyle.justifyCenter, GeneralStyle.itemsCenter]}>
-        <Text style={[GeneralStyle.fontBold,GeneralStyle.fontSize24,GeneralStyle.marginBottom10]}>La costa Shopping</Text>
+        <Text style={[GeneralStyle.fontBold,GeneralStyle.fontSize24,GeneralStyle.marginBottom10]}>{appName}</Text>
         <CustomInput
         customStyles={{width:'100%'}}
         placeholder="Email"

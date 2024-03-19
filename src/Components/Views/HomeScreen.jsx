@@ -24,12 +24,7 @@ const HomeScreen = ({navigation,route}) => {
         
           <Text style={styles.buttonText}>Cart</Text>
         </Pressable>
-        <Pressable
-          style={[styles.button, styles.purchasesButton]}
-          onPress={()=>fetchSession().then(result=>console.log(result))  }
-        >
-      <Text style={styles.buttonText}>My Purchases</Text>
-      </Pressable>
+        
       <Pressable
           style={[styles.button, styles.purchasesButton]}
           onPress={()=>navigation.navigate("Purchases")}

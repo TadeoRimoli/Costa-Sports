@@ -2,14 +2,14 @@ import { useState } from 'react';
 
 import { StyleSheet,Pressable, Text,Dimensions,Image, View } from 'react-native'
 import React from 'react'
-import { Colors, GeneralStyle } from '../../Styles/GeneralStyles';
+import { Colors, GeneralStyle, NewColors } from '../../Styles/GeneralStyles';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import CustomButton from '../CoreComponents/CustomButton';
 import CustomModal from '../CoreComponents/CustomModal';
 import CustomInput from '../CoreComponents/CustomInput';
 import { useDispatch } from 'react-redux';
 import { addCartItem } from '../../../Redux/slices/GeneralSlice';
-
+import { AntDesign } from '@expo/vector-icons';
 
 const ProductCard = ({item}) => {
     const dispatch = useDispatch()
@@ -108,12 +108,12 @@ const ProductCard = ({item}) => {
 
               <View style={{ flexDirection: 'col',  marginVertical: 8 }}>
                 <View style={[GeneralStyle.row,GeneralStyle.itemsCenter]}>
-                    <Pressable onPress={handleDecrement}>
-                      <Ionicons name="arrow-down-outline" size={35} color="black" />
+                    <Pressable style={{backgroundColor:NewColors.blueGrey100,borderRadius:40}} onPress={handleDecrement}>
+                      <AntDesign name="minus" size={30} color="black" />
                     </Pressable>
                     <CustomInput customStyles={{marginHorizontal: 10,}} keyboardType={"numeric"} value={count.toString()} setValue={handleAddCount}/>
-                    <Pressable onPress={handleIncrement}>
-                      <Ionicons name="arrow-up-outline" size={35} color="black" />
+                    <Pressable style={{backgroundColor:NewColors.blueGrey100,borderRadius:40}} onPress={handleIncrement}>
+                      <Ionicons name="add" fontWeight='bold' size={30} color="black" />
                     </Pressable>
                 </View>
               </View>

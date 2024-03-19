@@ -17,8 +17,59 @@ export const Colors = {
   green: '#6BB17B',
   Orange: '#CF906D',
   backgroundError:'#FADBD8',
-  error:'#DF4B4E'
+  error:'#DF4B4E',
+  
 };
+
+export const NewColors = {
+  'grey50': '#f3f8f8',
+  'grey100': '#dfedee',
+  'grey200': '#c3ddde',
+  'grey300': '#9ac4c6',
+  'grey400': '#76abae',
+  'grey500': '#4e888c',
+  'grey600': '#447176',
+  'grey700': '#3c5d62',
+  'grey800': '#374e53',
+  'grey900': '#314448',
+  'grey950': '#1d2b2f',
+  'blueGrey50': '#f6f7f9',
+  'blueGrey100': '#edeef1',
+  'blueGrey200': '#d6dae1',
+  'blueGrey300': '#b3bbc6',
+  'blueGrey400': '#8996a7',
+  'blueGrey500': '#6a788d',
+  'blueGrey600': '#556074',
+  'blueGrey700': '#464f5e',
+  'blueGrey800': '#3c4350',
+  'blueGrey900': '#31363f',
+  'blueGrey950': '#23272e',
+  'silver50': '#f8f8f8',
+  'silver100': '#eeeeee',
+  'silver200': '#dcdcdc',
+  'silver300': '#bdbdbd',
+  'silver400': '#989898',
+  'silver500': '#7c7c7c',
+  'silver600': '#656565',
+  'silver700': '#525252',
+  'silver800': '#464646',
+  'silver900': '#3d3d3d',
+  'silver950': '#292929',
+  'slateGrey50': '#f6f7f9',
+  'slateGrey100': '#eceff2',
+  'slateGrey200': '#d4dbe3',
+  'slateGrey300': '#aebccb',
+  'slateGrey400': '#8297ae',
+  'slateGrey500': '#637b94',
+  'slateGrey600': '#4e637b',
+  'slateGrey700': '#405064',
+  'slateGrey800': '#384454',
+  'slateGrey900': '#323c48',
+  'slateGrey950': '#222831'
+};
+
+
+
 
 export const GeneralStyle = StyleSheet.create({
   // Utiliza los colores del objeto Colors
