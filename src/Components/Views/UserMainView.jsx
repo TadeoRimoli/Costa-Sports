@@ -7,7 +7,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useDispatch } from 'react-redux';
 import SettingsScreen from './Settings';
 import SecurityScreen from './Security';
-import { deleteSession, dropTable } from '../../db';
+import { deleteSession } from '../../db';
 import { setUser } from '../../../Redux/slices/GeneralSlice';
 
 const Stack = createNativeStackNavigator()

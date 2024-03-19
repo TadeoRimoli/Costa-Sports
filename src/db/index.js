@@ -64,4 +64,4 @@ const deleteSession = () => {
 };
 
 
-export { createTable, getSession, insertSession, deleteSession, dropTable };
+export { createTable, getSession, insertSession, deleteSession };

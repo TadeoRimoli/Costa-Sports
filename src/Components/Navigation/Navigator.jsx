@@ -14,7 +14,7 @@ import Register from '../Views/Public/Register';
 import { useDispatch, useSelector } from 'react-redux';
 import Login from '../Views/Public/Login';
 import UserMainView from '../Views/UserMainView';
-import { createTable, deleteSession, dropTable, fetchSession, getSession } from '../../db';
+import { createTable, deleteSession,  getSession } from '../../db';
 import { setUser } from '../../../Redux/slices/GeneralSlice';
 
 const Tab = createBottomTabNavigator()
