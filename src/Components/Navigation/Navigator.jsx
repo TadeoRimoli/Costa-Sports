@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from '../Views/HomeScreen';
@@ -11,9 +11,11 @@ import ProductList from '../Views/ProductList';
 import PaymentScreen from '../Views/PaymentScreen';
 import Purchases from '../Views/Purchases';
 import Register from '../Views/Public/Register';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Login from '../Views/Public/Login';
 import UserMainView from '../Views/UserMainView';
+import { createTable, deleteSession, dropTable, fetchSession, getSession } from '../../db';
+import { setUser } from '../../../Redux/slices/GeneralSlice';
 
 const Tab = createBottomTabNavigator()
 const Stack = createNativeStackNavigator()
@@ -82,6 +84,36 @@ const PublicStack = ({})=>{
 const MyNavigator = ({}) => {
 
   const { user } = useSelector(state=>state.General)
+  
+  useEffect(() => {
+    // Crear la tabla al cargar la aplicación
+    createTable();
+    fetchSession()
+  }, []);
+
+  const dispatch = useDispatch()
+  const MAX_SESSION_TIME = 10; // 1 hora en segundos
+
+  const fetchSession = () => {
+    getSession(session => {
+      console.log('Session:', session);
+      if (session) {
+        const { updatedAt } = session;
+        const currentTimeInSeconds = Math.floor(Date.now() / 1000);
+        const elapsedTime = currentTimeInSeconds - updatedAt;
+        if (elapsedTime > MAX_SESSION_TIME) {
+          // Si ha pasado el tiempo máximo de sesión
+          deleteSession(); // Elimina la sesión expirada de la base de datos
+          dispatch(setUser(null)); // Actualiza el estado del usuario a null
+        } else {
+          // Si la sesión aún no ha expirado
+          dispatch(setUser(session)); // Actualiza el estado del usuario con los datos de la sesión
+        }
+      } else {
+        // Si no hay sesión almacenada
+      }
+    });
+  };
 
   return  user ? 
   (
@@ -90,6 +122,9 @@ const MyNavigator = ({}) => {
         tabBarActiveTintColor: '#877665', 
         tabBarStyle: {
           backgroundColor: '#f2f2f2',
+        },
+        tabBarIconStyle:{
+          color:'black'
         }
       }}
       >

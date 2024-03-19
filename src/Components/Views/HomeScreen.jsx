@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Pressable } from 'react-native';
+import { fetchSession } from '../../db';
 
 const HomeScreen = ({navigation,route}) => {
   
   const hour = new Date().getHours();
+  
+
   return (
     <View style={styles.container}>
       <Text style={styles.saludo}>{hour <12 ? 'Good morning!' : hour<18 ? 'Good afternoon!' : 'Good evening!' }</Text>
@@ -22,6 +25,12 @@ const HomeScreen = ({navigation,route}) => {
           <Text style={styles.buttonText}>Cart</Text>
         </Pressable>
         <Pressable
+          style={[styles.button, styles.purchasesButton]}
+          onPress={()=>fetchSession().then(result=>console.log(result))  }
+        >
+      <Text style={styles.buttonText}>My Purchases</Text>
+      </Pressable>
+      <Pressable
           style={[styles.button, styles.purchasesButton]}
           onPress={()=>navigation.navigate("Purchases")}
         >

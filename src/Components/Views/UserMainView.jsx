@@ -5,9 +5,10 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import UserView from './UserView';
 import { Ionicons } from '@expo/vector-icons';
 import { useDispatch } from 'react-redux';
-import { setUser } from '../../../Redux/slices/GeneralSlice';
 import SettingsScreen from './Settings';
 import SecurityScreen from './Security';
+import { deleteSession, dropTable } from '../../db';
+import { setUser } from '../../../Redux/slices/GeneralSlice';
 
 const Stack = createNativeStackNavigator()
 
@@ -19,7 +20,10 @@ const UserMainView = () => {
           'Are you sure you want to log out?',
           [
             { text: 'Go back', style: 'cancel' },
-            { text: 'Log out', onPress:()=>{ dispatch(setUser(null)) } },
+            { text: 'Log out', onPress:()=>{ 
+              deleteSession()
+              dispatch(setUser(null))
+            } },
           ]
         );
       };

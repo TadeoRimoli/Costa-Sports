@@ -7,6 +7,8 @@ import { NavigationContainer } from '@react-navigation/native'
 import MyNavigator from './src/Components/Navigation/Navigator';
 import store from './Redux/Store';
 import { Provider } from 'react-redux';
+import { initDb } from './src/db';
+
 
 export default function App() {
       

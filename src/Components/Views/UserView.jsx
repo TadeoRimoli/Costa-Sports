@@ -18,7 +18,7 @@ const UserView = () => {
     const {user} = useSelector(state=>state.General)
 
     const [putImageProfile] = usePutImageProfileMutation()
-    const {data,isSuccess,refetch } = useGetImageProfileQuery(user.localId)
+    const {data,isSuccess,refetch } = useGetImageProfileQuery( user?.localId ?? '-1')
     const [image, setImage] = useState(null);
   
       useEffect(()=>{
@@ -87,6 +87,7 @@ const UserView = () => {
     const navigation = useNavigation()
   
   return (
+    user ? 
     <View style={{flex:1,padding:10,justifyContent:'space-between'}}>
     <View style={{alignItems:'center',}}>
         
@@ -110,7 +111,7 @@ const UserView = () => {
     </View>
     <Text style={{alignSelf:'flex-end',}}>Version 1.0.0</Text>
 
-    </View>
+    </View> : null
   )
 }
 
