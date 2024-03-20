@@ -39,8 +39,6 @@ const HomeScreen = ({navigation,route}) => {
       </View>
       <Ionicons name="arrow-forward" size={30} color="white" />
     </Pressable>
-   
-    
     </View>
     </ImageBackground>
   );
