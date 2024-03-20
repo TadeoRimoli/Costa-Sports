@@ -65,9 +65,18 @@ export const NewColors = {
   'slateGrey700': '#405064',
   'slateGrey800': '#384454',
   'slateGrey900': '#323c48',
-  'slateGrey950': '#222831'
+  'slateGrey950': '#222831',
+
 };
 
+export const AppColors = {
+  inputBackground : '#FFF1DA',
+  primaryButton:'#FC3A51',
+  secondaryButton:'#FFF1DA',
+  primaryText : '#FFF1DA',
+  secondaryText:'#7379FF',
+  footerBackground:'#0E2430'
+}
 
 
 

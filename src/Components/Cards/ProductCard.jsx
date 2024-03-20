@@ -120,6 +120,7 @@ const ProductCard = ({item}) => {
               </View>
               <Text style={{ fontSize: 16, fontWeight: 'bold',alignSelf:'flex-end',marginTop:8 }}>Total: ${addProductModal?.item?.price*count}</Text>
           </View>
+         
           <View style={[GeneralStyle.row,GeneralStyle.justifyBetween]}>
               <CustomButton color={'#e74c3c'} label='Cancel' onPress={()=>setAddProductModal({visible:false,item:null})}></CustomButton>
               <CustomButton color={'#2ecc71'} label='Add' onPress={()=>{

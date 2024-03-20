@@ -16,13 +16,16 @@ import Login from '../Views/Public/Login';
 import UserMainView from '../Views/UserMainView';
 import { createTable, deleteSession,  getSession } from '../../db';
 import { setUser } from '../../../Redux/slices/GeneralSlice';
+import { AppColors } from '../../Styles/GeneralStyles';
 
 const Tab = createBottomTabNavigator()
 const Stack = createNativeStackNavigator()
 
 const HomeStack = () => {
   return <Stack.Navigator initialRouteName='Home'>
-      <Stack.Screen name="Home" component={HomeScreen}></Stack.Screen>
+      <Stack.Screen name="Home" 
+      options={{ headerShown:false }}
+      component={HomeScreen}></Stack.Screen>
       <Stack.Screen name="Purchases" component={Purchases}></Stack.Screen>
   </Stack.Navigator>
 }
@@ -91,8 +94,9 @@ const MyNavigator = ({}) => {
     fetchSession()
   }, []);
 
-  const dispatch = useDispatch()
-  const MAX_SESSION_TIME = 10; // 1 hora en segundos
+  const dispatch = useDispatch();
+  
+  const MAX_SESSION_TIME = 3600; // 1 hora en segundos
 
   const fetchSession = () => {
     getSession(session => {
@@ -117,22 +121,23 @@ const MyNavigator = ({}) => {
 
   return  user ? 
   (
-      <Tab.Navigator
-      screenOptions={{ headerShown: false,tabBarShowLabel:false,
-        tabBarActiveTintColor: '#877665', 
-        tabBarStyle: {
-          backgroundColor: '#f2f2f2',
-        },
-        tabBarIconStyle:{
-          color:'black'
-        }
-      }}
+        <Tab.Navigator
+        screenOptions={{
+          headerShown: false,
+          tabBarShowLabel: false,
+          tabBarActiveTintColor: 'white', 
+          tabBarStyle: {
+            backgroundColor: AppColors.footerBackground,
+            borderTopWidth: 0, // Eliminar el borde superior de la barra de navegación
+          },
+          
+        }}
       >
         <Tab.Screen  
         name="HomeStack" component={HomeStack}
         options={{
             tabBarIcon: ({ color, size }) => (
-              <Ionicons name="home" size={size} color={color} />
+              <Ionicons name="home-outline" size={size} color={color} />
             ),
           }}
         />
@@ -143,7 +148,7 @@ const MyNavigator = ({}) => {
         options={{
             tabBarLabel:'',
             tabBarIcon: ({ color, size }) => (
-              <Ionicons name="pricetags" size={size} color={color} />
+              <Ionicons name="pricetags-outline" size={size} color={color} />
             ),
           }}
         />
@@ -154,7 +159,7 @@ const MyNavigator = ({}) => {
         options={{
             tabBarLabel:'',
             tabBarIcon: ({ color, size }) => (
-              <Ionicons name="cart" size={size} color={color} />
+              <Ionicons name="cart-outline" size={size} color={color} />
             ),
           }}
         />
@@ -164,7 +169,7 @@ const MyNavigator = ({}) => {
         options={{
             tabBarLabel:'',
             tabBarIcon: ({ color, size }) => (
-              <Ionicons name="person" size={size} color={color} />
+              <Ionicons name="person-outline" size={size} color={color} />
             ),
           }}
         />

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { TextInput, StyleSheet, Text } from 'react-native';
 import PropTypes from 'prop-types';
+import { AppColors } from '../../Styles/GeneralStyles';
 
 const CustomInput = ({ customStyles, placeholder, label, value, setValue, keyboardType, error, setError, secureTextEntry=false }) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -38,9 +39,10 @@ const CustomInput = ({ customStyles, placeholder, label, value, setValue, keyboa
           customStyles,
           isFocused && styles.focused,
           error && error.error && styles.error,
-          { backgroundColor: error && error.error ? '#FADBD8' : '#f5f5f5' }
+          { fontSize:16,backgroundColor: error && error.error ? '#FADBD8' : AppColors.inputBackground }
         ]}
-        placeholderTextColor="rgba(0, 0, 0, 0.8)"
+        placeholderTextColor="rgba(0, 0, 0, 0.7)"
+        
         onFocus={handleFocus}
         onBlur={handleBlur}
       />

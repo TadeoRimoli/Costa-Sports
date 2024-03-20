@@ -1,6 +1,6 @@
-import { Alert, Button, Modal, StyleSheet, Text, View } from 'react-native'
+import { Alert, Button, Modal, StyleSheet, Text, View,ImageBackground } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { GeneralStyle } from '../../../Styles/GeneralStyles'
+import { AppColors, GeneralStyle } from '../../../Styles/GeneralStyles'
 import CustomInput from '../../CoreComponents/CustomInput'
 import CustomButton from '../../CoreComponents/CustomButton'
 import { useSignUpMutation } from '../../../services/authAPI'
@@ -70,11 +70,14 @@ const Register = () => {
   }
 
    
+  const backgroundImage = require('../../../images/registerbackground.png');
 
 
   return (
+    <ImageBackground source={backgroundImage} style={{ width: '100%', height: '100%' }}>
     <View style={[GeneralStyle.padding16, GeneralStyle.flex1, GeneralStyle.justifyCenter, GeneralStyle.itemsCenter]}>
-      <Text style={[GeneralStyle.fontBold,GeneralStyle.fontSize24,GeneralStyle.marginBottom10]}>{appName}</Text>
+      <Text style={[{color:AppColors.inputBackground},GeneralStyle.fontBold,GeneralStyle.fontSize24,GeneralStyle.marginBottom10]}>{appName}</Text>
+      
       <CustomInput
       customStyles={{width:'100%'}}
       placeholder="Email"
@@ -102,11 +105,12 @@ const Register = () => {
       setError={setConfirmPasswordError}
       />
       <CustomButton
-      customStyles={{width:'100%'}}
+      customStyles={{marginTop:10,width:'100%'}}
       label='Sign Up' onPress={handleSignUp} />
-      <Text style={[GeneralStyle.fontSize16,GeneralStyle.marginTop15]}>Already have an account?<Text onPress={()=>{
+      <Text style={[GeneralStyle.fontSize18,GeneralStyle.marginTop15,{color:AppColors.inputBackground}]}>Already have an account?<Text onPress={()=>{
           navigation.navigate("Login")
-      }} style={[GeneralStyle.fontSize16,{color:'blue'}]}> Log in</Text> </Text>
+      }} style={[GeneralStyle.fontSize18,{color:AppColors.secondaryText}]}> Log in</Text> </Text>
+
       <CustomModal
       animationType="none"
       transparent={false}
@@ -118,6 +122,8 @@ const Register = () => {
         <Text style={[GeneralStyle.fontSize22,GeneralStyle.marginBottom10]}>Ha ocurrido un error y no te pudimos registrar</Text>
     </CustomModal>
     </View>
+    </ImageBackground>
+
   )
 }
 

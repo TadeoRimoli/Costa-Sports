@@ -31,6 +31,13 @@ export const ecommerceAPI = createApi({
                 return data
             }
         }),
+        getProductsByCategoryOrderByPrice: buidler.query({
+            query: (category) => `/products.json?orderBy="category"&equalTo="${category}"&orderBy="price"`, // Agregamos orderBy="price"
+            transformResponse: (response) => {
+                const data = Object.values(response);
+                return data;
+            },
+        }),
         getCategories:buidler.query({
             query:()=>'/categories.json'
         }),

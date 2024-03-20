@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
-import { Colors, GeneralStyle } from '../../../Styles/GeneralStyles';
+import { StyleSheet, Text, View,ImageBackground , TextInput, TouchableOpacity, Alert } from 'react-native';
+import { AppColors, Colors, GeneralStyle } from '../../../Styles/GeneralStyles';
 import CustomInput from '../../CoreComponents/CustomInput';
 import CustomButton from '../../CoreComponents/CustomButton';
 import { useNavigation } from '@react-navigation/native';
@@ -47,9 +47,14 @@ const Login = () => {
       setPasswordError({ error: errors.password ? true : false, message: errors.password || '' });
     }
   }
+
+  const backgroundImage = require('../../../images/publicbackground.png');
+
   return (
+    <ImageBackground source={backgroundImage} style={{ width: '100%', height: '100%' }}>
+
     <View style={[GeneralStyle.padding16, GeneralStyle.flex1, GeneralStyle.justifyCenter, GeneralStyle.itemsCenter]}>
-        <Text style={[GeneralStyle.fontBold,GeneralStyle.fontSize24,GeneralStyle.marginBottom10]}>{appName}</Text>
+        <Text style={[{color:AppColors.inputBackground},GeneralStyle.fontBold,GeneralStyle.fontSize24,GeneralStyle.marginBottom10]}>{appName}</Text>
         <CustomInput
         customStyles={{width:'100%'}}
         placeholder="Email"
@@ -68,13 +73,16 @@ const Login = () => {
         setError={setPasswordError}
         />
         <CustomButton
-        customStyles={{width:'100%'}}
-        label='Login' onPress={handleLogin}/>
-        <Text style={[GeneralStyle.fontSize16,GeneralStyle.marginTop15]}>Don't have an account? <Text onPress={()=>{
+        customStyles={[{marginTop:10,width:'100%'}]}
+        label='Login' 
+        textStyles={[{fontSize:18,fontWeight:600,},]}
+        onPress={handleLogin}/>
+        <Text style={[GeneralStyle.fontSize18,GeneralStyle.marginTop15,{color:AppColors.inputBackground}]}>Don't have an account? <Text onPress={()=>{
             navigation.navigate("Register")
-        }} style={[GeneralStyle.fontSize16,{color:'blue'}]}>Sign up</Text> </Text>
-        
+        }} style={[GeneralStyle.fontSize18,{color:AppColors.secondaryText}]}>Sign up</Text> </Text>
     </View>
+    </ImageBackground>
+
   );
 };
 
