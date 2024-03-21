@@ -9,6 +9,7 @@ import SettingsScreen from './Settings';
 import SecurityScreen from './Security';
 import { deleteSession } from '../../db';
 import { setUser } from '../../../Redux/slices/GeneralSlice';
+import { AppColors } from '../../Styles/GeneralStyles';
 
 const Stack = createNativeStackNavigator()
 
@@ -31,11 +32,15 @@ const UserMainView = () => {
    <Stack.Navigator >
     <Stack.Screen name="Perfil" component={UserView}
         options={{
+          headerTintColor:AppColors.inputBackground,
+          headerStyle:{
+            backgroundColor:AppColors.footerBackground,
+          },
           headerRight: () => (
             <Ionicons
               name="log-out"
               size={30}
-              color="black"
+              color={AppColors.inputBackground}
               style={{ marginRight: 10 }}
               onPress={handleLogout}
             />

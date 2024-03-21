@@ -75,7 +75,8 @@ export const AppColors = {
   secondaryButton:'#FFF1DA',
   primaryText : '#FFF1DA',
   secondaryText:'#7379FF',
-  footerBackground:'#0E2430'
+  footerBackground:'#0E2430',
+  white:'#FFF8ED'
 }
 
 

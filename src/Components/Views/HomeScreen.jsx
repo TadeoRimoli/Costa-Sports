@@ -25,7 +25,6 @@ const HomeScreen = ({navigation,route}) => {
         setBackgroundImage(require('../../images/eveningbackground.png')) ;
       }
     }
-    console.log("a")
   },[isFocused])
 
   return (

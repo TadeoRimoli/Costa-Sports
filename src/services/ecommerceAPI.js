@@ -53,8 +53,15 @@ export const ecommerceAPI = createApi({
                 url:`/orders.json?orderBy="user"&equalTo="${user}"`,
                 method:"GET",
             })
+        }),
+        reduceProductStock: buidler.mutation({
+            query: ({ productId, amount }) => ({
+              url: `/products/${productId}.json`,
+              method: "PATCH",
+              body: { stock: amount }, // Reducir el stock en la cantidad especificada
+            }),
         })
     })
 })
 
-export const {useGetCategoriesQuery,useGetProductsQuery,useGetProductsByCategoryQuery,usePostOrderMutation,useGetOrdersMutation} = ecommerceAPI
+export const {useLazyGetProductsByCategoryQuery,useGetCategoriesQuery,useGetProductsQuery,useGetProductsByCategoryQuery,usePostOrderMutation,useGetOrdersMutation,useReduceProductStockMutation} = ecommerceAPI

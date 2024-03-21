@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { StyleSheet,Pressable, Text,Dimensions,Image, View } from 'react-native'
 import React from 'react'
-import { Colors, GeneralStyle, NewColors } from '../../Styles/GeneralStyles';
+import { AppColors, Colors, GeneralStyle, NewColors } from '../../Styles/GeneralStyles';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import CustomButton from '../CoreComponents/CustomButton';
 import CustomModal from '../CoreComponents/CustomModal';
@@ -96,7 +96,7 @@ const ProductCard = ({item}) => {
         visible={addProductModal.visible}
         hideModalFunction={()=>{setAddProductModal({visible:false,item:null})}}
         >   
-          <View style={{  borderRadius: 8, backgroundColor: 'white', marginBottom: 16 }}>
+          <View style={{  borderRadius: 8, backgroundColor: AppColors.inputBackground, marginBottom: 16 }}>
               <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 8 }}>{addProductModal?.item?.title}</Text>
               <Text style={{ fontSize: 14, color: 'gray', marginBottom: 8 }}>{addProductModal?.item?.description}</Text>
               

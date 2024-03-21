@@ -4,6 +4,7 @@ const initialState = {
   user:null,
   cart: [],
   user:null,
+  productList:[]
 };
 
 const GeneralSlice = createSlice({
@@ -28,9 +29,15 @@ const GeneralSlice = createSlice({
     removeCartItem(state, action){
         const itemIndexToRemove = action.payload;
         state.cart.splice(itemIndexToRemove, 1);
-    }
+    },
+    setProductList(state, action){
+      state.productList = action.payload;
+    },
+    clearProductList(state, action){
+      state.productList = [];
+    },
   },
 });
 
-export const { deleteAllCartItems,addCartItem,setCartItems,removeCartItem,setUser,resetUser} = GeneralSlice.actions;
+export const { clearProductList,setProductList,deleteAllCartItems,addCartItem,setCartItems,removeCartItem,setUser,resetUser} = GeneralSlice.actions;
 export default GeneralSlice.reducer;

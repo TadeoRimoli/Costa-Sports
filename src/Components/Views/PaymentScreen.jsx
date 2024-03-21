@@ -5,8 +5,8 @@ import CustomButton from '../CoreComponents/CustomButton';
 import CustomInput from '../CoreComponents/CustomInput';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteAllCartItems } from '../../../Redux/slices/GeneralSlice';
-import { Colors, GeneralStyle } from '../../Styles/GeneralStyles';
-import { usePostOrderMutation } from '../../services/ecommerceAPI';
+import { AppColors, Colors, GeneralStyle } from '../../Styles/GeneralStyles';
+import { usePostOrderMutation, useReduceProductStockMutation } from '../../services/ecommerceAPI';
 
 const PaymentScreen = ({  }) => {
 
@@ -22,6 +22,7 @@ const PaymentScreen = ({  }) => {
   const { totalPrice } = route.params;
 
   const [postOrder, { isLoading, isError, isSuccess }] = usePostOrderMutation();
+  const [updateProductStock, { }] = useReduceProductStockMutation();
 
   const {cart,purchases} = useSelector(state => state.General);
   const {user} = useSelector(state=>state.General)
@@ -33,6 +34,38 @@ const PaymentScreen = ({  }) => {
     neutral:'NEUTRAL',
   }
   const [purchaseStatus, setPurchaseStatus] = useState(cases.neutral);
+
+  const handleReduceStock = async (items) => {
+    try {
+      let allProductsHaveEnoughStock = true;
+      let i = 0;
+      while (allProductsHaveEnoughStock && i < items.length) {
+        const product = items[i];
+        const { item, stock, quantity } = product;
+        let newStock = stock - quantity;
+        if (newStock < 0) {
+          console.error(`La cantidad solicitada para el producto con ID ${item.id} excede el stock disponible`);
+          allProductsHaveEnoughStock = false;
+        }
+        i++;
+      }
+  
+      if (allProductsHaveEnoughStock) {
+        for (const product of items) {
+          const { item, quantity } = product;
+          await updateProductStock({ productId: item.id, amount: item.stock - quantity });
+          console.log(`Stock reducido para el producto con ID ${item.id} por ${quantity} unidades`);
+        }
+      } else {
+        return false;
+      }
+  
+      return true;
+    } catch (error) {
+      console.error('Error al reducir el stock:', error);
+      return false;
+    }
+  };
 
   const simulatePurchase = async () => {
     if (!creditCardNumber || !securityCode || !cardholderName) {
@@ -55,9 +88,16 @@ const PaymentScreen = ({  }) => {
             items: cart,
             card: creditCardNumber,
             user:user.localId
-        }
-          await postOrder(item)
-          setPurchaseStatus(cases.good);
+          }
+          const checkStock  = await handleReduceStock(cart);
+          if(checkStock){
+            await postOrder(item);
+            setPurchaseStatus(cases.good);
+            dispatch(deleteAllCartItems());
+          }else{
+            setPurchaseStatus(cases.bad);
+          }
+
         }catch(error){
             console.log(error)
         }
@@ -89,28 +129,13 @@ const PaymentScreen = ({  }) => {
     }
   },[isFocused])
 
-  useEffect(()=>{
-    if (purchaseStatus === cases.good) {
-      // Elimina todos los elementos del carrito
-      dispatch(deleteAllCartItems());
-
-      // Navega a la ruta deseada después de 3 segundos
-      const timeoutId = setTimeout(() => {
-        navigation.navigate('Purchases');
-      }, 3000);
-
-      // Limpia el timeout al desmontar el componente
-      return () => clearTimeout(timeoutId);
-    }
-  },[purchaseStatus])
-
   return (
-    <View style={styles.container}>
+    <View style={[styles.container,{backgroundColor:AppColors.footerBackground}]}>
       {loading ? <ActivityIndicator style={styles.loadingIndicator} size="large" color="#0000ff" />
       :
       <>
       {purchaseStatus=== cases.neutral &&<View style={{ width: '100%' }}>
-        <Text style={[styles.text, GeneralStyle.fontSize18]}>Total to pay: ${totalPrice.toFixed(2)}</Text>
+        <Text style={[styles.text, GeneralStyle.fontSize18,{color:AppColors.inputBackground}]}>Total to pay: ${totalPrice.toFixed(2)}</Text>
         <CustomInput
           placeholder="Credit Card Number"
           keyboardType="numeric"
@@ -134,7 +159,7 @@ const PaymentScreen = ({  }) => {
           error={cardholderNameError}
           setError={setCardholderNameError}
         />
-        <View style={[GeneralStyle.row, GeneralStyle.justifyBetween]}>
+        <View style={[GeneralStyle.row, GeneralStyle.justifyBetween,GeneralStyle.marginTop5]}>
           <CustomButton color="#B93649" label="Cancel" onPress={handleReturn} />
           <CustomButton color={Colors.green} label="Buy" onPress={simulatePurchase} />
         </View>
@@ -165,7 +190,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff',
     padding: 20,
   },
   text: {

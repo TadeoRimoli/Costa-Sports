@@ -15,14 +15,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import Login from '../Views/Public/Login';
 import UserMainView from '../Views/UserMainView';
 import { createTable, deleteSession,  getSession } from '../../db';
-import { setUser } from '../../../Redux/slices/GeneralSlice';
+import { setProductList, setUser } from '../../../Redux/slices/GeneralSlice';
 import { AppColors } from '../../Styles/GeneralStyles';
+import { useLazyGetProductsByCategoryQuery } from '../../services/ecommerceAPI';
 
 const Tab = createBottomTabNavigator()
 const Stack = createNativeStackNavigator()
 
 const HomeStack = () => {
-  return <Stack.Navigator initialRouteName='Home'>
+  return <Stack.Navigator 
+  
+  
+  initialRouteName='Home'>
       <Stack.Screen name="Home" 
       options={{ headerShown:false }}
       component={HomeScreen}></Stack.Screen>
@@ -31,14 +35,45 @@ const HomeStack = () => {
 }
 
 const CategoriesStack = ({navigation,route}) => {
+  
+  
+  const [fetchTrigger] = useLazyGetProductsByCategoryQuery({});
 
-  return <Stack.Navigator initialRouteName='Categories' 
+
+  const dispatch = useDispatch()
+  async function fetchItems(category){
+    const response = await fetchTrigger(category)
+    if(response.isSuccess){
+      dispatch(setProductList(response.data))
+    }
+  }  
+   // Función para manejar el clic en el botón
+  return <Stack.Navigator 
+  initialRouteName='Categories' 
   >
-      <Stack.Screen name="Categories" component={Categories} />
+      <Stack.Screen name="Categories" 
+      options={{
+        headerStyle:{
+          backgroundColor:AppColors.footerBackground,
+        },
+        headerTintColor:AppColors.inputBackground
+      }}
+      
+      component={Categories} />
       <Stack.Screen 
       options={({ route }) => ({
+        headerRight:()=>(
+          <Ionicons name="reload" onPress={()=>{
+            fetchItems(route.params.selectedCategory.name);
+          }} size={30} color={AppColors.inputBackground}/>
+        ),
         headerTitle:route.params.selectedCategory.name.toLowerCase().split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
         ,
+        headerStyle:{
+          backgroundColor:AppColors.footerBackground,
+        },
+        headerTintColor:AppColors.inputBackground
+
       })}
       name="Products" component={ProductList} />
   </Stack.Navigator>
@@ -51,15 +86,26 @@ const ShoppingCartStack = ({ navigation }) => {
       <Stack.Screen 
           name="ShoppingCart" 
           options={{
-            headerTitle:'Shopping Cart'
+            headerTitle:'Shopping Cart',
+            headerStyle:{
+              backgroundColor:AppColors.footerBackground,
+            },
+          headerTintColor:AppColors.inputBackground
+
           }}
           component={ShoppingCart} 
       />
       <Stack.Screen 
           name="PaymentScreen" 
           options={{
-            headerTitle:'Shopping Cart'
+            headerTitle:'Shopping Cart',
+            headerStyle:{
+              backgroundColor:AppColors.footerBackground,
+            },
+            headerTintColor:AppColors.inputBackground,
+
           }}
+          
           component={PaymentScreen}
       />
   </Stack.Navigator>
@@ -136,7 +182,7 @@ const MyNavigator = ({}) => {
         <Tab.Screen  
         name="HomeStack" component={HomeStack}
         options={{
-            tabBarIcon: ({ color, size }) => (
+          tabBarIcon: ({ color, size }) => (
               <Ionicons name="home-outline" size={size} color={color} />
             ),
           }}
@@ -146,6 +192,7 @@ const MyNavigator = ({}) => {
         name="CategoriesStack"
         component={CategoriesStack}
         options={{
+
             tabBarLabel:'',
             tabBarIcon: ({ color, size }) => (
               <Ionicons name="pricetags-outline" size={size} color={color} />
@@ -167,6 +214,7 @@ const MyNavigator = ({}) => {
         name="UserStack" 
         component={UserMainView}
         options={{
+            
             tabBarLabel:'',
             tabBarIcon: ({ color, size }) => (
               <Ionicons name="person-outline" size={size} color={color} />

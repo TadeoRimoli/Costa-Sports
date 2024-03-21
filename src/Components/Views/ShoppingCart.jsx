@@ -5,7 +5,7 @@ import CustomButton from '../../Components/CoreComponents/CustomButton';
 import { useIsFocused, useNavigation, useRoute } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeCartItem } from '../../../Redux/slices/GeneralSlice';
-import { Colors, GeneralStyle } from '../../Styles/GeneralStyles';
+import { AppColors, Colors, GeneralStyle } from '../../Styles/GeneralStyles';
 
 
 const ShoppingCart = ({ }) => {
@@ -28,7 +28,7 @@ const ShoppingCart = ({ }) => {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: '#34495e' }}>
+    <View style={{ flex: 1,backgroundColor: AppColors.footerBackground,}}>
       
       {totalPrice === 0 ? (
       <View style={styles.emptyCartMessage}>
@@ -36,7 +36,7 @@ const ShoppingCart = ({ }) => {
       </View>
       ):
       <View style={styles.totalContainer}>
-        <Text style={[{ fontWeight: 'bold', color: 'white' }, GeneralStyle.fontSize18]}>
+        <Text style={[{ fontWeight: 'bold', color: AppColors.inputBackground }, GeneralStyle.fontSize18]}>
           Total: ${totalPrice.toFixed(2)}
         </Text>
       </View>

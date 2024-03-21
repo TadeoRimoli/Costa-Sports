@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker'; // Importa ImagePicker de expo-image-picker
 import CustomButton from '../CoreComponents/CustomButton';
-import { GeneralStyle } from '../../Styles/GeneralStyles';
+import { AppColors, GeneralStyle } from '../../Styles/GeneralStyles';
 import { resetUser, setUser } from '../../../Redux/slices/GeneralSlice';
 import { useGetImageProfileQuery, usePutImageProfileMutation } from '../../services/profileApi';
 import MapPreview from '../CoreComponents/MapPreview';
@@ -88,28 +88,28 @@ const UserView = () => {
   
   return (
     user ? 
-    <View style={{flex:1,padding:10,justifyContent:'space-between'}}>
-    <View style={{alignItems:'center',}}>
-        
-        <View style={[GeneralStyle.justifyCenter,GeneralStyle.itemsCenter]}>
-            {image ? (
-            <TouchableOpacity onPress={showImagePickerOptions}>
-            <Image  source={{ uri: image }} style={styles.userImage} />
-            </TouchableOpacity>
-            )
-            : (
-            <Pressable onPress={showImagePickerOptions} style={styles.userIconContainer}>
-                <Ionicons name="person-circle-outline" size={100} color="black" />
-            </Pressable>
-            )}
-                <Text style={[GeneralStyle.fontSize18,GeneralStyle.marginBottom20]}>{user.email}</Text>
-        </View>
-        <NavigateRow label="Purchases" route="Purchases" />
-        <NavigateRow label="Location" route="Location" />
-        <NavigateRow label="Settings" route="Settings" />
-        <NavigateRow label="Security" route="Security" />
-    </View>
-    <Text style={{alignSelf:'flex-end',}}>Version 1.0.0</Text>
+    <View style={{flex:1,padding:10,justifyContent:'space-between',backgroundColor:AppColors.footerBackground}}>
+      <View style={{alignItems:'center',}}>
+          
+          <View style={[GeneralStyle.justifyCenter,GeneralStyle.itemsCenter]}>
+              {image ? (
+              <TouchableOpacity onPress={showImagePickerOptions}>
+              <Image  source={{ uri: image }} style={styles.userImage} />
+              </TouchableOpacity>
+              )
+              : (
+              <Pressable onPress={showImagePickerOptions} style={styles.userIconContainer}>
+                  <Ionicons name="person-circle-outline" size={100} color={AppColors.inputBackground} />
+              </Pressable>
+              )}
+                  <Text style={[GeneralStyle.fontSize18,GeneralStyle.marginBottom20,{color:AppColors.inputBackground}]}>{user.email}</Text>
+          </View>
+          <NavigateRow label="Purchases" route="Purchases" />
+          <NavigateRow label="Location" route="Location" />
+          <NavigateRow label="Settings" route="Settings" />
+          <NavigateRow label="Security" route="Security" />
+      </View>
+      <Text style={{alignSelf:'flex-end',color:AppColors.inputBackground}}>Version 1.0.0</Text>
 
     </View> : null
   )
@@ -131,8 +131,6 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
       marginBottom: 20,
-      borderWidth: 1,
-      borderColor: 'black',
     },
   });
   

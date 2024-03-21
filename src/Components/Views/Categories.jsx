@@ -4,7 +4,7 @@ import {View ,FlatList, ActivityIndicator } from 'react-native';
 import CustomInput from '../CoreComponents/CustomInput'; 
 import CategoryProductCard from '../Cards/CategoryProductCard';
 import { useFocusEffect, useIsFocused, useNavigation } from '@react-navigation/native';
-import { GeneralStyle } from '../../Styles/GeneralStyles';
+import { AppColors, GeneralStyle } from '../../Styles/GeneralStyles';
 import LoadingIndicator from '../CoreComponents/LoadingIndicator';
 import { useGetCategoriesQuery } from '../../services/ecommerceAPI';
 const Categories = ({}) => {
@@ -33,38 +33,36 @@ const Categories = ({}) => {
     },[categories])
 
     
-    if (isLoading) {
-       return <LoadingIndicator/>
-    }
-  
-    if (error) {
-      return <Text>Error: {error.message}</Text>;
-    }
+   
   
 
 
   return (
-    <View style={{flex:1,backgroundColor: '#34495e'}}>
-      <View style={{paddingHorizontal:10}}>
-        <View style={[{flexDirection:'row',alignItems:'center'}]}>
-          <CustomInput value={filterValue} setValue={(e)=>{filterItems(e)}} customStyles={{flex:1,marginRight:10}} placeholder={'Search'}/>
+    <View style={{ flex: 1, backgroundColor: AppColors.footerBackground }}>
+    {isLoading ? <LoadingIndicator /> : error ? <Text>Error: {error.message}</Text> : (
+      <>
+        <View style={{ paddingHorizontal: 10 }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <CustomInput value={filterValue} setValue={(e) => { filterItems(e) }} customStyles={{ flex: 1, marginRight: 10 }} placeholder={'Search'} />
+          </View>
+          <View
+            style={{
+              borderBottomColor: 'white',
+              borderBottomWidth: 3,
+              marginHorizontal: 0
+            }}
+          />
         </View>
-        <View
-          style={{
-            borderBottomColor: 'white',
-            borderBottomWidth: 3,
-            marginHorizontal:0
-          }}
-        />
-      </View>
         <FlatList
-        data={localCategories}
-        renderItem={({ item }) => (
-          <CategoryProductCard item={item} handlePressCategory={()=>handlePressCategory(item)}></CategoryProductCard>
-        )}
-        keyExtractor={item => item.name+'category'}
-      />
-    </View>
+          data={localCategories}
+          renderItem={({ item }) => (
+            <CategoryProductCard item={item} handlePressCategory={() => handlePressCategory(item)} />
+          )}
+          keyExtractor={(item) => item.name + 'category'}
+        />
+      </>
+    )}
+  </View>
   )
 }
 
