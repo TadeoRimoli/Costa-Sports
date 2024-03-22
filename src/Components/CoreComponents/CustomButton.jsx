@@ -3,14 +3,14 @@ import React from 'react'
 import { Text,StyleSheet} from 'react-native';
 import { AppColors, GeneralStyle } from '../../Styles/GeneralStyles';
 
-const CustomButton = ({customStyles, textStyles,label = "", value, setValue,onPress, color }) => {
+const CustomButton = ({customStyles, textStyles,label = "", value, setValue,onPress, color,textBlack }) => {
 
     return (
       <Pressable
         onPress={onPress}
         style={[styles.button,customStyles,  {backgroundColor:color ?color:AppColors.primaryButton} ]}
       >
-        <Text style={[styles.buttonText,textStyles,{color:AppColors.inputBackground}]}>{label}</Text>
+        <Text style={[styles.buttonText,textStyles,{ color:textBlack ?AppColors.black:AppColors.white}]}>{label}</Text>
       </Pressable>
     );
   };

@@ -54,7 +54,6 @@ const PaymentScreen = ({  }) => {
         for (const product of items) {
           const { item, quantity } = product;
           await updateProductStock({ productId: item.id, amount: item.stock - quantity });
-          console.log(`Stock reducido para el producto con ID ${item.id} por ${quantity} unidades`);
         }
       } else {
         return false;
@@ -135,7 +134,7 @@ const PaymentScreen = ({  }) => {
       :
       <>
       {purchaseStatus=== cases.neutral &&<View style={{ width: '100%' }}>
-        <Text style={[styles.text, GeneralStyle.fontSize18,{color:AppColors.inputBackground}]}>Total to pay: ${totalPrice.toFixed(2)}</Text>
+        <Text style={[styles.text, GeneralStyle.fontSize18,{color:AppColors.white}]}>Total to pay: ${totalPrice.toFixed(2)}</Text>
         <CustomInput
           placeholder="Credit Card Number"
           keyboardType="numeric"

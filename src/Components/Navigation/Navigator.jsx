@@ -56,7 +56,7 @@ const CategoriesStack = ({navigation,route}) => {
         headerStyle:{
           backgroundColor:AppColors.footerBackground,
         },
-        headerTintColor:AppColors.inputBackground
+        headerTintColor:AppColors.white
       }}
       
       component={Categories} />
@@ -65,14 +65,14 @@ const CategoriesStack = ({navigation,route}) => {
         headerRight:()=>(
           <Ionicons name="reload" onPress={()=>{
             fetchItems(route.params.selectedCategory.name);
-          }} size={30} color={AppColors.inputBackground}/>
+          }} size={30} color={AppColors.white}/>
         ),
         headerTitle:route.params.selectedCategory.name.toLowerCase().split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
         ,
         headerStyle:{
           backgroundColor:AppColors.footerBackground,
         },
-        headerTintColor:AppColors.inputBackground
+        headerTintColor:AppColors.white
 
       })}
       name="Products" component={ProductList} />
@@ -90,7 +90,7 @@ const ShoppingCartStack = ({ navigation }) => {
             headerStyle:{
               backgroundColor:AppColors.footerBackground,
             },
-          headerTintColor:AppColors.inputBackground
+          headerTintColor:AppColors.white
 
           }}
           component={ShoppingCart} 
@@ -102,7 +102,7 @@ const ShoppingCartStack = ({ navigation }) => {
             headerStyle:{
               backgroundColor:AppColors.footerBackground,
             },
-            headerTintColor:AppColors.inputBackground,
+            headerTintColor:AppColors.white,
 
           }}
           
@@ -146,7 +146,6 @@ const MyNavigator = ({}) => {
 
   const fetchSession = () => {
     getSession(session => {
-      console.log('Session:', session);
       if (session) {
         const { updatedAt } = session;
         const currentTimeInSeconds = Math.floor(Date.now() / 1000);

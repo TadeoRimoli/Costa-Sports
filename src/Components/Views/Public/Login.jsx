@@ -27,7 +27,6 @@ const Login = () => {
       loginSchema.validateSync({ email, password }, { abortEarly: false });
 
       const {data, isLoading, isError: postError, isSuccess,result,error} = await login({ email, password });
-      console.log(data, isLoading,  postError, isSuccess,result,error)
       if(error && error.data.error.message && error.data.error.message=="INVALID_LOGIN_CREDENTIALS")
         Alert.alert("Error","Credenciales incorrectas")
       else if(postError){
@@ -54,7 +53,7 @@ const Login = () => {
     <ImageBackground source={backgroundImage} style={{ width: '100%', height: '100%' }}>
 
     <View style={[GeneralStyle.padding16, GeneralStyle.flex1, GeneralStyle.justifyCenter, GeneralStyle.itemsCenter]}>
-        <Text style={[{color:AppColors.inputBackground},GeneralStyle.fontBold,GeneralStyle.fontSize24,GeneralStyle.marginBottom10]}>{appName}</Text>
+        <Text style={[{color:AppColors.white},GeneralStyle.fontBold,GeneralStyle.fontSize24,GeneralStyle.marginBottom10]}>{appName}</Text>
         <CustomInput
         customStyles={{width:'100%'}}
         placeholder="Email"
@@ -77,7 +76,7 @@ const Login = () => {
         label='Login' 
         textStyles={[{fontSize:18,fontWeight:600,},]}
         onPress={handleLogin}/>
-        <Text style={[GeneralStyle.fontSize18,GeneralStyle.marginTop15,{color:AppColors.inputBackground}]}>Don't have an account? <Text onPress={()=>{
+        <Text style={[GeneralStyle.fontSize18,GeneralStyle.marginTop15,{color:AppColors.white}]}>Don't have an account? <Text onPress={()=>{
             navigation.navigate("Register")
         }} style={[GeneralStyle.fontSize18,{color:AppColors.secondaryText}]}>Sign up</Text> </Text>
     </View>

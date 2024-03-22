@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View,Dimensions, Pressable, Image, ScrollView } from 'react-native'
 import React from 'react'
-import { Colors, GeneralStyle } from '../../Styles/GeneralStyles';
+import { AppColors, Colors, GeneralStyle } from '../../Styles/GeneralStyles';
 
 const CategoryProductCard = ({item,handlePressCategory}) => {
   
@@ -8,16 +8,13 @@ const CategoryProductCard = ({item,handlePressCategory}) => {
     const windowHeight = Dimensions.get('window').height;
     let titleFixed = item.name.toLowerCase().split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
 
-    const renderBrands = () => {
-      return item.brands.map((brand, index) => (
-        <Text key={index} style={{ fontWeight: 'bold' }}>{brand}</Text>
-      ));
-    };
     return (
       <Pressable
+      
       onPress={handlePressCategory}
       style={[styles.cardContainer,{
         width:windowWidth-20,
+        backgroundColor:AppColors.softYellow
       }]}
     >
       <Image
@@ -29,20 +26,20 @@ const CategoryProductCard = ({item,handlePressCategory}) => {
       />
       
       {item.isNew && (
-              <View style={[GeneralStyle.row,{position:'absolute',right:0,margin:8,padding:8,backgroundColor:Colors.softSkyBlue,borderRadius:8}]}>
-                <Text style={{ fontWeight: 'bold', color: 'green' }}>New</Text>
+              <View style={[GeneralStyle.row,{position:'absolute',right:0,margin:8,padding:8,backgroundColor:AppColors.hardYellow,borderRadius:8}]}>
+                <Text style={{ fontWeight: 500}}>New</Text>
               </View>
             )}
       <View style={{marginHorizontal:10,paddingTop:10,paddingBottom:20}}>
         <View style={[GeneralStyle.row,GeneralStyle.justifyBetween,GeneralStyle.itemsCenter,GeneralStyle.marginBottom10]}>
           <Text ellipsizeMode='tail' numberOfLines={1} style={{ marginRight:8,fontSize: 20, fontWeight: 'bold' }}>{titleFixed}</Text>
-          <Text style={{ fontWeight: 'bold' }}>{item.priceRange}</Text>
+          <Text style={{ fontWeight: 'bold',fontSize:20 }}>{item.priceRange}</Text>
         </View>
         
         <Text>{item.description}</Text>
-
-          <View style={GeneralStyle.row}>
-            <Text >{item.brands.join(', ')}</Text>
+          
+          <View style={[GeneralStyle.row,GeneralStyle.marginTop5]}>
+            <Text style={{ fontWeight: '600' }} >{item.brands.join(', ')}</Text>
           </View>
       </View>
     </Pressable>
@@ -55,7 +52,6 @@ export default CategoryProductCard
 
 const styles = StyleSheet.create({
     cardContainer: {
-      backgroundColor: '#BAE0F2',
       borderRadius: 15,
       shadowColor: '#000000',
       shadowOpacity: 0.3,

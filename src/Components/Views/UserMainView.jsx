@@ -32,7 +32,7 @@ const UserMainView = () => {
    <Stack.Navigator >
     <Stack.Screen name="Perfil" component={UserView}
         options={{
-          headerTintColor:AppColors.inputBackground,
+          headerTintColor:AppColors.white,
           headerStyle:{
             backgroundColor:AppColors.footerBackground,
           },
@@ -40,7 +40,7 @@ const UserMainView = () => {
             <Ionicons
               name="log-out"
               size={30}
-              color={AppColors.inputBackground}
+              color={AppColors.white}
               style={{ marginRight: 10 }}
               onPress={handleLogout}
             />

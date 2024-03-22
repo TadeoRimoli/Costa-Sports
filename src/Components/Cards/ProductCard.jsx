@@ -49,12 +49,14 @@ const ProductCard = ({item}) => {
     }
     return stars;
   };
+  
   const handleAddProduct = (item) => {
     if(count <= item.stock && count >= 1){
 
       dispatch(addCartItem( { item: item, quantity: count }));
     }
   };
+
   function handleAddCount(e) {
     if (e === "") {
       setCount(0);
@@ -68,13 +70,13 @@ const ProductCard = ({item}) => {
   }
 
   return (
-    <View  style={[ {alignSelf:'center',marginVertical:10, backgroundColor:'#d2d7d3',width:windowWidth-20,height:(windowHeight+50)/2,borderRadius:10 }]}>
+    <View  style={[ {alignSelf:'center',marginVertical:10, backgroundColor:AppColors.softYellow,width:windowWidth-20,height:(windowHeight+50)/2,borderRadius:10 }]}>
           <Image
           style={{ flex: 1, width: null,resizeMode: 'cover' , height: null,  borderTopLeftRadius: 10, borderTopRightRadius: 10 }}
           source={{ uri: item.thumbnail }}
           onError={(error) => console.error('Error al cargar la imagen:', error.nativeEvent.error)}
           />
-           <View style={{ position: 'absolute',flexDirection:'row', top: 20, right: 10, backgroundColor: '#C57474', borderRadius: 5, padding: 5 }}>
+           <View style={{ position: 'absolute',flexDirection:'row', top: 20, right: 10, backgroundColor: AppColors.green, borderRadius: 16, padding: 8 }}>
             <Text style={{ fontSize: 16, fontWeight: 'bold' }}>-{item.discountPercentage}%</Text>
           </View>
           <View style={[GeneralStyle.padding16]}>
@@ -96,7 +98,7 @@ const ProductCard = ({item}) => {
         visible={addProductModal.visible}
         hideModalFunction={()=>{setAddProductModal({visible:false,item:null})}}
         >   
-          <View style={{  borderRadius: 8, backgroundColor: AppColors.inputBackground, marginBottom: 16 }}>
+          <View style={{  borderRadius: 8, backgroundColor: AppColors.white, marginBottom: 16 }}>
               <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 8 }}>{addProductModal?.item?.title}</Text>
               <Text style={{ fontSize: 14, color: 'gray', marginBottom: 8 }}>{addProductModal?.item?.description}</Text>
               

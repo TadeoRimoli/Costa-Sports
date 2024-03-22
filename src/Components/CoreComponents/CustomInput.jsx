@@ -3,7 +3,7 @@ import { TextInput, StyleSheet, Text } from 'react-native';
 import PropTypes from 'prop-types';
 import { AppColors } from '../../Styles/GeneralStyles';
 
-const CustomInput = ({ customStyles, placeholder, label, value, setValue, keyboardType, error, setError, secureTextEntry=false }) => {
+const CustomInput = ({ enabled=true,customStyles, placeholder, label, value, setValue, keyboardType, error, setError, secureTextEntry=false }) => {
   const [isFocused, setIsFocused] = useState(false);
   
   const handleFocus = () => {
@@ -30,6 +30,7 @@ const CustomInput = ({ customStyles, placeholder, label, value, setValue, keyboa
       <TextInput
         placeholder={placeholder}
         value={value}
+        editable={enabled} // Controla si el input es editable o no
         keyboardType={keyboardType}
         onChangeText={handle}
         autoCapitalize='none'
@@ -39,7 +40,7 @@ const CustomInput = ({ customStyles, placeholder, label, value, setValue, keyboa
           customStyles,
           isFocused && styles.focused,
           error && error.error && styles.error,
-          { fontSize:16,backgroundColor: error && error.error ? '#FADBD8' : AppColors.inputBackground }
+          { fontSize:16,backgroundColor: error && error.error ? '#FADBD8' : AppColors.white }
         ]}
         placeholderTextColor="rgba(0, 0, 0, 0.7)"
         

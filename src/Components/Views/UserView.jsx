@@ -99,17 +99,17 @@ const UserView = () => {
               )
               : (
               <Pressable onPress={showImagePickerOptions} style={styles.userIconContainer}>
-                  <Ionicons name="person-circle-outline" size={100} color={AppColors.inputBackground} />
+                  <Ionicons name="person-circle-outline" size={100} color={AppColors.white} />
               </Pressable>
               )}
-                  <Text style={[GeneralStyle.fontSize18,GeneralStyle.marginBottom20,{color:AppColors.inputBackground}]}>{user.email}</Text>
+                  <Text style={[GeneralStyle.fontSize18,GeneralStyle.marginBottom20,{color:AppColors.white}]}>{user.email}</Text>
           </View>
           <NavigateRow label="Purchases" route="Purchases" />
           <NavigateRow label="Location" route="Location" />
           <NavigateRow label="Settings" route="Settings" />
           <NavigateRow label="Security" route="Security" />
       </View>
-      <Text style={{alignSelf:'flex-end',color:AppColors.inputBackground}}>Version 1.0.0</Text>
+      <Text style={{alignSelf:'flex-end',color:AppColors.white}}>Version 1.0.0</Text>
 
     </View> : null
   )

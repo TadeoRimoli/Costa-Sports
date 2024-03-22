@@ -76,7 +76,7 @@ const Register = () => {
   return (
     <ImageBackground source={backgroundImage} style={{ width: '100%', height: '100%' }}>
     <View style={[GeneralStyle.padding16, GeneralStyle.flex1, GeneralStyle.justifyCenter, GeneralStyle.itemsCenter]}>
-      <Text style={[{color:AppColors.inputBackground},GeneralStyle.fontBold,GeneralStyle.fontSize24,GeneralStyle.marginBottom10]}>{appName}</Text>
+      <Text style={[{color:AppColors.white},GeneralStyle.fontBold,GeneralStyle.fontSize24,GeneralStyle.marginBottom10]}>{appName}</Text>
       
       <CustomInput
       customStyles={{width:'100%'}}
@@ -107,7 +107,7 @@ const Register = () => {
       <CustomButton
       customStyles={{marginTop:10,width:'100%'}}
       label='Sign Up' onPress={handleSignUp} />
-      <Text style={[GeneralStyle.fontSize18,GeneralStyle.marginTop15,{color:AppColors.inputBackground}]}>Already have an account?<Text onPress={()=>{
+      <Text style={[GeneralStyle.fontSize18,GeneralStyle.marginTop15,{color:AppColors.white}]}>Already have an account?<Text onPress={()=>{
           navigation.navigate("Login")
       }} style={[GeneralStyle.fontSize18,{color:AppColors.secondaryText}]}> Log in</Text> </Text>
 

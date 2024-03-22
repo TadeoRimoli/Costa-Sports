@@ -70,13 +70,17 @@ export const NewColors = {
 };
 
 export const AppColors = {
-  inputBackground : '#FFF1DA',
   primaryButton:'#FC3A51',
   secondaryButton:'#FFF1DA',
   primaryText : '#FFF1DA',
   secondaryText:'#7379FF',
   footerBackground:'#0E2430',
-  white:'#FFF8ED'
+  softYellow:'#FFF1DA',
+  hardYellow:'#F5B349',
+  white : '#FFF8ED',
+  green:'#4CF549',
+  black:'#3d3d3d'
+
 }
 
 
@@ -167,6 +171,12 @@ export const GeneralStyle = StyleSheet.create({
     },
     margin5: {
       margin: 5,
+    },
+    margin10: {
+      margin: 10,
+    },
+    margin15: {
+      margin: 15,
     },
     marginTop5: {
       marginTop: 5,
