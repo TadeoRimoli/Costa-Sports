@@ -4,20 +4,21 @@ import { useSelector } from 'react-redux';
 import { useGetOrdersMutation } from '../../services/ecommerceAPI';
 import { useIsFocused } from '@react-navigation/native';
 import { AppColors } from '../../Styles/GeneralStyles';
+import { isLoading } from 'expo-font';
+import LoadingIndicator from '../CoreComponents/LoadingIndicator';
 
 const Purchases = ({}) => {
   
 
   const [purchases, setPurchases] = useState([]);
-  const [getOrders, {data, isLoading: isPosting, isError: postError, isSuccess }] = useGetOrdersMutation();
+  const [getOrders, {data, isLoading: isPosting, isError: postError,error, isSuccess }] = useGetOrdersMutation();
   const {user} = useSelector(state=>state.General)
   const isFocused = useIsFocused()
 
   useEffect(() => {
-      if(isFocused)
-        getOrders(user.localId);
+      if(isFocused){
+        getOrders(user.localId);}
   }, [isFocused]);
-
   useEffect(()=>{
     if(isSuccess){
       setPurchases(Object.values(data).sort((a,b)=> b.date -a.date ))
@@ -56,6 +57,9 @@ const Purchases = ({}) => {
   };
 
   return (
+    <View style={{flex:1,backgroundColor: AppColors.footerBackground}}>
+    {postError ? <Text style={{color:'white'}}>Error: {error.data.error}</Text>:
+    isPosting ? <LoadingIndicator/> :
     <FlatList
       style={[styles.container,{backgroundColor:AppColors.footerBackground}]}
       contentContainerStyle={{alignItems:''}}
@@ -63,6 +67,8 @@ const Purchases = ({}) => {
       renderItem={renderItem}
       keyExtractor={(item, index) => index.toString()}
     />
+    }
+    </View>
   );
 };
 const styles = StyleSheet.create({

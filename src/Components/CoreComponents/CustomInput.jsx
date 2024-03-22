@@ -47,7 +47,7 @@ const CustomInput = ({ enabled=true,customStyles, placeholder, label, value, set
         onFocus={handleFocus}
         onBlur={handleBlur}
       />
-      {error && error.message ? <Text style={{marginBottom:10,alignSelf:'flex-start'}}>{error.message}</Text> : null}
+      {error && error.message ? <Text style={{color:AppColors.white,marginBottom:10,alignSelf:'flex-start'}}>{error.message}</Text> : null}
     </>
   );
 };

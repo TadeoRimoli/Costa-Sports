@@ -78,7 +78,7 @@ export const AppColors = {
   softYellow:'#FFF1DA',
   hardYellow:'#F5B349',
   white : '#FFF8ED',
-  green:'#4CF549',
+  green:'#4cf549',
   black:'#3d3d3d'
 
 }

@@ -48,9 +48,30 @@ const UserMainView = () => {
           ),
         }}
     />
-    <Stack.Screen name="Location" component={MapPreview}/>
-    <Stack.Screen name="Settings" component={SettingsScreen}/>
-    <Stack.Screen name="Security" component={SecurityScreen}/>
+    <Stack.Screen name="Location" 
+    options={{
+      headerTintColor:AppColors.white,
+      headerStyle:{
+        backgroundColor:AppColors.footerBackground
+      }
+    }}
+    component={MapPreview}/>
+    <Stack.Screen name="Settings"
+    options={{
+      headerTintColor:AppColors.white,
+      headerStyle:{
+        backgroundColor:AppColors.footerBackground
+      }
+    }}
+    component={SettingsScreen}/>
+    <Stack.Screen name="Security"
+    options={{
+      headerTintColor:AppColors.white,
+      headerStyle:{
+        backgroundColor:AppColors.footerBackground
+      }
+    }}
+    component={SecurityScreen}/>
 
    </Stack.Navigator>
   );

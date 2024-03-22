@@ -94,11 +94,14 @@ const ShoppingCart = ({ }) => {
         keyExtractor={(item, index) => item.item.id.toString() + '_' + index.toString()}
       />
 
-      {cart.length>0 && <PrimaryButton color={AppColors.green} label="Go to Pay" onPress={handlePayment} 
+      {cart.length>0 && 
+      <PrimaryButton  label="Go to Pay" onPress={handlePayment} 
       customStyles={{marginTop:4,marginBottom:8,width:'50%',alignSelf:'center'}} 
-      textBlack={true}
-      textStyles={{ fontWeight: '400'}} 
-      />}
+      colorText={AppColors.white}
+      color="#09a70d"
+      textStyles={{ fontWeight: '500'}} 
+      />  
+      }
 
       <CustomModal visible={deleteProductFromCartModal.visible} hideModalFunction={()=>{
         dispatch(setDeleteProductFromCartModal({visible:false,item:-1}))

@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addCartItem, clearProductList, setAddProductFromModal, setCartItems, setProductList } from '../../../Redux/slices/GeneralSlice';
 import { AntDesign } from '@expo/vector-icons';
 import PrimaryButton from '../CoreComponents/PrimaryButton';
+import SecondaryButton from '../CoreComponents/SecondaryButton';
 
 const ProductList = ({}) => {
 
@@ -89,7 +90,7 @@ const ProductList = ({}) => {
       <>
         <View style={[GeneralStyle.row,GeneralStyle.itemsCenter,GeneralStyle.padding8]}>
           <CustomInput value={filterValue} setValue={(e)=>{filterItems(e)}} customStyles={{flex:1,marginRight:10}} placeholder={'Search'}/>
-          <Ionicons name="funnel-outline" onPress={()=>{setShowFilters(true)}}  size={30} color="white" />
+          <Ionicons style={{marginRight:4}} name="funnel-outline" onPress={()=>{setShowFilters(true)}}  size={30} color="white" />
         </View>
         <FlatList
         data={productList}
@@ -102,22 +103,24 @@ const ProductList = ({}) => {
           setShowFilters(false)
         }}>
           <View style={{  }}>
-            <Pressable onPress={()=>{
+            <Text style={[GeneralStyle.fontBold,GeneralStyle.fontSize20,GeneralStyle.marginBottom10]}>Ordenar por $$$:</Text>
+            <SecondaryButton
+            label='De menor a mayor'
+            onPress={()=>{
               const productsCopy = [...products]
               dispatch(setProductList(productsCopy.sort((a, b) => a.price - b.price)))
               setShowFilters(false)
-            }} style={{alignItems:'center',justifyContent:'center', width:'100%', height:40 ,
-            marginVertical:4  ,  backgroundColor:NewColors.blueGrey200,borderRadius:8 }}>
-              <Text>Ordenar de menor a mayor</Text>
-            </Pressable>
-            <Pressable onPress={()=>{
+            }} 
+            />
+            <SecondaryButton
+            label='De mayor a menor'
+            customStyles={{marginTop:8}}
+            onPress={()=>{
               const productsCopy = [...products]
               dispatch(setProductList(productsCopy.sort((a, b) => b.price - a.price)))
               setShowFilters(false)
-            }} style={{alignItems:'center',justifyContent:'center', width:'100%', height:40 ,
-            marginVertical:4  ,  backgroundColor:NewColors.blueGrey200,borderRadius:8 }}>
-              <Text>Ordenar de mayor a menor</Text>
-            </Pressable>
+            }} 
+            />
           </View>
         </CustomModal>
       </>)}
@@ -149,12 +152,12 @@ const ProductList = ({}) => {
                 </View>
               </View>
               </View>
-              <Text style={{ fontSize: 16, fontWeight: 'bold',alignSelf:'flex-end',marginTop:8 }}>Total: ${priceWithDiscount*count}</Text>
+              <Text style={{ fontSize: 16, fontWeight: 'bold',alignSelf:'flex-end',marginTop:8 }}>Total: ${(priceWithDiscount*count).toFixed(2)}</Text>
           </View>
          
           <View style={[GeneralStyle.row,GeneralStyle.justifyBetween]}>
-              <PrimaryButton color={'#e74c3c'} label='Cancel' onPress={()=>dispatch(setAddProductFromModal({visible:false,item:null}))}></PrimaryButton>
-              <PrimaryButton color={'#2ecc71'} label='Add' onPress={()=>{
+              <SecondaryButton label='Cancel' onPress={()=>dispatch(setAddProductFromModal({visible:false,item:null}))}></SecondaryButton>
+              <PrimaryButton label='Add' onPress={()=>{
                 const value = { ...addProductFromModal.item };
                 handleAddProduct(value);
                 dispatch(setAddProductFromModal({visible:false,item:null}))

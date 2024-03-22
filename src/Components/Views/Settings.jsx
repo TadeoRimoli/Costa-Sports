@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, Switch, StyleSheet } from 'react-native';
+import { AppColors } from '../../Styles/GeneralStyles';
 
 const SettingsScreen = () => {
   const [pushNotificationsEnabled, setPushNotificationsEnabled] = useState(false);
@@ -8,36 +9,37 @@ const SettingsScreen = () => {
   const [liveNotificationsEnabled, setLiveNotificationsEnabled] = useState(false);
 
   return (
-    <View style={styles.container}>
-      <View style={styles.settingContainer}>
-        <Text style={styles.settingText}>Push Notifications</Text>
-        <Switch
-          value={pushNotificationsEnabled}
-          onValueChange={(newValue) => setPushNotificationsEnabled(newValue)}
-        />
-      </View>
-      <View style={styles.settingContainer}>
-        <Text style={styles.settingText}>Email Notifications</Text>
-        <Switch
-          value={emailNotificationsEnabled}
-          onValueChange={(newValue) => setEmailNotificationsEnabled(newValue)}
-        />
-      </View>
-      <View style={styles.settingContainer}>
-        <Text style={styles.settingText}>Dark Theme</Text>
-        <Switch
-          value={darkThemeEnabled}
-          onValueChange={(newValue) => setDarkThemeEnabled(newValue)}
-        />
-      </View>
-      <View style={styles.settingContainer}>
-        <Text style={styles.settingText}>Live Notifications</Text>
-        <Switch
-          value={liveNotificationsEnabled}
-          onValueChange={(newValue) => setLiveNotificationsEnabled(newValue)}
-        />
-      </View>
-    </View>
+    <View style={[styles.container, { backgroundColor: AppColors.footerBackground }]}>
+  <View style={styles.settingContainer}>
+    <Text style={[styles.settingText, { color: AppColors.white }]}>Push Notifications</Text>
+    <Switch
+      value={pushNotificationsEnabled}
+      onValueChange={(newValue) => setPushNotificationsEnabled(newValue)}
+    />
+  </View>
+  <View style={styles.settingContainer}>
+    <Text style={[styles.settingText, { color: AppColors.white }]}>Email Notifications</Text>
+    <Switch
+      value={emailNotificationsEnabled}
+      onValueChange={(newValue) => setEmailNotificationsEnabled(newValue)}
+    />
+  </View>
+  <View style={styles.settingContainer}>
+    <Text style={[styles.settingText, { color: AppColors.white }]}>Dark Theme</Text>
+    <Switch
+      value={darkThemeEnabled}
+      onValueChange={(newValue) => setDarkThemeEnabled(newValue)}
+    />
+  </View>
+  <View style={styles.settingContainer}>
+    <Text style={[styles.settingText, { color: AppColors.white }]}>Live Notifications</Text>
+    <Switch
+      value={liveNotificationsEnabled}
+      onValueChange={(newValue) => setLiveNotificationsEnabled(newValue)}
+    />
+  </View>
+</View>
+
   );
 };
 

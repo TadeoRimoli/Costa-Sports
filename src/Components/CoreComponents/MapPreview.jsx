@@ -3,11 +3,12 @@ import { Dimensions, Image, StyleSheet, View, PanResponder, Text } from 'react-n
 import { mapsApiKey } from '../../Constants/Constants';
 import * as Location from "expo-location"
 import { useIsFocused } from '@react-navigation/native';
+import { AppColors, GeneralStyle } from '../../Styles/GeneralStyles';
 const MapPreview = ({ latitude, longitude }) => {
   const { width, height } = Dimensions.get('window');
   const [location,setLocation]=useState({latitude:"",longitude:""})
 
-  const url = `https://maps.googleapis.com/maps/api/staticmap?center=${location.latitude},${location.longitude}&zoom=16&size=600x300&maptype=roadmap&markers=color:blue%7Clabel:S%7C40.702147,-74.015794&key=${mapsApiKey}`;
+  const url = `https://maps.googleapis.com/maps/api/staticmap?center=${location.latitude},${location.longitude}&zoom=16&size=800x400&maptype=roadmap&markers=color:blue%7Clabel:S%7C40.702147,-74.015794&key=${mapsApiKey}`;
 
   const [errorMessage,setErrorMessage]=useState("")
   const [address,setAddress]=useState("")
@@ -45,13 +46,12 @@ const MapPreview = ({ latitude, longitude }) => {
   }, [isFocused,location]);
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container,{backgroundColor:AppColors.footerBackground}]}>
     <Image
       source={location.latitude !== "" ? { uri: url } : require('../../images/mapa.png')}
       style={styles.userImage}
-      resizeMode="contain" // Ajusta la imagen al tamaño del contenedor
     />
-    <Text style={styles.addressText}>{address}</Text>
+    <Text style={[styles.addressText,{color:AppColors.white}]}>{address}</Text>
   </View>
   );
 };
@@ -65,8 +65,9 @@ const styles = StyleSheet.create({
   },
   userImage: {
     width: '100%', // Ancho del 100% del contenedor
-    height: 200, // Altura fija (puedes ajustarla según tus necesidades)
+    height: 300, // Altura fija (puedes ajustarla según tus necesidades)
     marginBottom: 20, // Agrega espacio entre la imagen y el texto
+    borderRadius:12,
   },
   addressText: {
     fontSize: 16, // Tamaño de fuente personalizable

@@ -50,7 +50,7 @@ const CartProduct = ({ item, onRemove }) => {
   const priceWithDiscount = (product.price-((product.discountPercentage/100)*product.price)).toFixed(2)
 
   return (
-    <View style={[{ alignSelf:'center',backgroundColor: '#d2d7d3', width: windowWidth - 20, height: (windowHeight ) / 2.5, margin: 10, borderRadius: 10 }]}>
+    <View style={[{ alignSelf:'center',backgroundColor: '#d2d7d3', width: windowWidth - 20, height: (windowHeight ) / 1.9, margin: 10, borderRadius: 10 }]}>
       <Image
         style={{ position:'relative',flex: 1, width: null, resizeMode: 'cover', height: null, borderTopLeftRadius: 10, borderTopRightRadius: 10 }}
         source={{ uri: product.thumbnail }}
@@ -62,7 +62,7 @@ const CartProduct = ({ item, onRemove }) => {
         <Pressable style={{ position:'absolute',top:0,right:0,margin:5}} onPress={onRemove}>
             <Ionicons   name="close"  size={25} style={{padding:2,borderRadius:17}}  color={AppColors.softYellow} backgroundColor={'rgba(0, 0, 0, 0.7)'}/>
         </Pressable>
-      <View style={[GeneralStyle.padding16]}>
+      <View style={[GeneralStyle.padding8]}>
         <View style={[GeneralStyle.row, GeneralStyle.justifyBetween, GeneralStyle.marginBottom5]}>
           <Text ellipsizeMode='tail' numberOfLines={1} style={{ flex: 1, marginRight: 8, fontSize: 20, fontWeight: 'bold' }}>{product.title}</Text>
           <Text style={{color:'rgba(0, 0, 0, 0.7)', fontSize: 20, fontWeight: 'bold',textDecorationLine:'line-through' }}>${product.price}</Text>
@@ -72,9 +72,9 @@ const CartProduct = ({ item, onRemove }) => {
 
         <View style={[GeneralStyle.row, GeneralStyle.justifyBetween, GeneralStyle.itemsCenter, GeneralStyle.marginTop5]}>
           <View style={[,GeneralStyle.row, GeneralStyle.itemsCenter]}>
-            <MaterialCommunityIcons onPress={handleDecrement} name="minus" size={24} color="black"  style={{ borderWidth: 1,paddingLeft:2,borderRadius:4  }} />
+            <MaterialCommunityIcons onPress={handleDecrement} name="minus" size={28} color="black"  style={{ borderWidth: 1,paddingLeft:2,borderRadius:4  }} />
             <CustomInput customStyles={{marginHorizontal:8}} value={item.quantity.toString()} enabled={false} setValue={()=>{}}></CustomInput>
-            <MaterialCommunityIcons onPress={handleIncrement} name="plus" size={24} color="black" style={{ borderWidth: 1,paddingLeft:2,borderRadius:4  }} />
+            <MaterialCommunityIcons onPress={handleIncrement} name="plus" size={28} color="black" style={{ borderWidth: 1,paddingLeft:2,borderRadius:4  }} />
           </View>
           <View style={[,GeneralStyle.row, GeneralStyle.itemsCenter]}>
             <Text style={[,{fontWeight:'bold'},GeneralStyle.fontSize18]}>Total: </Text>
