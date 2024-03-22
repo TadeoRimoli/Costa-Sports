@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Button, StyleSheet, Text, TextInput, View, ActivityIndicator, BackHandler } from 'react-native';
 import { useIsFocused, useNavigation, useRoute } from '@react-navigation/native';
-import CustomButton from '../CoreComponents/CustomButton';
+import PrimaryButton from '../CoreComponents/PrimaryButton';
 import CustomInput from '../CoreComponents/CustomInput';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteAllCartItems } from '../../../Redux/slices/GeneralSlice';
 import { AppColors, Colors, GeneralStyle } from '../../Styles/GeneralStyles';
 import { usePostOrderMutation, useReduceProductStockMutation } from '../../services/ecommerceAPI';
+import SecondaryButton from '../CoreComponents/SecondaryButton';
 
 const PaymentScreen = ({  }) => {
 
@@ -26,7 +27,6 @@ const PaymentScreen = ({  }) => {
 
   const {cart,purchases} = useSelector(state => state.General);
   const {user} = useSelector(state=>state.General)
-
 
   const cases ={
     good:'VALIDATED',
@@ -82,7 +82,7 @@ const PaymentScreen = ({  }) => {
       if(success){
         try{
           let item={
-            date: new Date().toISOString(),
+            date: new Date().getTime(),
             totalAmount: totalPrice,
             items: cart,
             card: creditCardNumber,
@@ -159,18 +159,21 @@ const PaymentScreen = ({  }) => {
           setError={setCardholderNameError}
         />
         <View style={[GeneralStyle.row, GeneralStyle.justifyBetween,GeneralStyle.marginTop5]}>
-          <CustomButton color="#B93649" label="Cancel" onPress={handleReturn} />
-          <CustomButton color={Colors.green} label="Buy" onPress={simulatePurchase} />
+          <PrimaryButton color="#B93649" label="Cancel" onPress={handleReturn} />
+          <PrimaryButton color={Colors.green} label="Buy" onPress={simulatePurchase} />
         </View>
       </View>}
 
       {purchaseStatus === cases.good && (
-          <Text style={styles.successText}>Purchase successful!</Text>
+        <>
+          <Text style={[styles.successText,{color:AppColors.green}]}>Purchase successful!</Text>
+          <SecondaryButton label='View my purchases' onPress={()=>{navigation.navigate("Purchases")}}></SecondaryButton>
+        </>
       )}
       {purchaseStatus === cases.bad && (
         <>
           <Text style={[styles.errorText, { color: Colors.error,textAlign:'center' }]}>Purchase failed!</Text>
-          <CustomButton color={Colors.error} label="Try again" 
+          <PrimaryButton color={Colors.error} label="Try again" 
           onPress={() => 
             setPurchaseStatus(cases.neutral)
           }
@@ -200,7 +203,6 @@ const styles = StyleSheet.create({
   },
   successText: {
     marginVertical: 20,
-    color: 'green',
     fontSize: 30,
   },
   errorText: {

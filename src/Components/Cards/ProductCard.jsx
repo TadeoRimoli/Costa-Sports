@@ -4,31 +4,17 @@ import { StyleSheet,Pressable, Text,Dimensions,Image, View } from 'react-native'
 import React from 'react'
 import { AppColors, Colors, GeneralStyle, NewColors } from '../../Styles/GeneralStyles';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import CustomButton from '../CoreComponents/CustomButton';
+import PrimaryButton from '../CoreComponents/PrimaryButton';
 import CustomModal from '../CoreComponents/CustomModal';
 import CustomInput from '../CoreComponents/CustomInput';
 import { useDispatch } from 'react-redux';
-import { addCartItem } from '../../../Redux/slices/GeneralSlice';
-import { AntDesign } from '@expo/vector-icons';
+import { addCartItem, setAddProductFromModal } from '../../../Redux/slices/GeneralSlice';
 
 const ProductCard = ({item}) => {
     const dispatch = useDispatch()
     const windowWidth = Dimensions.get('window').width;
     const windowHeight = Dimensions.get('window').height;
     
-    const [count, setCount] = useState(1);
-    const [addProductModal,setAddProductModal] = useState({visible:false,item:null});
-
-    const handleIncrement = () => {
-      if(count < item.stock)
-        setCount(count + 1);
-    };
-  
-    const handleDecrement = () => {
-      if (count > 1 ) {
-        setCount(count - 1);
-      }
-    };
 
   const renderStars = (roundedRating) => {
     const stars = [];
@@ -50,24 +36,6 @@ const ProductCard = ({item}) => {
     return stars;
   };
   
-  const handleAddProduct = (item) => {
-    if(count <= item.stock && count >= 1){
-
-      dispatch(addCartItem( { item: item, quantity: count }));
-    }
-  };
-
-  function handleAddCount(e) {
-    if (e === "") {
-      setCount(0);
-      return;
-    }
-    const countValue = parseInt(e, 10);
-    
-    if (!isNaN(countValue) && countValue <= item.stock && countValue >= 1) {
-      setCount(countValue);
-    }
-  }
 
   return (
     <View  style={[ {alignSelf:'center',marginVertical:10, backgroundColor:AppColors.softYellow,width:windowWidth-20,height:(windowHeight+50)/2,borderRadius:10 }]}>
@@ -89,16 +57,16 @@ const ProductCard = ({item}) => {
               <View style={[GeneralStyle.row]}>
                 {renderStars(Math.round(item.rating * 2) / 2)}
               </View>
-              <CustomButton  label='Add to Cart' onPress={()=>{
-                setAddProductModal({visible:true,item:item})
+              <PrimaryButton  label='Add to Cart' onPress={()=>{
+                dispatch(setAddProductFromModal({visible:true,item:item}))
                 }} color={'#2c3e50'}/>
             </View>
           </View>
-        <CustomModal
+        {/* <CustomModal
         visible={addProductModal.visible}
         hideModalFunction={()=>{setAddProductModal({visible:false,item:null})}}
         >   
-          <View style={{  borderRadius: 8, backgroundColor: AppColors.white, marginBottom: 16 }}>
+          <View style={{  borderRadius: 8, backgroundColor: 'white', marginBottom: 16 }}>
               <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 8 }}>{addProductModal?.item?.title}</Text>
               <Text style={{ fontSize: 14, color: 'gray', marginBottom: 8 }}>{addProductModal?.item?.description}</Text>
               
@@ -124,14 +92,14 @@ const ProductCard = ({item}) => {
           </View>
          
           <View style={[GeneralStyle.row,GeneralStyle.justifyBetween]}>
-              <CustomButton color={'#e74c3c'} label='Cancel' onPress={()=>setAddProductModal({visible:false,item:null})}></CustomButton>
-              <CustomButton color={'#2ecc71'} label='Add' onPress={()=>{
+              <PrimaryButton color={'#e74c3c'} label='Cancel' onPress={()=>setAddProductModal({visible:false,item:null})}></PrimaryButton>
+              <PrimaryButton color={'#2ecc71'} label='Add' onPress={()=>{
                 const value = { ...addProductModal.item };
                 handleAddProduct(value);
                 setAddProductModal({visible:false,item:null})
-                }}></CustomButton>
+                }}></PrimaryButton>
           </View>
-        </CustomModal>
+        </CustomModal> */}
     </View>
   )
 }

@@ -3,7 +3,7 @@ import { View, Text, StyleSheet,ImageBackground, TouchableOpacity, Pressable } f
 import { fetchSession } from '../../db';
 import { AppColors, GeneralStyle, NewColors } from '../../Styles/GeneralStyles';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import CustomButton from '../CoreComponents/CustomButton';
+import PrimaryButton from '../CoreComponents/PrimaryButton';
 import { useIsFocused } from '@react-navigation/native';
 
 const HomeScreen = ({navigation,route}) => {

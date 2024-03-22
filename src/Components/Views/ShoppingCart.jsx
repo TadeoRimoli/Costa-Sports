@@ -1,26 +1,29 @@
 import { Button, FlatList, StyleSheet, Text, View,Dimensions } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import CartProduct from '../Cards/CartProduct';
-import CustomButton from '../../Components/CoreComponents/CustomButton';
+import PrimaryButton from '../../Components/CoreComponents/PrimaryButton';
 import { useIsFocused, useNavigation, useRoute } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
-import { removeCartItem } from '../../../Redux/slices/GeneralSlice';
+import { removeCartItem, setCartItems, setDeleteProductFromCartModal } from '../../../Redux/slices/GeneralSlice';
 import { AppColors, Colors, GeneralStyle } from '../../Styles/GeneralStyles';
 import CustomInput from '../CoreComponents/CustomInput';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import CustomModal from '../CoreComponents/CustomModal';
+import SecondaryButton from '../CoreComponents/SecondaryButton';
 
 
 const ShoppingCart = ({ }) => {
   const [totalPrice, setTotalPrice] = useState(0);
   const navigation = useNavigation(); 
-  const {cart}= useSelector(state =>state.General)
+  const {cart,deleteProductFromCartModal}= useSelector(state =>state.General)
   const dispatch = useDispatch();
 
 
   useEffect(() => {
     let total = 0;
     cart.forEach((item) => {
-      total += item.item.price * item.quantity;
+      const priceWithDiscount = (item.item.price-((item.item.discountPercentage/100)*item.item.price)).toFixed(2)
+      total += priceWithDiscount * item.quantity;
     });
     setTotalPrice(total);
   }, [cart]);
@@ -30,20 +33,19 @@ const ShoppingCart = ({ }) => {
   };
 
   const windowWidth = Dimensions.get('window').width;
+  
+  const productToDelete = cart.find(item => item.item.id === deleteProductFromCartModal.item);
+
+  // console.log(cart)
 
   return (
     <View style={{ flex: 1,backgroundColor: AppColors.footerBackground,}}>
-      
+     
       {totalPrice === 0 ? (
       <View style={styles.emptyCartMessage}>
         <Text style={styles.emptyCartText}>You don't have anything in your cart yet.</Text>
       </View>
       ):
-      // <View style={[GeneralStyle.marginVertical10,GeneralStyle.marginHorizontal20]}>
-      //   <Text style={[{ fontWeight: 'bold', color: AppColors.white }, GeneralStyle.fontSize18]}>
-      //     Total: ${totalPrice.toFixed(2)}
-      //   </Text>
-      // </View>
       <View style={[GeneralStyle.row,GeneralStyle.itemsCenter,{
           padding: 10,
           borderRadius: 10,
@@ -54,6 +56,7 @@ const ShoppingCart = ({ }) => {
           width:windowWidth-20,
           alignSelf:'center',
       }]}>
+
         <View style={{ position: 'relative',marginRight:12 }}>
           <Ionicons color={'rgba(0, 0, 0, 0.7)'} name="cart-outline" size={30} />
           {cart.length > 0 && (
@@ -76,6 +79,7 @@ const ShoppingCart = ({ }) => {
       </View>
 
       }
+
       <FlatList
         data={cart}
         renderItem={({ item, index }) => (
@@ -90,12 +94,34 @@ const ShoppingCart = ({ }) => {
         keyExtractor={(item, index) => item.item.id.toString() + '_' + index.toString()}
       />
 
-      {/* Botón para simular el pago */}
-      {cart.length>0 && <CustomButton color={AppColors.green} label="Go to Pay" onPress={handlePayment} 
+      {cart.length>0 && <PrimaryButton color={AppColors.green} label="Go to Pay" onPress={handlePayment} 
       customStyles={{marginTop:4,marginBottom:8,width:'50%',alignSelf:'center'}} 
       textBlack={true}
-      textStyles={{ fontWeight: '400'}} // Establecer el color del texto aquí
+      textStyles={{ fontWeight: '400'}} 
       />}
+
+      <CustomModal visible={deleteProductFromCartModal.visible} hideModalFunction={()=>{
+        dispatch(setDeleteProductFromCartModal({visible:false,item:-1}))
+      }}>
+        {productToDelete && 
+        <View style={{  borderRadius: 8, backgroundColor: 'white', marginBottom: 16 }}>
+          <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 8 }}>{'Remove item'}</Text>
+          <Text style={{ fontSize: 14, color: 'rgba(0, 0, 0, 0.8)', marginBottom: 16 }}>{'Do you want to remove '+productToDelete.item.title+' from your cart?'}</Text>
+          <View style={[GeneralStyle.row,GeneralStyle.justifyBetween]}>
+            <SecondaryButton label='Cancelar'
+            onPress={()=>{
+              dispatch(setDeleteProductFromCartModal({visible:false,item:-1}))
+            }}  ></SecondaryButton>
+            <PrimaryButton label='Eliminar' onPress={()=>{
+              const newArray = [...cart];
+              dispatch(setCartItems(newArray.filter(obj => obj.item.id !== productToDelete.item.id)));
+              dispatch(setDeleteProductFromCartModal({visible:false,item:-1}))
+
+            }}/>
+          </View>
+        </View>
+        }
+      </CustomModal> 
     </View>
   );
 };

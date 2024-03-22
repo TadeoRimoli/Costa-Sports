@@ -1,6 +1,6 @@
 import React from 'react'
 import {StatusBar, StyleSheet, SafeAreaView,Text, View ,TextInput, Pressable } from 'react-native';
-import CustomButton from '../CustomButton';
+import PrimaryButton from '../PrimaryButton';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Colors, GeneralStyle } from '../../../Styles/GeneralStyles';
 

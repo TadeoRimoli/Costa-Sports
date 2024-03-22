@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Button, Alert, Image, TouchableOpacity, Pressab
 import { useDispatch, useSelector } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker'; // Importa ImagePicker de expo-image-picker
-import CustomButton from '../CoreComponents/CustomButton';
+import PrimaryButton from '../CoreComponents/PrimaryButton';
 import { AppColors, GeneralStyle } from '../../Styles/GeneralStyles';
 import { resetUser, setUser } from '../../../Redux/slices/GeneralSlice';
 import { useGetImageProfileQuery, usePutImageProfileMutation } from '../../services/profileApi';

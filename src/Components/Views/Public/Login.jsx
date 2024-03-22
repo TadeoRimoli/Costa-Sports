@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View,ImageBackground , TextInput, TouchableOpacity, Alert } from 'react-native';
 import { AppColors, Colors, GeneralStyle } from '../../../Styles/GeneralStyles';
 import CustomInput from '../../CoreComponents/CustomInput';
-import CustomButton from '../../CoreComponents/CustomButton';
+import PrimaryButton from '../../CoreComponents/PrimaryButton';
 import { useNavigation } from '@react-navigation/native';
 import { useLoginMutation } from '../../../services/authAPI';
 import { useDispatch, useSelector } from 'react-redux';
@@ -71,7 +71,7 @@ const Login = () => {
         error={passwordError}
         setError={setPasswordError}
         />
-        <CustomButton
+        <PrimaryButton
         customStyles={[{marginTop:10,width:'100%'}]}
         label='Login' 
         textStyles={[{fontSize:18,fontWeight:600,},]}

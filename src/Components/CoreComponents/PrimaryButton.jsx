@@ -3,14 +3,14 @@ import React from 'react'
 import { Text,StyleSheet} from 'react-native';
 import { AppColors, GeneralStyle } from '../../Styles/GeneralStyles';
 
-const CustomButton = ({customStyles, textStyles,label = "", value, setValue,onPress, color,textBlack }) => {
+const PrimaryButton = ({customStyles, textStyles,label = "", value, setValue,onPress, color,colorText,textBlack }) => {
 
     return (
       <Pressable
         onPress={onPress}
         style={[styles.button,customStyles,  {backgroundColor:color ?color:AppColors.primaryButton} ]}
       >
-        <Text style={[styles.buttonText,textStyles,{ color:textBlack ?AppColors.black:AppColors.white}]}>{label}</Text>
+        <Text style={[styles.buttonText,textStyles,{ color:colorText ? colorText : textBlack ?AppColors.black:AppColors.white}]}>{label}</Text>
       </Pressable>
     );
   };
@@ -22,10 +22,10 @@ const styles = StyleSheet.create({
       justifyContent:'center'
     },
     buttonText: {
-      fontSize:18,
+      fontSize:16,
       fontWeight:600,
       alignSelf:'center',
       color: 'white',
     },
 });
-export default CustomButton
+export default PrimaryButton

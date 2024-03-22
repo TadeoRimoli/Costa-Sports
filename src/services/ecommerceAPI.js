@@ -50,16 +50,23 @@ export const ecommerceAPI = createApi({
         }),
         getOrders:buidler.mutation({
             query:(user)=>({
-                url:`/orders.json?orderBy="user"&equalTo="${user}"`,
+                url:`/orders.json?orderBy="user"&equalTo="${user}`,
                 method:"GET",
             })
         }),
         reduceProductStock: buidler.mutation({
-            query: ({ productId, amount }) => ({
+            
+            query: ({ productId, amount }) => {
+                console.log("productId: ", productId,"amount: ", amount)
+                return ({
               url: `/products/${productId}.json`,
               method: "PATCH",
               body: { stock: amount }, // Reducir el stock en la cantidad especificada
-            }),
+            })},
+            // transformResponse:(response)=>{
+            //     console.log(response)
+            //     return response;
+            // }
         })
     })
 })

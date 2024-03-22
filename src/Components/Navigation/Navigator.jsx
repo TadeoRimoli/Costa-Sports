@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Login from '../Views/Public/Login';
 import UserMainView from '../Views/UserMainView';
 import { createTable, deleteSession,  getSession } from '../../db';
-import { setProductList, setUser } from '../../../Redux/slices/GeneralSlice';
+import { reset, setProductList, setUser } from '../../../Redux/slices/GeneralSlice';
 import { AppColors } from '../../Styles/GeneralStyles';
 import { useLazyGetProductsByCategoryQuery } from '../../services/ecommerceAPI';
 
@@ -30,7 +30,14 @@ const HomeStack = () => {
       <Stack.Screen name="Home" 
       options={{ headerShown:false }}
       component={HomeScreen}></Stack.Screen>
-      <Stack.Screen name="Purchases" component={Purchases}></Stack.Screen>
+      <Stack.Screen name="Purchases" 
+      options={{
+        headerStyle:{
+          backgroundColor:AppColors.footerBackground,
+        },
+        headerTintColor:AppColors.white
+      }}
+      component={Purchases}></Stack.Screen>
   </Stack.Navigator>
 }
 
@@ -132,7 +139,7 @@ const PublicStack = ({})=>{
 
 const MyNavigator = ({}) => {
 
-  const { user } = useSelector(state=>state.General)
+  const { user,cart } = useSelector(state=>state.General)
   
   useEffect(() => {
     // Crear la tabla al cargar la aplicación
@@ -153,6 +160,7 @@ const MyNavigator = ({}) => {
         if (elapsedTime > MAX_SESSION_TIME) {
           // Si ha pasado el tiempo máximo de sesión
           deleteSession(); // Elimina la sesión expirada de la base de datos
+          dispatch(reset())
           dispatch(setUser(null)); // Actualiza el estado del usuario a null
         } else {
           // Si la sesión aún no ha expirado
@@ -205,7 +213,24 @@ const MyNavigator = ({}) => {
         options={{
             tabBarLabel:'',
             tabBarIcon: ({ color, size }) => (
-              <Ionicons name="cart-outline" size={size} color={color} />
+              <View style={{ position: 'relative',marginRight:12 }}>
+                <Ionicons color={color} name="cart-outline" size={size} />
+                {cart.length > 0 && (
+                  <View style={{
+                    position: 'absolute',
+                    top: -5,
+                    right: -5,
+                    backgroundColor: 'white',
+                    borderRadius: 12,
+                    paddingHorizontal: 5,
+                    paddingVertical: 2,
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                  }}>
+                    <Text style={{ color: 'rgba(0, 0, 0, 0.8)', fontSize: 12 }}>{cart.length}</Text>
+                  </View>
+                )}
+              </View>
             ),
           }}
         />

@@ -5,7 +5,8 @@ import { AppColors, Colors, GeneralStyle } from '../../Styles/GeneralStyles';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCartItems } from '../../../Redux/slices/GeneralSlice';
+import { setCartItems, setDeleteProductFromCartModal } from '../../../Redux/slices/GeneralSlice';
+import CustomInput from '../CoreComponents/CustomInput';
 
 const CartProduct = ({ item, onRemove }) => {
   const windowWidth = Dimensions.get('window').width;
@@ -32,8 +33,9 @@ const CartProduct = ({ item, onRemove }) => {
       const objetoModificado = { ...cart[index] };
       // Modificar el campo deseado del objeto clonado
       if(nuevoValor==0){
-        const newArray = [...cart];
-        dispatch(setCartItems(newArray.filter(objeto => objeto.item.id !== product.id)));
+        // const newArray = [...cart];
+        // dispatch(setCartItems(newArray.filter(objeto => objeto.item.id !== product.id)));
+        dispatch(setDeleteProductFromCartModal({visible:true,item:product.id}))
       }else if(product.stock>=nuevoValor){
         objetoModificado.quantity = nuevoValor;
       // Reemplazar el objeto original con el objeto modificado en el array
@@ -71,7 +73,7 @@ const CartProduct = ({ item, onRemove }) => {
         <View style={[GeneralStyle.row, GeneralStyle.justifyBetween, GeneralStyle.itemsCenter, GeneralStyle.marginTop5]}>
           <View style={[,GeneralStyle.row, GeneralStyle.itemsCenter]}>
             <MaterialCommunityIcons onPress={handleDecrement} name="minus" size={24} color="black"  style={{ borderWidth: 1,paddingLeft:2,borderRadius:4  }} />
-            <Text style={[GeneralStyle.fontSize24, { marginHorizontal: 12 }]}>{item.quantity}</Text>
+            <CustomInput customStyles={{marginHorizontal:8}} value={item.quantity.toString()} enabled={false} setValue={()=>{}}></CustomInput>
             <MaterialCommunityIcons onPress={handleIncrement} name="plus" size={24} color="black" style={{ borderWidth: 1,paddingLeft:2,borderRadius:4  }} />
           </View>
           <View style={[,GeneralStyle.row, GeneralStyle.itemsCenter]}>

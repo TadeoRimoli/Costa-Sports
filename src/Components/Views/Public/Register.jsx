@@ -2,7 +2,7 @@ import { Alert, Button, Modal, StyleSheet, Text, View,ImageBackground } from 're
 import React, { useEffect, useState } from 'react'
 import { AppColors, GeneralStyle } from '../../../Styles/GeneralStyles'
 import CustomInput from '../../CoreComponents/CustomInput'
-import CustomButton from '../../CoreComponents/CustomButton'
+import PrimaryButton from '../../CoreComponents/PrimaryButton'
 import { useSignUpMutation } from '../../../services/authAPI'
 
 import { useNavigation } from '@react-navigation/native';
@@ -64,7 +64,7 @@ const Register = () => {
   >
     <View style={[{ flex: 1, justifyContent: 'center', alignItems: 'center', }]}>
       <Text style={[GeneralStyle.fontSize22,GeneralStyle.marginBottom10]}>Felicidades! la cuenta ya fue creada</Text>
-      <CustomButton label="Iniciar sesión"textStyles={{fontSize:20}} onPress={redirectToLogin} />
+      <PrimaryButton label="Iniciar sesión"textStyles={{fontSize:20}} onPress={redirectToLogin} />
     </View>
   </Modal>
   }
@@ -104,7 +104,7 @@ const Register = () => {
       error={confirmPasswordError}
       setError={setConfirmPasswordError}
       />
-      <CustomButton
+      <PrimaryButton
       customStyles={{marginTop:10,width:'100%'}}
       label='Sign Up' onPress={handleSignUp} />
       <Text style={[GeneralStyle.fontSize18,GeneralStyle.marginTop15,{color:AppColors.white}]}>Already have an account?<Text onPress={()=>{

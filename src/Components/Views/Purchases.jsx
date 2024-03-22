@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, FlatList } from 'react-native';
+import { StyleSheet, Text, View, FlatList ,Image} from 'react-native';
 import { useSelector } from 'react-redux';
 import { useGetOrdersMutation } from '../../services/ecommerceAPI';
 import { useIsFocused } from '@react-navigation/native';
+import { AppColors } from '../../Styles/GeneralStyles';
 
 const Purchases = ({}) => {
   
@@ -19,7 +20,7 @@ const Purchases = ({}) => {
 
   useEffect(()=>{
     if(isSuccess){
-      setPurchases(Object.values(data))
+      setPurchases(Object.values(data).sort((a,b)=> b.date -a.date ))
     }
   },[isSuccess])
 
@@ -27,7 +28,7 @@ const Purchases = ({}) => {
   const renderItem = ({ item, index }) => {
     let date = new Date(item.date);
     return (
-      <View style={styles.purchaseCard}>
+      <View style={[styles.purchaseCard, { backgroundColor: AppColors.softYellow }]}>
         <View style={styles.header}>
           <Text style={styles.dateText}>{date.toLocaleDateString()}</Text>
           <Text style={styles.dateText}>{date.toLocaleTimeString()}</Text>
@@ -36,12 +37,19 @@ const Purchases = ({}) => {
         <Text style={styles.cardText}>Credit Card Number: {item.card}</Text>
         <Text style={styles.itemsHeader}>Items:</Text>
         {item.items.map((product, productIndex) => {
-          return <View key={productIndex} style={styles.itemContainer}>
-            <Text style={styles.itemIndexText}>{product.item.title}</Text>
-            <Text style={styles.itemPriceText}>Price per unit: ${product.item.price.toFixed(2)}</Text>
-            <Text style={styles.itemPriceText}>Quantity: ${product.quantity}</Text>
-            <Text style={styles.itemPriceText}>Total: ${(product.quantity*product.item.price).toFixed(2)}</Text>
-          </View>
+          return (
+            <View key={"product.item.id"+productIndex} style={styles.itemContainer}>
+              <Image source={{ uri: product.item.thumbnail }} style={styles.thumbnail} />
+
+              <View style={{}}>
+                <Text style={styles.itemIndexText}>{product.item.title}</Text>
+                <Text style={styles.itemPriceText}>Price per unit: ${product.item.price.toFixed(2)}</Text>
+                <Text style={styles.itemPriceText}>Quantity: ${product.quantity}</Text>
+                <Text style={styles.itemPriceText}>Total: ${(product.quantity * product.item.price).toFixed(2)}</Text>
+              </View>
+
+            </View>
+          );
         })}
       </View>
     );
@@ -49,7 +57,7 @@ const Purchases = ({}) => {
 
   return (
     <FlatList
-      style={styles.container}
+      style={[styles.container,{backgroundColor:AppColors.footerBackground}]}
       contentContainerStyle={{alignItems:''}}
       data={purchases}
       renderItem={renderItem}
@@ -57,55 +65,52 @@ const Purchases = ({}) => {
     />
   );
 };
-
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#ffffff',
-  },
   purchaseCard: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 10,
-    padding: 10,
-    margin: 10,
+    borderRadius: 8,
+    padding: 16,
+    marginBottom: 16,
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 10,
+    marginBottom: 8,
   },
   dateText: {
     fontSize: 16,
+    fontWeight: 'bold',
   },
   totalAmountText: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 10,
+    fontSize: 16,
+    marginBottom: 8,
   },
   cardText: {
     fontSize: 16,
-    marginBottom: 10,
+    marginBottom: 8,
   },
   itemsHeader: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
-    marginBottom: 5,
+    marginBottom: 8,
   },
   itemContainer: {
-    margin: 10,
+    marginBottom: 8,
+    flexDirection:'row'
+  },
+  thumbnail: {
+    width: 50,
+    height: 50,
+    marginRight:10,
+    marginTop:5,
+    borderRadius: 4,
   },
   itemIndexText: {
     fontSize: 16,
-    fontWeight: 'bold',
-  },
-  itemTitleText: {
-    fontSize: 16,
+    marginBottom: 4,
   },
   itemPriceText: {
-    fontSize: 16,
-    marginVertical:2,
+    fontSize: 14,
+    color: 'gray',
   },
 });
-
 export default Purchases;

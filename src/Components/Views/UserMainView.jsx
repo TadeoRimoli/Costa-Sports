@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 import SettingsScreen from './Settings';
 import SecurityScreen from './Security';
 import { deleteSession } from '../../db';
-import { setUser } from '../../../Redux/slices/GeneralSlice';
+import { reset, setUser } from '../../../Redux/slices/GeneralSlice';
 import { AppColors } from '../../Styles/GeneralStyles';
 
 const Stack = createNativeStackNavigator()
@@ -23,6 +23,7 @@ const UserMainView = () => {
             { text: 'Go back', style: 'cancel' },
             { text: 'Log out', onPress:()=>{ 
               deleteSession()
+              dispatch(reset())
               dispatch(setUser(null))
             } },
           ]
