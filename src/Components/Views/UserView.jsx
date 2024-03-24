@@ -30,17 +30,19 @@ const UserView = () => {
         }
     },[isSuccess,data])
 
-    const showImagePickerOptions = () => {
-      Alert.alert(
-        'Select image',
-        'Choose an option to select an image:',
-        [
-          { text: 'Cancel', style: 'cancel' },
-          { text: 'Gallery', onPress: pickImageFromGallery },
-          { text: 'Camera', onPress: takePhotoWithCamera },
-        ]
-      );
-    };
+    const [showImagePicker,setShowImagePicker]=useState(false)
+
+    // const showImagePickerOptions = () => {
+    //   Alert.alert(
+    //     'Select image',
+    //     'Choose an option to select an image:',
+    //     [
+    //       { text: 'Cancel', style: 'cancel' },
+    //       { text: 'Gallery', onPress: pickImageFromGallery },
+    //       { text: 'Camera', onPress: takePhotoWithCamera },
+    //     ]
+    //   );
+    // };
    
     const pickImageFromGallery = async () => {
       try {
@@ -96,12 +98,12 @@ const UserView = () => {
           
           <View style={[GeneralStyle.justifyCenter,GeneralStyle.itemsCenter]}>
               {image ? (
-              <TouchableOpacity onPress={showImagePickerOptions}>
+              <TouchableOpacity onPress={()=>{setShowImagePicker(true)}}>
               <Image  source={{ uri: image }} style={styles.userImage} />
               </TouchableOpacity>
               )
               : (
-              <Pressable onPress={showImagePickerOptions} style={styles.userIconContainer}>
+              <Pressable onPress={()=>{setShowImagePicker(true)}} style={styles.userIconContainer}>
                   <Ionicons name="person-circle-outline" size={100} color={AppColors.white} />
               </Pressable>
               )}
@@ -114,20 +116,7 @@ const UserView = () => {
       </View>
       <Text style={{alignSelf:'flex-end',color:AppColors.white}}>Version 1.0.0</Text>
       <CustomModal visible={logoutModal} hideModalFunction={()=>{dispatch(hideLogoutModal())}} >
-      {/* const handleLogout = () => {
-      Alert.alert(
-          'Log out',
-          'Are you sure you want to log out?',
-          [
-            { text: 'Go back', style: 'cancel' },
-            { text: 'Log out', onPress:()=>{ 
-              deleteSession()
-              dispatch(reset())
-              dispatch(setUser(null))
-            } },
-          ]
-        );
-      }; */}
+     
       <Text style={[GeneralStyle.fontBold,GeneralStyle.fontSize18]}>Log out</Text>
       <Text style={[GeneralStyle.fontSize16,GeneralStyle.marginVertical10]}>Are you sure you want to log out?</Text>
       <View style={[GeneralStyle.row,GeneralStyle.justifyBetween]}>
@@ -144,6 +133,15 @@ const UserView = () => {
         } }
         />
       </View>
+      </CustomModal>
+
+        <CustomModal visible={showImagePicker} hideModalFunction={()=>{setShowImagePicker(false)}}>
+        <Text style={[GeneralStyle.fontBold, GeneralStyle.fontSize18]}>Select image</Text>
+        <Text style={[GeneralStyle.fontSize16, GeneralStyle.marginVertical10]}>Choose an option to select an image:</Text>
+        <View style={[GeneralStyle.row, GeneralStyle.justifyBetween]}>
+          <PrimaryButton label='Gallery' onPress={pickImageFromGallery} />
+          <PrimaryButton label='Camera' onPress={takePhotoWithCamera} />
+        </View>
       </CustomModal>
     </View> : null
   )

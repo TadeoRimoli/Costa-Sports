@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View,ImageBackground , TextInput, TouchableOpacity, Alert } from 'react-native';
+import { StyleSheet, Text, View,ImageBackground , TextInput, TouchableOpacity, Alert, Keyboard } from 'react-native';
 import { AppColors, Colors, GeneralStyle } from '../../../Styles/GeneralStyles';
 import CustomInput from '../../CoreComponents/CustomInput';
 import PrimaryButton from '../../CoreComponents/PrimaryButton';
@@ -10,6 +10,7 @@ import { setUser } from '../../../../Redux/slices/GeneralSlice';
 import { loginSchema } from '../../../services/authYupSchema';
 import { insertSession } from '../../../db';
 import { appName } from '../../../Constants/Constants';
+import CustomModal from '../../CoreComponents/CustomModal';
 
 
 const Login = () => {
@@ -21,16 +22,17 @@ const Login = () => {
   const navigation = useNavigation()
   const [login,{}] = useLoginMutation();
 
+  const [modalVisibility,setModalVisibility]=useState({visibility:false,message:''})
   const handleLogin = async () => {
-
+    Keyboard.dismiss()
     try {
       loginSchema.validateSync({ email, password }, { abortEarly: false });
-
       const {data, isLoading, isError: postError, isSuccess,result,error} = await login({ email, password });
       if(error && error.data.error.message && error.data.error.message=="INVALID_LOGIN_CREDENTIALS")
-        Alert.alert("Error","Credenciales incorrectas")
+        setModalVisibility({visibility:true,message:'Incorrect credentials'})
       else if(postError){
-        Alert.alert("Error",error.data.error.message)
+        setModalVisibility({visibility:true,message:error.data.error.message})
+
       }
       if (data && data.idToken) {
         insertSession(data.email,data.idToken,data.localId)
@@ -80,6 +82,10 @@ const Login = () => {
             navigation.navigate("Register")
         }} style={[GeneralStyle.fontSize18,{color:AppColors.secondaryText}]}>Sign up</Text> </Text>
     </View>
+    <CustomModal visible={modalVisibility.visibility} autoCloseTimeout={3500} hideModalFunction={()=>{setModalVisibility({visibility:false,message:''})}}>
+      <Text style={[GeneralStyle.fontBold, GeneralStyle.fontSize18]}>Error</Text>
+      <Text style={[GeneralStyle.fontSize16, GeneralStyle.marginVertical10]}>{modalVisibility.message}</Text>
+    </CustomModal>
     </ImageBackground>
 
   );
