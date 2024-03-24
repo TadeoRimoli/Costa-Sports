@@ -169,6 +169,9 @@ export const GeneralStyle = StyleSheet.create({
     fontSize32: {
       fontSize: 32,
     },
+    fontSize36: {
+      fontSize: 36,
+    },
     margin5: {
       margin: 5,
     },

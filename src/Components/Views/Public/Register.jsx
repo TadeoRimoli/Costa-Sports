@@ -76,7 +76,7 @@ const Register = () => {
   return (
     <ImageBackground source={backgroundImage} style={{ width: '100%', height: '100%' }}>
     <View style={[GeneralStyle.padding16, GeneralStyle.flex1, GeneralStyle.justifyCenter, GeneralStyle.itemsCenter]}>
-      <Text style={[{color:AppColors.white},GeneralStyle.fontBold,GeneralStyle.fontSize24,GeneralStyle.marginBottom10]}>{appName}</Text>
+      <Text style={[{color:AppColors.white},GeneralStyle.fontBold,GeneralStyle.fontSize36,GeneralStyle.marginBottom10]}>{appName}</Text>
       
       <CustomInput
       customStyles={{width:'100%'}}
