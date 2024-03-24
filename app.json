@@ -1,15 +1,13 @@
 {
   "expo": {
-    "name": "AppCoder",
+    "name": "Costa Sports",
     "slug": "AppCoder",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "image": "./assets/splashscreen.jpg"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -19,13 +17,18 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/icon.jpg",
         "backgroundColor": "#ffffff"
       },
       "package": "com.tadeor1.AppCoder"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/icon.jpg"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "fe89e52c-e19d-4844-bbd0-ff94dd6cc3f3"
+      }
     }
   }
 }

@@ -59,7 +59,9 @@ const UserView = () => {
         const { uri } = pickerResult.assets[0];
         setImage(uri);
         let response = await putImageProfile({image:'data:image/jpeg;base64,' + pickerResult.assets[0].base64,localId:user.localId})
+        setShowImagePicker(false)
       } catch (error) {
+        setShowImagePicker(false)
         console.error('Error selecting image from gallery:', error);
         Alert.alert('Error', 'An error occurred while selecting the image from the gallery');
       }
@@ -84,7 +86,9 @@ const UserView = () => {
         const { uri } = pickerResult.assets[0];
         setImage(uri);
         await putImageProfile({image:'data:image/jpeg;base64,'+pickerResult.assets[0].base64,localId:user.localId});
+        setShowImagePicker(false)
       } catch (error) {
+        setShowImagePicker(false)
         console.error('Error taking photo with camera:', error);
         Alert.alert('Error', 'An error occurred while taking the photo with the camera');
       }

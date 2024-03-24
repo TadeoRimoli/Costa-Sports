@@ -8,6 +8,8 @@ import MyNavigator from './src/Components/Navigation/Navigator';
 import store from './Redux/Store';
 import { Provider } from 'react-redux';
 import { initDb } from './src/db';
+import LoadingIndicator from './src/Components/CoreComponents/LoadingIndicator';
+import { AppColors, GeneralStyle } from './src/Styles/GeneralStyles';
 
 
 export default function App() {
@@ -15,13 +17,15 @@ export default function App() {
   const [fontsLoaded] = Font.useFonts(FontsArray);
 
   if(!fontsLoaded){
-    return <Text>Loading Fonts</Text>
+    return <View style={[GeneralStyle.flex1,GeneralStyle.justifyCenter,GeneralStyle.itemsCenter,{ backgroundColor:AppColors.footerBackground}]}>
+      <LoadingIndicator/>
+    </View>
   }
 
   return (
     <SafeAreaView style={styles.container}>
       <NavigationContainer>
-        <StatusBar  />
+        <StatusBar  backgroundColor="transparent" barStyle="dark-content" />
         <Provider store={store}>
         <MyNavigator />
         </Provider>
