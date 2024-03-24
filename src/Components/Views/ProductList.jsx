@@ -44,8 +44,19 @@ const ProductList = ({}) => {
 
     const [count, setCount] = useState(1);
 
+
+    function getStock(){
+      var indice = cart.findIndex(function(producto) {
+        return producto.item.id === addProductFromModal.item.id; // Supongamos que deseas eliminar el producto con id 7
+      });
+      
+      if(indice !==-1)
+      return addProductFromModal.item.stock - cart[indice].quantity
+      else return addProductFromModal.item.stock
+    }
+
     const handleIncrement = () => {
-      if(count < addProductFromModal.item.stock)
+      if(count < getStock())
         setCount(count + 1);
     };
   
@@ -56,7 +67,7 @@ const ProductList = ({}) => {
     };
     
     const handleAddProduct = (item) => {
-      if (count <= item.stock && count >= 1) {
+      if (count <= getStock() && count >= 1) {
         const existingProductIndex = cart.findIndex(cartItem => cartItem.item.id === item.id);
     
         if (existingProductIndex !== -1) {
@@ -82,7 +93,15 @@ const ProductList = ({}) => {
       setCount(countValue);
     }
   }
-    const priceWithDiscount = addProductFromModal.item ? (addProductFromModal.item.price-((addProductFromModal.item.discountPercentage/100)*addProductFromModal.item.price)).toFixed(2) : 0
+    const priceWithDiscount = addProductFromModal.item ? (addProductFromModal.item.price-((addProductFromModal.item.discountPercentage/100)*addProductFromModal.item.price)).toFixed(2) : 0;
+
+    useEffect(()=>{
+      if(addProductFromModal.visible){
+        setCount(1)
+      }
+    },[addProductFromModal.visible])
+
+
 
     return (
     <View style={{flex:1,backgroundColor: AppColors.footerBackground}}>
@@ -128,7 +147,6 @@ const ProductList = ({}) => {
         visible={addProductFromModal.visible}
         hideModalFunction={()=>{dispatch(setAddProductFromModal({visible:false,item:-1}))}}
         >   
-        {/*  */}
           {addProductFromModal.item && <>
           <View style={{  borderRadius: 8, backgroundColor: 'white', marginBottom: 16 }}>
               <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 8 }}>{addProductFromModal?.item.title}</Text>
@@ -137,7 +155,7 @@ const ProductList = ({}) => {
               <View style={[GeneralStyle.row,GeneralStyle.itemsCenter,GeneralStyle.justifyBetween]}>
                 <View style={[]}>
                   <Text style={{ fontSize: 16, fontWeight: 'bold', marginBottom: 8 }}>Price: ${priceWithDiscount}</Text>
-                  <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Stock: {addProductFromModal.item.stock}</Text>
+                  <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Stock: {getStock()}</Text>
                 </View>
 
               <View style={{ flexDirection: 'col',  marginVertical: 8 }}>
@@ -145,7 +163,7 @@ const ProductList = ({}) => {
                     <Pressable style={{backgroundColor:NewColors.blueGrey100,borderRadius:40}} onPress={handleDecrement}>
                       <AntDesign name="minus" size={30} color="black" />
                     </Pressable>
-                    <CustomInput customStyles={{marginHorizontal: 10,}} keyboardType={"numeric"} value={count.toString()} setValue={handleAddCount}/>
+                    <CustomInput customStyles={{marginHorizontal: 10,}} keyboardType={"numeric"} enabled={false} value={count.toString()} setValue={()=>{}}/>
                     <Pressable style={{backgroundColor:NewColors.blueGrey100,borderRadius:40}} onPress={handleIncrement}>
                       <Ionicons name="add" fontWeight='bold' size={30} color="black" />
                     </Pressable>

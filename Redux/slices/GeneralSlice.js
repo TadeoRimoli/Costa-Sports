@@ -13,6 +13,7 @@ const initialState = {
     visible:false,
     item:-1
   },
+  logoutModal:false
 };
 
 const GeneralSlice = createSlice({
@@ -50,9 +51,15 @@ const GeneralSlice = createSlice({
     setAddProductFromModal(state, action){
       state.addProductFromModal = action.payload;
     },
+    showLogoutModal(state){
+      state.logoutModal = true;
+    },
+    hideLogoutModal(state){
+      state.logoutModal = false;
+    },
     reset: () => initialState
   },
 });
 
-export const { reset,clearProductList,setProductList,deleteAllCartItems,addCartItem,setCartItems,removeCartItem,setUser,resetUser,setDeleteProductFromCartModal,setAddProductFromModal} = GeneralSlice.actions;
+export const { showLogoutModal,hideLogoutModal,reset,clearProductList,setProductList,deleteAllCartItems,addCartItem,setCartItems,removeCartItem,setUser,resetUser,setDeleteProductFromCartModal,setAddProductFromModal} = GeneralSlice.actions;
 export default GeneralSlice.reducer;

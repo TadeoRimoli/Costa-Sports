@@ -5,17 +5,20 @@ import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker'; // Importa ImagePicker de expo-image-picker
 import PrimaryButton from '../CoreComponents/PrimaryButton';
 import { AppColors, GeneralStyle } from '../../Styles/GeneralStyles';
-import { resetUser, setUser } from '../../../Redux/slices/GeneralSlice';
+import { hideLogoutModal, reset, resetUser, setUser } from '../../../Redux/slices/GeneralSlice';
 import { useGetImageProfileQuery, usePutImageProfileMutation } from '../../services/profileApi';
 import MapPreview from '../CoreComponents/MapPreview';
 import { useNavigation } from '@react-navigation/native';
 import { ScrollView } from 'react-native';
 import NavigateRow from '../CoreComponents/NavigateRow';
+import CustomModal from '../CoreComponents/CustomModal';
+import SecondaryButton from '../CoreComponents/SecondaryButton';
+import { deleteSession } from '../../db';
 
 const UserView = () => {
 
     const dispatch = useDispatch()
-    const {user} = useSelector(state=>state.General)
+    const {user,logoutModal} = useSelector(state=>state.General)
 
     const [putImageProfile] = usePutImageProfileMutation()
     const {data,isSuccess,refetch } = useGetImageProfileQuery( user?.localId ?? '-1')
@@ -110,7 +113,38 @@ const UserView = () => {
           <NavigateRow label="Security" route="Security" />
       </View>
       <Text style={{alignSelf:'flex-end',color:AppColors.white}}>Version 1.0.0</Text>
+      <CustomModal visible={logoutModal} hideModalFunction={()=>{dispatch(hideLogoutModal())}} >
+      {/* const handleLogout = () => {
+      Alert.alert(
+          'Log out',
+          'Are you sure you want to log out?',
+          [
+            { text: 'Go back', style: 'cancel' },
+            { text: 'Log out', onPress:()=>{ 
+              deleteSession()
+              dispatch(reset())
+              dispatch(setUser(null))
+            } },
+          ]
+        );
+      }; */}
+      <Text style={[GeneralStyle.fontBold,GeneralStyle.fontSize18]}>Log out</Text>
+      <Text style={[GeneralStyle.fontSize16,GeneralStyle.marginVertical10]}>Are you sure you want to log out?</Text>
+      <View style={[GeneralStyle.row,GeneralStyle.justifyBetween]}>
+        <SecondaryButton label='Cancel' onPress={()=>{
+          dispatch(hideLogoutModal())
+        }}></SecondaryButton>
+        <PrimaryButton label='Logout' 
+        onPress={ ()=>{
+          deleteSession()
+          dispatch(reset())
+          dispatch(setUser(null))
+          dispatch(hideLogoutModal())
 
+        } }
+        />
+      </View>
+      </CustomModal>
     </View> : null
   )
 }

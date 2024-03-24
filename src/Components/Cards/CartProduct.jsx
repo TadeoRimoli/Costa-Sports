@@ -15,35 +15,29 @@ const CartProduct = ({ item, onRemove }) => {
   const {cart} = useSelector(state=>state.General);
   const product = item.item;
   const dispatch = useDispatch()
-  function handleIncrement(){
-    modificarCampo(item.quantity+1)
-  }
 
-  function handleDecrement(){
-    modificarCampo(item.quantity-1)
-    
+  function getStockAvailable(){
+    return product.stock - item.quantity
   }
 
   // const dispatch = useDispatch()
-  function modificarCampo( nuevoValor) {
+  function modifyQuantity( increment) {
     const index = cart.findIndex(item => item.item.id === product.id);
     // Si se encontró el objeto
+    const newQuantity = increment ? item.quantity+1 : item.quantity-1;
     if (index !== -1) {
       // Clonar el objeto encontrado para no modificar el original directamente
       const objetoModificado = { ...cart[index] };
       // Modificar el campo deseado del objeto clonado
-      if(nuevoValor==0){
-        // const newArray = [...cart];
-        // dispatch(setCartItems(newArray.filter(objeto => objeto.item.id !== product.id)));
+      if(newQuantity==0){
         dispatch(setDeleteProductFromCartModal({visible:true,item:product.id}))
-      }else if(product.stock>=nuevoValor){
-        objetoModificado.quantity = nuevoValor;
+      }else if( (increment && getStockAvailable()>0) || (!increment && item.quantity>1) ){
+        objetoModificado.quantity = newQuantity;
       // Reemplazar el objeto original con el objeto modificado en el array
       const newArray = [...cart];
       newArray[index] = objetoModificado;
       dispatch(setCartItems(newArray));
       }
-      // Retornar el nuevo array con el campo modificado
     }
   }
   
@@ -72,9 +66,9 @@ const CartProduct = ({ item, onRemove }) => {
 
         <View style={[GeneralStyle.row, GeneralStyle.justifyBetween, GeneralStyle.itemsCenter, GeneralStyle.marginTop5]}>
           <View style={[,GeneralStyle.row, GeneralStyle.itemsCenter]}>
-            <MaterialCommunityIcons onPress={handleDecrement} name="minus" size={28} color="black"  style={{ borderWidth: 1,paddingLeft:2,borderRadius:4  }} />
+            <MaterialCommunityIcons onPress={()=>modifyQuantity(false)} name="minus" size={28} color="black"  style={{ borderWidth: 1,paddingLeft:2,borderRadius:4  }} />
             <CustomInput customStyles={{marginHorizontal:8}} value={item.quantity.toString()} enabled={false} setValue={()=>{}}></CustomInput>
-            <MaterialCommunityIcons onPress={handleIncrement} name="plus" size={28} color="black" style={{ borderWidth: 1,paddingLeft:2,borderRadius:4  }} />
+            <MaterialCommunityIcons onPress={()=>modifyQuantity(true)} name="plus" size={28} color="black" style={{ borderWidth: 1,paddingLeft:2,borderRadius:4  }} />
           </View>
           <View style={[,GeneralStyle.row, GeneralStyle.itemsCenter]}>
             <Text style={[,{fontWeight:'bold'},GeneralStyle.fontSize18]}>Total: </Text>

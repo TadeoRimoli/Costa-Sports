@@ -32,11 +32,6 @@ const Categories = ({}) => {
       setLocalCategories(categories);
     },[categories])
 
-    
-   
-  
-
-
   return (
     <View style={{ flex: 1, backgroundColor: AppColors.footerBackground }}>
     {isLoading ? <LoadingIndicator /> : error ? <Text>Error: {error.message}</Text> : (

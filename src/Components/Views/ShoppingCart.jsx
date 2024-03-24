@@ -111,11 +111,11 @@ const ShoppingCart = ({ }) => {
           <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 8 }}>{'Remove item'}</Text>
           <Text style={{ fontSize: 14, color: 'rgba(0, 0, 0, 0.8)', marginBottom: 16 }}>{'Do you want to remove '+productToDelete.item.title+' from your cart?'}</Text>
           <View style={[GeneralStyle.row,GeneralStyle.justifyBetween]}>
-            <SecondaryButton label='Cancelar'
+            <SecondaryButton label='Cancel'
             onPress={()=>{
               dispatch(setDeleteProductFromCartModal({visible:false,item:-1}))
             }}  ></SecondaryButton>
-            <PrimaryButton label='Eliminar' onPress={()=>{
+            <PrimaryButton label='Delete' onPress={()=>{
               const newArray = [...cart];
               dispatch(setCartItems(newArray.filter(obj => obj.item.id !== productToDelete.item.id)));
               dispatch(setDeleteProductFromCartModal({visible:false,item:-1}))

@@ -62,44 +62,7 @@ const ProductCard = ({item}) => {
                 }} color={'#2c3e50'}/>
             </View>
           </View>
-        {/* <CustomModal
-        visible={addProductModal.visible}
-        hideModalFunction={()=>{setAddProductModal({visible:false,item:null})}}
-        >   
-          <View style={{  borderRadius: 8, backgroundColor: 'white', marginBottom: 16 }}>
-              <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 8 }}>{addProductModal?.item?.title}</Text>
-              <Text style={{ fontSize: 14, color: 'gray', marginBottom: 8 }}>{addProductModal?.item?.description}</Text>
-              
-              <View style={[GeneralStyle.row,GeneralStyle.itemsCenter,GeneralStyle.justifyBetween]}>
-                <View style={[]}>
-                  <Text style={{ fontSize: 16, fontWeight: 'bold', marginBottom: 8 }}>Price: ${addProductModal?.item?.price}</Text>
-                  <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Stock: {item.stock}</Text>
-                </View>
-
-              <View style={{ flexDirection: 'col',  marginVertical: 8 }}>
-                <View style={[GeneralStyle.row,GeneralStyle.itemsCenter]}>
-                    <Pressable style={{backgroundColor:NewColors.blueGrey100,borderRadius:40}} onPress={handleDecrement}>
-                      <AntDesign name="minus" size={30} color="black" />
-                    </Pressable>
-                    <CustomInput customStyles={{marginHorizontal: 10,}} keyboardType={"numeric"} value={count.toString()} setValue={handleAddCount}/>
-                    <Pressable style={{backgroundColor:NewColors.blueGrey100,borderRadius:40}} onPress={handleIncrement}>
-                      <Ionicons name="add" fontWeight='bold' size={30} color="black" />
-                    </Pressable>
-                </View>
-              </View>
-              </View>
-              <Text style={{ fontSize: 16, fontWeight: 'bold',alignSelf:'flex-end',marginTop:8 }}>Total: ${addProductModal?.item?.price*count}</Text>
-          </View>
-         
-          <View style={[GeneralStyle.row,GeneralStyle.justifyBetween]}>
-              <PrimaryButton color={'#e74c3c'} label='Cancel' onPress={()=>setAddProductModal({visible:false,item:null})}></PrimaryButton>
-              <PrimaryButton color={'#2ecc71'} label='Add' onPress={()=>{
-                const value = { ...addProductModal.item };
-                handleAddProduct(value);
-                setAddProductModal({visible:false,item:null})
-                }}></PrimaryButton>
-          </View>
-        </CustomModal> */}
+        
     </View>
   )
 }

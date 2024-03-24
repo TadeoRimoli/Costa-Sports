@@ -74,8 +74,8 @@ const Purchases = ({}) => {
 const styles = StyleSheet.create({
   purchaseCard: {
     borderRadius: 8,
-    padding: 16,
-    marginBottom: 16,
+    padding: 8,
+    margin: 8,
   },
   header: {
     flexDirection: 'row',
