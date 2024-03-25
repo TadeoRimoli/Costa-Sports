@@ -31,10 +31,10 @@ Tadeo Rimoli
 ## Installation
 
 - Clone the Costa Sports repository to your local machine.
-git clone https://github.com/yourusername/costa-sports.git
+- git clone https://github.com/yourusername/costa-sports.git
 - Navigate to the project directory.
-cd costa-sports
+- cd costa-sports
 - Install the necessary dependencies.
-npm install
+- npm install
 - Start the application.
-npm start
+- npm start
