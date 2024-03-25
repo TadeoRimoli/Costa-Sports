@@ -122,21 +122,21 @@ const ProductList = ({}) => {
           setShowFilters(false)
         }}>
           <View style={{  }}>
-            <Text style={[GeneralStyle.fontBold,GeneralStyle.fontSize20,GeneralStyle.marginBottom10]}>Ordenar por $$$:</Text>
+            <Text style={[GeneralStyle.fontBold,GeneralStyle.fontSize20,GeneralStyle.marginBottom10]}>Order by $$$</Text>
             <SecondaryButton
-            label='De menor a mayor'
+            label='lower to higher'
             onPress={()=>{
               const productsCopy = [...products]
-              dispatch(setProductList(productsCopy.sort((a, b) => a.price - b.price)))
+              dispatch(setProductList(productsCopy.sort((a, b) => (a.price-((a.discountPercentage/100)*a.price))  - (b.price-((b.discountPercentage/100)*b.price)))))
               setShowFilters(false)
             }} 
             />
             <SecondaryButton
-            label='De mayor a menor'
+            label='higher to lower'
             customStyles={{marginTop:8}}
             onPress={()=>{
               const productsCopy = [...products]
-              dispatch(setProductList(productsCopy.sort((a, b) => b.price - a.price)))
+              dispatch(setProductList(productsCopy.sort((a, b) => (b.price-((b.discountPercentage/100)*b.price)) - (a.price-((a.discountPercentage/100)*a.price)))))
               setShowFilters(false)
             }} 
             />
