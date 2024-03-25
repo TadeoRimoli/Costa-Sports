@@ -36,6 +36,7 @@ const ProductCard = ({item}) => {
     return stars;
   };
   
+  const priceWithDiscount = (item.price-((item.discountPercentage/100)*item.price)).toFixed(2)
 
   return (
     <View  style={[ {alignSelf:'center',marginVertical:10, backgroundColor:AppColors.softYellow,width:windowWidth-20,height:(windowHeight+50)/2,borderRadius:10 }]}>
@@ -50,7 +51,11 @@ const ProductCard = ({item}) => {
           <View style={[GeneralStyle.padding16]}>
             <View style={[GeneralStyle.row,GeneralStyle.justifyBetween,GeneralStyle.marginBottom5]}>
               <Text ellipsizeMode='tail' numberOfLines={1} style={{ flex:1,marginRight:8,fontSize: 20, fontWeight: 'bold' }}>{item.title}</Text>
-              <Text style={{ fontSize: 20, fontWeight: 'bold' }}>${item.price}</Text>
+              <View>
+              <Text style={{ fontSize: 20, fontWeight: 'bold' }}>${priceWithDiscount}</Text>
+              <Text style={{ fontSize: 14, fontWeight: 400, textDecorationLine:'line-through',color:'rgba(0, 0, 0, 0.7)' }}>${item.price}</Text>
+
+              </View>
             </View>
             <Text >{item.description}</Text>
             <View style={[GeneralStyle.row,GeneralStyle.justifyBetween,GeneralStyle.itemsCenter,GeneralStyle.marginTop5]}>
