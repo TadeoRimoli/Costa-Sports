@@ -63,12 +63,11 @@ const Register = () => {
     }}
   >
     <View style={[{ flex: 1, justifyContent: 'center', alignItems: 'center', }]}>
-      <Text style={[GeneralStyle.fontSize22,GeneralStyle.marginBottom10]}>Felicidades! la cuenta ya fue creada</Text>
-      <PrimaryButton label="Iniciar sesión"textStyles={{fontSize:20}} onPress={redirectToLogin} />
+      <Text style={[GeneralStyle.fontSize22,GeneralStyle.marginBottom10]}>Congratulations! the account has already been created</Text>
+      <PrimaryButton label="Log in"textStyles={{fontSize:20}} onPress={redirectToLogin} />
     </View>
   </Modal>
   }
-
    
   const backgroundImage = require('../../../images/registerbackground.png');
 
@@ -109,7 +108,7 @@ const Register = () => {
       label='Sign Up' onPress={handleSignUp} />
       <Text style={[GeneralStyle.fontSize18,GeneralStyle.marginTop15,{color:AppColors.white}]}>Already have an account?<Text onPress={()=>{
           navigation.navigate("Login")
-      }} style={[GeneralStyle.fontSize18,{color:AppColors.secondaryText}]}> Log in</Text> </Text>
+      }} style={[GeneralStyle.fontSize18,{color:AppColors.secondaryText}]}>Log in</Text> </Text>
 
       <CustomModal
       animationType="none"
@@ -119,7 +118,7 @@ const Register = () => {
         setErrorModal(false);
       }}
     >
-        <Text style={[GeneralStyle.fontSize22,GeneralStyle.marginBottom10]}>Ha ocurrido un error y no te pudimos registrar</Text>
+        <Text style={[GeneralStyle.fontSize22,GeneralStyle.marginBottom10]}>An error occurred and we could not register you</Text>
     </CustomModal>
     </View>
     </ImageBackground>
