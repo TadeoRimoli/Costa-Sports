@@ -30,7 +30,7 @@ Costa Sports is an e-commerce application dedicated to the sale of sports produc
 Tadeo Rimoli
 ## Installation
 
-- Clone the Costa Sports repository to your local machine. `git clone https://github.com/yourusername/costa-sports.git`
+- Clone the Costa Sports repository to your local machine. `git clone https://github.com/TadeoRimoli/costa-sports.git`
 - Navigate to the project directory. `cd costa-sports`
 - Install the necessary dependencies. `npm install`
 - Start the application. `npm start`
