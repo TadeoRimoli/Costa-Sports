@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { Dimensions } from 'react-native';
 
 const initialState = {
   user:null,
@@ -13,7 +14,8 @@ const initialState = {
     visible:false,
     item:-1
   },
-  logoutModal:false
+  logoutModal:false,
+  dimensions:Dimensions.get('window')
 };
 
 const GeneralSlice = createSlice({
@@ -57,9 +59,12 @@ const GeneralSlice = createSlice({
     hideLogoutModal(state){
       state.logoutModal = false;
     },
+    setDimensions(state,action){
+      state.dimensions = action.payload;
+    },
     reset: () => initialState
   },
 });
 
-export const { showLogoutModal,hideLogoutModal,reset,clearProductList,setProductList,deleteAllCartItems,addCartItem,setCartItems,removeCartItem,setUser,resetUser,setDeleteProductFromCartModal,setAddProductFromModal} = GeneralSlice.actions;
+export const { showLogoutModal,hideLogoutModal,reset,clearProductList,setProductList,deleteAllCartItems,addCartItem,setCartItems,removeCartItem,setUser,resetUser,setDeleteProductFromCartModal,setAddProductFromModal,setDimensions} = GeneralSlice.actions;
 export default GeneralSlice.reducer;

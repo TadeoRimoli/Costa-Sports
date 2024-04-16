@@ -32,7 +32,7 @@ const HomeScreen = ({navigation,route}) => {
     <View style={styles.container}>
       <Text style={styles.saludo}>{saludo}</Text>
       <Text style={[styles.noticia]}>Explore, choose, enjoy! Find what you need in one place.</Text>
-      <Pressable style={[styles.button, GeneralStyle.row,{backgroundColor:AppColors.primaryButton}]} onPress={() => navigation.navigate("CategoriesStack", { screen: "Categories" })}>
+      <Pressable style={[styles.button, GeneralStyle.row,{backgroundColor:AppColors.primaryButton}]} onPress={() => navigation.navigate("Marketplace", { screen: "Categories" })}>
       <View style={[GeneralStyle.row, { flex: 1, justifyContent: 'center', alignItems: 'center' ,color:AppColors.primaryText}]}> 
         <Text style={[{fontSize:20,color:AppColors.primaryText,fontWeight:600},]}>Explore</Text>
       </View>

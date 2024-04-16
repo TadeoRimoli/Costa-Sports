@@ -1,12 +1,15 @@
 import React, { useEffect } from 'react'
 import { useState,Text } from 'react';
-import {View ,FlatList, ActivityIndicator } from 'react-native';
+import {View ,FlatList, ActivityIndicator, Dimensions } from 'react-native';
 import CustomInput from '../CoreComponents/CustomInput'; 
 import CategoryProductCard from '../Cards/CategoryProductCard';
 import { useFocusEffect, useIsFocused, useNavigation } from '@react-navigation/native';
 import { AppColors, GeneralStyle } from '../../Styles/GeneralStyles';
 import LoadingIndicator from '../CoreComponents/LoadingIndicator';
 import { useGetCategoriesQuery } from '../../services/ecommerceAPI';
+import {  useSelector } from 'react-redux';
+import { maxMobileResolution } from '../../Constants/Constants';
+
 const Categories = ({}) => {
 
 
@@ -32,6 +35,15 @@ const Categories = ({}) => {
       setLocalCategories(categories);
     },[categories])
 
+    const {dimensions} = useSelector(state=>state.General);
+
+    const [isDesktop, setIsDesktop] = useState(false);
+
+    useEffect(()=>{
+      if(dimensions.width>maxMobileResolution) setIsDesktop(true)
+    },[dimensions])
+   
+
   return (
     <View style={{ flex: 1, backgroundColor: AppColors.footerBackground }}>
     {isLoading ? <LoadingIndicator /> : error ? <Text>Error: {error.message}</Text> : (
@@ -51,7 +63,7 @@ const Categories = ({}) => {
         <FlatList
           data={localCategories}
           renderItem={({ item }) => (
-            <CategoryProductCard item={item} handlePressCategory={() => handlePressCategory(item)} />
+            <CategoryProductCard item={item} isDesktop={isDesktop} handlePressCategory={() => handlePressCategory(item)} />
           )}
           keyExtractor={(item) => item.name + 'category'}
         />

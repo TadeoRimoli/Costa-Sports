@@ -106,7 +106,7 @@ const Register = () => {
       <PrimaryButton
       customStyles={{marginTop:10,width:'100%'}}
       label='Sign Up' onPress={handleSignUp} />
-      <Text style={[GeneralStyle.fontSize18,GeneralStyle.marginTop15,{color:AppColors.white}]}>Already have an account?<Text onPress={()=>{
+      <Text style={[GeneralStyle.fontSize18,GeneralStyle.marginTop15,{color:AppColors.white}]}>Already have an account? <Text onPress={()=>{
           navigation.navigate("Login")
       }} style={[GeneralStyle.fontSize18,{color:AppColors.secondaryText}]}>Log in</Text> </Text>
 

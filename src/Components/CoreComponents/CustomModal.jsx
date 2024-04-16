@@ -1,5 +1,7 @@
-import { View, Text, Modal,StyleSheet, Button, Keyboard, TouchableWithoutFeedback } from 'react-native'
+import { View, Text, Modal,StyleSheet, Button, Keyboard, TouchableWithoutFeedback, Dimensions } from 'react-native'
 import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { maxMobileResolution } from '../../Constants/Constants';
 
 const CustomModal = ({
   children,
@@ -27,6 +29,13 @@ const CustomModal = ({
     const handleChildPress = (event) => {
       event.stopPropagation();
     };
+
+    
+
+  const {dimensions} = useSelector(state=>state.General);
+
+  
+
   return (
     <Modal
     style={style}
@@ -39,7 +48,9 @@ const CustomModal = ({
       <TouchableWithoutFeedback onPress={hideModalFunction}>
         <View style={[styles.modalContainer]}>
           <TouchableWithoutFeedback onPress={(event)=>handleChildPress(event)}>
-          <View style={[styles.modalContent,{width:expandModal ? '100%' : '80%',maxHeight:isKeyboardVisible ? '100%': '80%'}]}>
+          <View style={[styles.modalContent,
+            , dimensions.width>1000 ? { width:dimensions.width/2 } :
+            {width:expandModal ? '100%' : '80%',maxHeight:isKeyboardVisible ? '100%': '80%'}]}>
             {children}
           </View>
           </TouchableWithoutFeedback>
@@ -57,7 +68,7 @@ const styles = StyleSheet.create({
       marginTop: 20, 
     },
     container: {
-      flex: 1,
+      flex:1,
       justifyContent: 'center',
       alignItems: 'center',
     },
@@ -77,7 +88,7 @@ const styles = StyleSheet.create({
       padding: 20,
       borderRadius: 10,
       elevation: 5,
-      maxWidth: '90%',
+      maxWidth: '95%',
       overflow: 'hidden', 
       display: 'flex',     
       flexDirection:'column'

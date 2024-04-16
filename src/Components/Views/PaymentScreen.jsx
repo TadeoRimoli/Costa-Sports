@@ -117,7 +117,7 @@ const PaymentScreen = ({  }) => {
   const dispatch = useDispatch()
   const handleReturn = () => {
     dispatch(deleteAllCartItems())
-    navigation.navigate("CategoriesStack")
+    navigation.navigate("Marketplace")
   };
 
   const isFocused = useIsFocused()

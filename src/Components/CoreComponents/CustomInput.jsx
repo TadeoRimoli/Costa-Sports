@@ -23,7 +23,6 @@ const CustomInput = ({ enabled=true,customStyles, placeholder, label, value, set
     }
     setValue(e)
   }
-  
 
   return (
     <>
@@ -40,7 +39,10 @@ const CustomInput = ({ enabled=true,customStyles, placeholder, label, value, set
           customStyles,
           isFocused && styles.focused,
           error && error.error && styles.error,
-          { fontSize:16,backgroundColor: error && error.error ? '#FADBD8' : AppColors.white }
+          { 
+            outline:'none',
+            fontSize:16,backgroundColor: error && error.error ? '#FADBD8' : AppColors.white },
+          
         ]}
         placeholderTextColor="rgba(0, 0, 0, 0.7)"
         

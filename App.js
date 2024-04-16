@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import {StatusBar, StyleSheet, SafeAreaView,Text, View ,TextInput,ScrollView,Image,FlatList,Keyboard,Dimensions, Pressable } from 'react-native';
 
 import { FontsArray } from './src/Constants/Fonts';
@@ -10,6 +10,8 @@ import { Provider } from 'react-redux';
 import { initDb } from './src/db';
 import LoadingIndicator from './src/Components/CoreComponents/LoadingIndicator';
 import { AppColors, GeneralStyle } from './src/Styles/GeneralStyles';
+import { setDimensions } from './Redux/slices/GeneralSlice';
+import AppContainer from './src/Components/CoreComponents/AppContainer';
 
 
 export default function App() {
@@ -22,12 +24,22 @@ export default function App() {
     </View>
   }
 
+
   return (
-    <SafeAreaView style={styles.container}>
-      <NavigationContainer>
+    <SafeAreaView style={[styles.container, ]}>
+      <NavigationContainer
+       documentTitle={{
+        formatter: (options, route) => {
+          return `${route?.name ? route.name + ' - ' : ''}Costa Sports`
+        }
+      }}
+      >
         <StatusBar  backgroundColor="transparent" barStyle="dark-content" />
+
         <Provider store={store}>
-        <MyNavigator />
+        <AppContainer>
+          <MyNavigator />
+        </AppContainer>
         </Provider>
         </NavigationContainer>
   </SafeAreaView>
@@ -39,7 +51,7 @@ const styles = StyleSheet.create({
     flexDirection:'row',
   },
   container: {
-    flex: 1,
+    flex:1,
     justifyContent: 'flex-start',
     flexDirection:'column',
     backgroundColor:'white',

@@ -1,25 +1,27 @@
 import { StyleSheet, Text, View,Dimensions, Pressable, Image, ScrollView } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { AppColors, Colors, GeneralStyle } from '../../Styles/GeneralStyles';
+import {  useSelector } from 'react-redux';
 
-const CategoryProductCard = ({item,handlePressCategory}) => {
+const CategoryProductCard = ({item,handlePressCategory,isDesktop}) => {
   
-    const windowWidth = Dimensions.get('window').width;
-    const windowHeight = Dimensions.get('window').height;
+    const {cart,dimensions} = useSelector(state=>state.General);
+ 
     let titleFixed = item.name.toLowerCase().split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
 
+  
     return (
       <Pressable
       
       onPress={handlePressCategory}
       style={[styles.cardContainer,{
-        width:windowWidth-20,
+        width:!isDesktop ? dimensions.width-20 : '95%',
         backgroundColor:AppColors.softYellow
       }]}
     >
       <Image
         style={[styles.image,{
-          height: windowHeight / 2.5,
+          height: !isDesktop ? dimensions.height / 2.5 : dimensions.height/2,
         }]}
         source={{ uri: item.image }}
         onError={(error) => console.error('Error al cargar la imagen:', error.nativeEvent.error)}

@@ -1,4 +1,4 @@
-import { View,  Text,FlatList, ActivityIndicator, StyleSheet, Pressable } from 'react-native'
+import { View,  Text,FlatList, ActivityIndicator, StyleSheet, Pressable, Dimensions } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useFocusEffect, useIsFocused, useRoute } from '@react-navigation/native'
 import CustomInput from '../CoreComponents/CustomInput';
@@ -13,6 +13,7 @@ import { addCartItem, clearProductList, setAddProductFromModal, setCartItems, se
 import { AntDesign } from '@expo/vector-icons';
 import PrimaryButton from '../CoreComponents/PrimaryButton';
 import SecondaryButton from '../CoreComponents/SecondaryButton';
+import { maxMobileResolution } from '../../Constants/Constants';
 
 const ProductList = ({}) => {
 
@@ -21,7 +22,7 @@ const ProductList = ({}) => {
     const [filterValue,setFilterValue]=useState('')
     const dispatch = useDispatch()
     const [firstLoad, setFirstLoad] = useState(true); 
-    const {productList,addProductFromModal,cart} = useSelector(state=>state.General)
+    const {productList,addProductFromModal,cart,dimensions} = useSelector(state=>state.General)
     function filterItems(e){
         setFilterValue(e)
         dispatch(setProductList(products.filter((product)=> product.title.toLowerCase().includes(e.toLowerCase()))))
@@ -102,6 +103,11 @@ const ProductList = ({}) => {
     },[addProductFromModal.visible])
 
 
+    const [isDesktop, setIsDesktop] = useState(false);
+
+    useEffect(()=>{
+      if(dimensions.width>maxMobileResolution) setIsDesktop(true)
+    },[dimensions])
 
     return (
     <View style={{flex:1,backgroundColor: AppColors.footerBackground}}>
@@ -114,7 +120,7 @@ const ProductList = ({}) => {
         <FlatList
         data={productList}
         renderItem={({ item }) => (
-          <ProductCard key={item.id} item={item} ></ProductCard>
+          <ProductCard key={item.id} item={item} isDesktop={isDesktop} ></ProductCard>
         )}
         keyExtractor={item => item.id}
         />
@@ -158,12 +164,12 @@ const ProductList = ({}) => {
                   <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Stock: {getStock()}</Text>
                 </View>
 
-              <View style={{ flexDirection: 'col',  marginVertical: 8 }}>
-                <View style={[GeneralStyle.row,GeneralStyle.itemsCenter]}>
+              <View style={{ flexDirection: 'column',  marginVertical: 8 }}>
+                <View style={[GeneralStyle.row,GeneralStyle.itemsCenter,]}>
                     <Pressable style={{backgroundColor:NewColors.blueGrey100,borderRadius:40}} onPress={handleDecrement}>
                       <AntDesign name="minus" size={30} color="black" />
                     </Pressable>
-                    <CustomInput customStyles={{marginHorizontal: 10,}} keyboardType={"numeric"} enabled={false} value={count.toString()} setValue={()=>{}}/>
+                    <CustomInput  customStyles={{width:100,marginHorizontal: 10}} keyboardType={"numeric"} enabled={false} value={count.toString()} setValue={()=>{}}/>
                     <Pressable style={{backgroundColor:NewColors.blueGrey100,borderRadius:40}} onPress={handleIncrement}>
                       <Ionicons name="add" fontWeight='bold' size={30} color="black" />
                     </Pressable>

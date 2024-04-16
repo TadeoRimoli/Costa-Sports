@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { Dimensions, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -14,10 +14,11 @@ import Register from '../Views/Public/Register';
 import { useDispatch, useSelector } from 'react-redux';
 import Login from '../Views/Public/Login';
 import UserMainView from '../Views/UserMainView';
-import { createTable, deleteSession,  getSession } from '../../db';
-import { reset, setProductList, setUser } from '../../../Redux/slices/GeneralSlice';
+import {  deleteSession,  getSession } from '../../db';
+import { reset, setDimensions, setProductList, setUser } from '../../../Redux/slices/GeneralSlice';
 import { AppColors } from '../../Styles/GeneralStyles';
 import { useLazyGetProductsByCategoryQuery } from '../../services/ecommerceAPI';
+import { maxMobileResolution } from '../../Constants/Constants';
 
 const Tab = createBottomTabNavigator()
 const Stack = createNativeStackNavigator()
@@ -28,7 +29,7 @@ const HomeStack = () => {
   
   initialRouteName='Home'>
       <Stack.Screen name="Home" 
-      options={{ headerShown:false }}
+      options={{ headerShown:false, }}
       component={HomeScreen}></Stack.Screen>
       <Stack.Screen name="Purchases" 
       options={{
@@ -67,10 +68,10 @@ const CategoriesStack = ({navigation,route}) => {
       }}
       
       component={Categories} />
-      <Stack.Screen 
+      <Stack.Screen
       options={({ route }) => ({
         headerRight:()=>(
-          <Ionicons name="reload" onPress={()=>{
+          <Ionicons style={{marginRight:10}} name="reload" onPress={()=>{
             fetchItems(route.params.selectedCategory.name);
           }} size={30} color={AppColors.white}/>
         ),
@@ -89,9 +90,9 @@ const CategoriesStack = ({navigation,route}) => {
 
 const ShoppingCartStack = ({ navigation }) => {
 
-  return <Stack.Navigator initialRouteName='ShoppingCart'>
+  return <Stack.Navigator initialRouteName="Shopping Cart">
       <Stack.Screen 
-          name="ShoppingCart" 
+          name="Shopping Cart" 
           options={{
             headerTitle:'Shopping Cart',
             headerStyle:{
@@ -103,7 +104,7 @@ const ShoppingCartStack = ({ navigation }) => {
           component={ShoppingCart} 
       />
       <Stack.Screen 
-          name="PaymentScreen" 
+          name="Payment Screen" 
           options={{
             headerTitle:'Shopping Cart',
             headerStyle:{
@@ -142,8 +143,6 @@ const MyNavigator = ({}) => {
   const { user,cart } = useSelector(state=>state.General)
   
   useEffect(() => {
-    // Crear la tabla al cargar la aplicación
-    createTable();
     fetchSession()
   }, []);
 
@@ -168,13 +167,21 @@ const MyNavigator = ({}) => {
         }
       } else {
         // Si no hay sesión almacenada
+        deleteSession(); // Elimina la sesión expirada de la base de datos
+        dispatch(reset())
+        dispatch(setUser(null)); // Actualiza el estado del usuario a null
       }
     });
   };
 
+
+
+
   return  user ? 
   (
         <Tab.Navigator
+        
+    
         screenOptions={{
           headerShown: false,
           tabBarShowLabel: false,
@@ -196,7 +203,7 @@ const MyNavigator = ({}) => {
         />
         
         <Tab.Screen  
-        name="CategoriesStack"
+        name="Marketplace"
         component={CategoriesStack}
         options={{
 
@@ -208,7 +215,7 @@ const MyNavigator = ({}) => {
         />
         
         <Tab.Screen  
-        name="CartStack" 
+        name="Cart" 
         component={ShoppingCartStack}
         options={{
             tabBarLabel:'',
@@ -234,8 +241,8 @@ const MyNavigator = ({}) => {
             ),
           }}
         />
-          <Tab.Screen  
-        name="UserStack" 
+        <Tab.Screen  
+        name="User" 
         component={UserMainView}
         options={{
             
@@ -247,6 +254,7 @@ const MyNavigator = ({}) => {
         />
       </Tab.Navigator>
   ) : <PublicStack/>
+
 }
 
 export default MyNavigator

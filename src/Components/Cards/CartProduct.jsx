@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { StyleSheet, Pressable, Text, Dimensions, Image, View } from 'react-native';
 import React from 'react';
 import { AppColors, Colors, GeneralStyle } from '../../Styles/GeneralStyles';
@@ -9,10 +9,8 @@ import { setCartItems, setDeleteProductFromCartModal } from '../../../Redux/slic
 import CustomInput from '../CoreComponents/CustomInput';
 
 const CartProduct = ({ item, onRemove }) => {
-  const windowWidth = Dimensions.get('window').width;
-  const windowHeight = Dimensions.get('window').height;
 
-  const {cart} = useSelector(state=>state.General);
+  const {cart,dimensions} = useSelector(state=>state.General);
   const product = item.item;
   const dispatch = useDispatch()
 
@@ -43,8 +41,13 @@ const CartProduct = ({ item, onRemove }) => {
   
   const priceWithDiscount = (product.price-((product.discountPercentage/100)*product.price)).toFixed(2)
 
+
+  const [isDesktop, setIsDesktop] = useState(false);
+
+
+  
   return (
-    <View style={[{ alignSelf:'center',backgroundColor: '#d2d7d3', width: windowWidth - 20, height: (windowHeight ) / 1.9, margin: 10, borderRadius: 10 }]}>
+    <View style={[{ alignSelf:'center',backgroundColor: '#d2d7d3', width: !isDesktop ? dimensions.width-20 : '95%', height: (dimensions.height ) / 1.9, margin: 10, borderRadius: 10 }]}>
       <Image
         style={{ position:'relative',flex: 1, width: null, resizeMode: 'cover', height: null, borderTopLeftRadius: 10, borderTopRightRadius: 10 }}
         source={{ uri: product.thumbnail }}

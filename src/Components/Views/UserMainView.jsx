@@ -10,17 +10,17 @@ import SecurityScreen from './Security';
 import { deleteSession } from '../../db';
 import { reset, setUser, showLogoutModal } from '../../../Redux/slices/GeneralSlice';
 import { AppColors } from '../../Styles/GeneralStyles';
+import { useNavigation } from '@react-navigation/native';
 
 const Stack = createNativeStackNavigator()
 
 const UserMainView = () => {
     const dispatch = useDispatch()
-
-   
+    const navigation = useNavigation();
 
   return (
    <Stack.Navigator >
-    <Stack.Screen name="Perfil" component={UserView}
+    <Stack.Screen name="Profile" component={UserView}
         options={{
           headerTintColor:AppColors.white,
           headerStyle:{

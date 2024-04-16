@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { StyleSheet,Pressable, Text,Dimensions,Image, View } from 'react-native'
 import React from 'react'
@@ -7,14 +7,12 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import PrimaryButton from '../CoreComponents/PrimaryButton';
 import CustomModal from '../CoreComponents/CustomModal';
 import CustomInput from '../CoreComponents/CustomInput';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addCartItem, setAddProductFromModal } from '../../../Redux/slices/GeneralSlice';
 
-const ProductCard = ({item}) => {
+const ProductCard = ({item,isDesktop}) => {
     const dispatch = useDispatch()
-    const windowWidth = Dimensions.get('window').width;
-    const windowHeight = Dimensions.get('window').height;
-    
+    const {dimensions} = useSelector(state=>state.General);
 
   const renderStars = (roundedRating) => {
     const stars = [];
@@ -37,9 +35,10 @@ const ProductCard = ({item}) => {
   };
   
   const priceWithDiscount = (item.price-((item.discountPercentage/100)*item.price)).toFixed(2)
-
   return (
-    <View  style={[ {alignSelf:'center',marginVertical:10, backgroundColor:AppColors.softYellow,width:windowWidth-20,height:(windowHeight+50)/2,borderRadius:10 }]}>
+    <View  style={[ {alignSelf:'center',marginVertical:10, backgroundColor:AppColors.softYellow,width:!isDesktop ? dimensions.width-20 : '95%',
+    height:  isDesktop ? dimensions.height / 1.5 : dimensions.height/2.5,
+    borderRadius:10 }]}>
           <Image
           style={{ flex: 1, width: null,resizeMode: 'cover' , height: null,  borderTopLeftRadius: 10, borderTopRightRadius: 10 }}
           source={{ uri: item.thumbnail }}

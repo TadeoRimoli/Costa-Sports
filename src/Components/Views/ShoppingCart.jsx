@@ -10,14 +10,14 @@ import CustomInput from '../CoreComponents/CustomInput';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import CustomModal from '../CoreComponents/CustomModal';
 import SecondaryButton from '../CoreComponents/SecondaryButton';
+import { maxMobileResolution } from '../../Constants/Constants';
 
 
 const ShoppingCart = ({ }) => {
   const [totalPrice, setTotalPrice] = useState(0);
   const navigation = useNavigation(); 
-  const {cart,deleteProductFromCartModal}= useSelector(state =>state.General)
+  const {cart,deleteProductFromCartModal,dimensions}= useSelector(state =>state.General)
   const dispatch = useDispatch();
-
 
   useEffect(() => {
     let total = 0;
@@ -29,14 +29,12 @@ const ShoppingCart = ({ }) => {
   }, [cart]);
 
   const handlePayment = () => {
-    navigation.navigate('PaymentScreen', { totalPrice });
+    navigation.navigate("Payment Screen", { totalPrice });
   };
 
-  const windowWidth = Dimensions.get('window').width;
   
   const productToDelete = cart.find(item => item.item.id === deleteProductFromCartModal.item);
 
-  // console.log(cart)
 
   return (
     <View style={{ flex: 1,backgroundColor: AppColors.footerBackground,}}>
@@ -53,7 +51,7 @@ const ShoppingCart = ({ }) => {
           borderColor: '#ccc',
           borderWidth: 1,
           backgroundColor:AppColors.white,
-          width:windowWidth-20,
+          width:dimensions.width > maxMobileResolution ? '95%': dimensions.width-20 ,
           alignSelf:'center',
       }]}>
 
