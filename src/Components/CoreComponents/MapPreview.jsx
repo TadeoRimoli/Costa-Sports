@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Dimensions, Image, StyleSheet, View, PanResponder, Text } from 'react-native';
-import { mapsApiKey } from '../../Constants/Constants';
+import { MapsApiKey } from '@env';
 import * as Location from "expo-location"
 import { useIsFocused } from '@react-navigation/native';
 import { AppColors, GeneralStyle } from '../../Styles/GeneralStyles';
@@ -8,7 +8,7 @@ const MapPreview = ({ latitude, longitude }) => {
   const { width, height } = Dimensions.get('window');
   const [location,setLocation]=useState({latitude:"",longitude:""})
 
-  const url = `https://maps.googleapis.com/maps/api/staticmap?center=${location.latitude},${location.longitude}&zoom=16&size=800x400&maptype=roadmap&markers=color:blue%7Clabel:S%7C40.702147,-74.015794&key=${mapsApiKey}`;
+  const url = `https://maps.googleapis.com/maps/api/staticmap?center=${location.latitude},${location.longitude}&zoom=16&size=800x400&maptype=roadmap&markers=color:blue%7Clabel:S%7C40.702147,-74.015794&key=${MapsApiKey}`;
 
   const [errorMessage,setErrorMessage]=useState("")
   const [address,setAddress]=useState("")
@@ -37,7 +37,7 @@ const MapPreview = ({ latitude, longitude }) => {
   useEffect(() => {
     const fetchLocation = async () => {
       if (isFocused && location.latitude) {
-        const response  = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.latitude},${location.longitude}&key=${mapsApiKey}`)
+        const response  = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.latitude},${location.longitude}&key=${MapsApiKey}`)
         const data = await response.json();
         setAddress(data.results[0].formatted_address)
       }

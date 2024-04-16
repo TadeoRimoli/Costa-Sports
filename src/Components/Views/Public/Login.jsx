@@ -50,7 +50,7 @@ const Login = () => {
   }
 
   const backgroundImage = require('../../../images/publicbackground.png');
-
+  
   return (
     <ImageBackground source={backgroundImage} style={{ width: '100%', height: '100%' }}>
 

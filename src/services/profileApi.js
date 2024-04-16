@@ -1,5 +1,5 @@
 import {createApi,fetchBaseQuery} from "@reduxjs/toolkit/query/react"
-import { FirebaseURL } from "../Constants/Constants"
+import { FirebaseURL } from "@env"
 
 export const profileApi = createApi({
     reducerPath:"profileApi",
