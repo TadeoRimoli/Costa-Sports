@@ -21,6 +21,7 @@ const Categories = ({}) => {
 
     function handlePressCategory(item){
       setFilterValue('')
+      setLocalCategories(categories)
       navigation.navigate("Products",{selectedCategory:item})
     }
   
