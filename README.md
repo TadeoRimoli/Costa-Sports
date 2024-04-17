@@ -1,7 +1,7 @@
 
 # Costa Sports
 
-Costa Sports is an e-commerce application dedicated to the sale of sports products. It allows users to explore a wide range of products, generate purchase orders, manage previous purchases, filter products by categories, and sort them by price from highest to lowest or from lowest to highest. Additionally, the application offers the ability to create and manage user profiles, using Firebase as DB and backend for authentication. Costa Sports leverages phone resources such as GPS and the camera to enhance the user experience, allowing for profile picture capture.
+Costa Sports is an e-commerce application dedicated to the sale of sports products. It allows users to explore a wide range of products, generate purchase orders, manage previous purchases, filter products by categories, and sort them by price from highest to lowest or from lowest to highest. Additionally, the application offers the ability to create and manage user profiles, using Firebase as DB and backend for authentication. Costa Sports leverages phone resources such as GPS and the camera to enhance the user experience, allowing for profile picture capture. 
 
 ## Key Features
 
@@ -34,3 +34,5 @@ Tadeo Rimoli
 - Navigate to the project directory. `cd costa-sports`
 - Install the necessary dependencies. `npm install`
 - Start the application. `npm start`
+
+Demo Available: https://costa-sports.netlify.app/
