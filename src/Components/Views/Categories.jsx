@@ -37,11 +37,7 @@ const Categories = ({}) => {
 
     const {dimensions} = useSelector(state=>state.General);
 
-    const [isDesktop, setIsDesktop] = useState(false);
 
-    useEffect(()=>{
-      if(dimensions.width>maxMobileResolution) setIsDesktop(true)
-    },[dimensions])
    
 
   return (
@@ -63,7 +59,7 @@ const Categories = ({}) => {
         <FlatList
           data={localCategories}
           renderItem={({ item }) => (
-            <CategoryProductCard item={item} isDesktop={isDesktop} handlePressCategory={() => handlePressCategory(item)} />
+            <CategoryProductCard item={item}  handlePressCategory={() => handlePressCategory(item)} />
           )}
           keyExtractor={(item) => item.name + 'category'}
         />

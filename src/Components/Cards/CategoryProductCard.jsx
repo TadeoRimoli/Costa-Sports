@@ -2,8 +2,9 @@ import { StyleSheet, Text, View,Dimensions, Pressable, Image, ScrollView } from 
 import React, { useEffect, useState } from 'react'
 import { AppColors, Colors, GeneralStyle } from '../../Styles/GeneralStyles';
 import {  useSelector } from 'react-redux';
+import { maxMobileResolution } from '../../Constants/Constants';
 
-const CategoryProductCard = ({item,handlePressCategory,isDesktop}) => {
+const CategoryProductCard = ({item,handlePressCategory}) => {
   
     const {cart,dimensions} = useSelector(state=>state.General);
  
@@ -15,13 +16,13 @@ const CategoryProductCard = ({item,handlePressCategory,isDesktop}) => {
       
       onPress={handlePressCategory}
       style={[styles.cardContainer,{
-        width:!isDesktop ? dimensions.width-20 : '95%',
+        width:!dimensions.width>maxMobileResolution ? dimensions.width-20 : '95%',
         backgroundColor:AppColors.softYellow
       }]}
     >
       <Image
         style={[styles.image,{
-          height: !isDesktop ? dimensions.height / 2.5 : dimensions.height/2,
+          height: !dimensions.width>maxMobileResolution ? dimensions.height / 2.5 : dimensions.height/2,
         }]}
         source={{ uri: item.image }}
         onError={(error) => console.error('Error al cargar la imagen:', error.nativeEvent.error)}

@@ -49,7 +49,7 @@ const CustomModal = ({
         <View style={[styles.modalContainer]}>
           <TouchableWithoutFeedback onPress={(event)=>handleChildPress(event)}>
           <View style={[styles.modalContent,
-            , dimensions.width>1000 ? { width:dimensions.width/2 } :
+            , dimensions.width>1000 ? { width:maxMobileResolution-100 } :
             {width:expandModal ? '100%' : '80%',maxHeight:isKeyboardVisible ? '100%': '80%'}]}>
             {children}
           </View>

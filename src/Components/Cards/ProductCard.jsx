@@ -9,8 +9,9 @@ import CustomModal from '../CoreComponents/CustomModal';
 import CustomInput from '../CoreComponents/CustomInput';
 import { useDispatch, useSelector } from 'react-redux';
 import { addCartItem, setAddProductFromModal } from '../../../Redux/slices/GeneralSlice';
+import { maxMobileResolution } from '../../Constants/Constants';
 
-const ProductCard = ({item,isDesktop}) => {
+const ProductCard = ({item}) => {
     const dispatch = useDispatch()
     const {dimensions} = useSelector(state=>state.General);
 
@@ -36,8 +37,8 @@ const ProductCard = ({item,isDesktop}) => {
   
   const priceWithDiscount = (item.price-((item.discountPercentage/100)*item.price)).toFixed(2)
   return (
-    <View  style={[ {alignSelf:'center',marginVertical:10, backgroundColor:AppColors.softYellow,width:!isDesktop ? dimensions.width-20 : '95%',
-    height:  isDesktop ? dimensions.height / 1.5 : dimensions.height/2.5,
+    <View  style={[ {alignSelf:'center',marginVertical:10, backgroundColor:AppColors.softYellow,width:!dimensions.width>maxMobileResolution ? dimensions.width-20 : '95%',
+    height:  dimensions.width>maxMobileResolution ? dimensions.height / 1.5 : dimensions.height/2.5,
     borderRadius:10 }]}>
           <Image
           style={{ flex: 1, width: null,resizeMode: 'cover' , height: null,  borderTopLeftRadius: 10, borderTopRightRadius: 10 }}

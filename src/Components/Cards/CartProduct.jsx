@@ -7,6 +7,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCartItems, setDeleteProductFromCartModal } from '../../../Redux/slices/GeneralSlice';
 import CustomInput from '../CoreComponents/CustomInput';
+import { maxMobileResolution } from '../../Constants/Constants';
 
 const CartProduct = ({ item, onRemove }) => {
 
@@ -42,12 +43,11 @@ const CartProduct = ({ item, onRemove }) => {
   const priceWithDiscount = (product.price-((product.discountPercentage/100)*product.price)).toFixed(2)
 
 
-  const [isDesktop, setIsDesktop] = useState(false);
 
 
   
   return (
-    <View style={[{ alignSelf:'center',backgroundColor: '#d2d7d3', width: !isDesktop ? dimensions.width-20 : '95%', height: (dimensions.height ) / 1.9, margin: 10, borderRadius: 10 }]}>
+    <View style={[{ alignSelf:'center',backgroundColor: '#d2d7d3', width: !dimensions.width>maxMobileResolution ? dimensions.width-20 : '95%', height: (dimensions.height ) / 1.9, margin: 10, borderRadius: 10 }]}>
       <Image
         style={{ position:'relative',flex: 1, width: null, resizeMode: 'cover', height: null, borderTopLeftRadius: 10, borderTopRightRadius: 10 }}
         source={{ uri: product.thumbnail }}

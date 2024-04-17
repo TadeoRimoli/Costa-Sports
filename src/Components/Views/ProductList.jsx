@@ -103,11 +103,6 @@ const ProductList = ({}) => {
     },[addProductFromModal.visible])
 
 
-    const [isDesktop, setIsDesktop] = useState(false);
-
-    useEffect(()=>{
-      if(dimensions.width>maxMobileResolution) setIsDesktop(true)
-    },[dimensions])
 
     return (
     <View style={{flex:1,backgroundColor: AppColors.footerBackground}}>
@@ -120,7 +115,7 @@ const ProductList = ({}) => {
         <FlatList
         data={productList}
         renderItem={({ item }) => (
-          <ProductCard key={item.id} item={item} isDesktop={isDesktop} ></ProductCard>
+          <ProductCard key={item.id} item={item}  ></ProductCard>
         )}
         keyExtractor={item => item.id}
         />
